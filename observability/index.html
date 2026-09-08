@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <script src="qrcode.min.js"></script>
   <style>
     :root {
       /* TikTok Signature Color Palette */
@@ -875,7 +875,85 @@
       border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.15);
       padding: 1.25rem;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+    /* ORGANIZER & TIKETYA BRANDING STYLES */
+    .organizer-brand-banner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      width: 100%;
+    }
+
+    .organizer-brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: linear-gradient(135deg, rgba(37, 244, 238, 0.15), rgba(254, 44, 85, 0.15));
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 9999px;
+      padding: 6px 16px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+    }
+
+    .organizer-icon {
+      font-size: 15px;
+    }
+
+    .organizer-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      background: linear-gradient(90deg, var(--tiktok-cyan), #ffffff, var(--tiktok-red));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .organizer-tag {
+      font-size: 10px;
+      color: var(--tiktok-gray);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 700;
+      margin-left: 4px;
+      border-left: 1px solid rgba(255, 255, 255, 0.18);
+      padding-left: 8px;
+    }
+
+    .organizer-selector-pills {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .pill-btn, .pill-btn-upload {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--tiktok-gray);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      user-select: none;
+    }
+
+    .pill-btn:hover, .pill-btn-upload:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
+    .pill-btn.active {
+      background: rgba(37, 244, 238, 0.18);
+      border-color: var(--tiktok-cyan);
+      color: var(--tiktok-cyan);
+      box-shadow: 0 0 10px rgba(37, 244, 238, 0.3);
     }
   </style>
 </head>
@@ -886,8 +964,8 @@
     <div class="brand-header">
       <div class="brand-icon chromatic-text">🎟️</div>
       <div class="brand-titles">
-        <div class="brand-title chromatic-text">SMART TICKET</div>
-        <div class="brand-sub">Quentro Engine • TOTP 15s</div>
+        <div class="brand-title chromatic-text">TiketYA! SMART TICKET</div>
+        <div class="brand-sub">Quentro Anti-Fraud Engine • TOTP 15s</div>
       </div>
     </div>
 
@@ -918,6 +996,23 @@
       <div class="ticket-container">
         <div class="ticket-card-native">
           
+          <!-- ORGANIZER / TIKETYA BRANDING BANNER -->
+          <div class="organizer-brand-banner">
+            <div class="organizer-brand-badge" id="organizer-badge-display">
+              <span class="organizer-icon" id="organizer-icon-el">🎟️</span>
+              <span class="organizer-title" id="organizer-name-el">TiketYA!</span>
+              <span class="organizer-tag">Organizador Oficial</span>
+            </div>
+            <div class="organizer-selector-pills">
+              <button class="pill-btn active" data-org="tiketya" id="btn-org-tiketya">🎟️ TiketYA!</button>
+              <button class="pill-btn" data-org="rock" id="btn-org-rock">⚡ RockFest</button>
+              <label class="pill-btn-upload" title="Subir logo personalizado del organizador">
+                <span>📁 Subir Logo</span>
+                <input type="file" id="input-custom-logo" accept="image/*" style="display:none;">
+              </label>
+            </div>
+          </div>
+
           <div class="badge-event-type">ENTRADA VIP OFICIAL</div>
           <h1 class="ticket-event-name" id="ui-event-name">Rock Revolution World Tour 2026</h1>
           <p class="ticket-venue-name" id="ui-event-venue">Estadio Nacional • Puerta 4 • Lima</p>
@@ -1164,32 +1259,119 @@
       e.target.textContent = isSoundOn ? '🔊' : '🔇';
     });
 
-    // Real QR Code Generator using QRCode Library with Canvas High-DPI Scaling
+    // Organizer & Branding State
+    let currentOrganizer = 'tiketya';
+    let customOrganizerImg = null;
+
+    function drawCenterBadge(canvas) {
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      const size = canvas.width;
+      const badgeSize = Math.floor(size * 0.22); // 22% of QR size, well within 30% error correction limit
+      const cx = size / 2;
+      const cy = size / 2;
+      const x = cx - badgeSize / 2;
+      const y = cy - badgeSize / 2;
+      const radius = Math.floor(badgeSize * 0.24);
+
+      ctx.save();
+      const drawRounded = (bx, by, bw, bh, br) => {
+        if (ctx.roundRect) {
+          ctx.roundRect(bx, by, bw, bh, br);
+        } else {
+          ctx.moveTo(bx + br, by);
+          ctx.arcTo(bx + bw, by, bx + bw, by + bh, br);
+          ctx.arcTo(bx + bw, by + bh, bx, by + bh, br);
+          ctx.arcTo(bx, by + bh, bx, by, br);
+          ctx.arcTo(bx, by, bx + bw, by, br);
+        }
+      };
+
+      // Subtle drop shadow
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+      ctx.shadowBlur = 6;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 2;
+
+      // Solid background
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      drawRounded(x, y, badgeSize, badgeSize, radius);
+      ctx.fill();
+
+      // Border gradient (TikTok Cyan to Magenta)
+      ctx.shadowColor = 'transparent';
+      ctx.lineWidth = 2.5;
+      const grad = ctx.createLinearGradient(x, y, x + badgeSize, y + badgeSize);
+      grad.addColorStop(0, '#25F4EE');
+      grad.addColorStop(1, '#FE2C55');
+      ctx.strokeStyle = grad;
+      ctx.stroke();
+
+      if (customOrganizerImg && customOrganizerImg.complete && customOrganizerImg.naturalWidth > 0) {
+        // Draw user custom uploaded logo
+        const pad = Math.floor(badgeSize * 0.12);
+        ctx.save();
+        ctx.beginPath();
+        drawRounded(x + pad, y + pad, badgeSize - pad * 2, badgeSize - pad * 2, radius - 2);
+        ctx.clip();
+        ctx.drawImage(customOrganizerImg, x + pad, y + pad, badgeSize - pad * 2, badgeSize - pad * 2);
+        ctx.restore();
+      } else if (currentOrganizer === 'rock') {
+        // RockFest Organizer
+        ctx.fillStyle = '#09090d';
+        ctx.font = `900 ${Math.floor(badgeSize * 0.26)}px 'Plus Jakarta Sans', sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('⚡ROCK', cx, cy - 3);
+        ctx.fillStyle = '#FE2C55';
+        ctx.font = `800 ${Math.floor(badgeSize * 0.20)}px 'Plus Jakarta Sans', sans-serif`;
+        ctx.fillText('FEST', cx, cy + Math.floor(badgeSize * 0.24));
+      } else {
+        // Default: TiketYA!
+        ctx.fillStyle = '#010101';
+        ctx.font = `900 ${Math.floor(badgeSize * 0.25)}px 'Plus Jakarta Sans', sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('Tiket', cx, cy - Math.floor(badgeSize * 0.12));
+        ctx.fillStyle = '#FE2C55';
+        ctx.font = `900 ${Math.floor(badgeSize * 0.27)}px 'Plus Jakarta Sans', sans-serif`;
+        ctx.fillText('YA!', cx, cy + Math.floor(badgeSize * 0.21));
+      }
+
+      ctx.restore();
+    }
+
+    // Real QR Code Generator using QRCode Library with Canvas High-DPI Scaling & Center Logo
     function renderOpticalQr(elementId, rawText) {
       const canvas = document.getElementById(elementId);
       if (!canvas) return;
 
       if (window.QRCode && window.QRCode.toCanvas) {
         window.QRCode.toCanvas(canvas, rawText, {
-          width: 250,
+          width: 260,
           margin: 1,
           color: {
             dark: '#010101',
             light: '#ffffff'
           },
-          errorCorrectionLevel: 'M'
+          errorCorrectionLevel: 'H' // High 30% error recovery allows center badge
         }, (err) => {
-          if (err) console.error('QR Render error:', err);
+          if (err) {
+            console.error('QR Render error:', err);
+          } else {
+            drawCenterBadge(canvas);
+          }
         });
       } else {
         const ctx = canvas.getContext('2d');
-        canvas.width = 250;
-        canvas.height = 250;
+        canvas.width = 260;
+        canvas.height = 260;
         ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, 250, 250);
+        ctx.fillRect(0, 0, 260, 260);
         ctx.fillStyle = '#010101';
-        ctx.font = '11px monospace';
-        ctx.fillText('QR: ' + rawText.substring(0, 22), 10, 125);
+        ctx.font = '12px monospace';
+        ctx.fillText('Generando QR...', 30, 130);
       }
     }
 
@@ -1599,6 +1781,59 @@
         setActiveView('ticket');
       }
     });
+
+    // Organizer Branding Selector Listeners
+    document.querySelectorAll('.pill-btn[data-org]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.pill-btn[data-org]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentOrganizer = btn.getAttribute('data-org');
+        customOrganizerImg = null;
+        updateOrganizerDisplay();
+        if (lastLivePayload) {
+          renderOpticalQr('qr-canvas', lastLivePayload);
+        }
+      });
+    });
+
+    const inputLogo = document.getElementById('input-custom-logo');
+    if (inputLogo) {
+      inputLogo.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          const img = new Image();
+          img.onload = () => {
+            customOrganizerImg = img;
+            currentOrganizer = 'custom';
+            document.querySelectorAll('.pill-btn[data-org]').forEach(b => b.classList.remove('active'));
+            updateOrganizerDisplay();
+            if (lastLivePayload) {
+              renderOpticalQr('qr-canvas', lastLivePayload);
+            }
+          };
+          img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function updateOrganizerDisplay() {
+      const nameEl = document.getElementById('organizer-name-el');
+      const iconEl = document.getElementById('organizer-icon-el');
+      if (!nameEl) return;
+      if (customOrganizerImg) {
+        nameEl.textContent = 'Organizador Custom';
+        iconEl.textContent = '🖼️';
+      } else if (currentOrganizer === 'rock') {
+        nameEl.textContent = 'RockFest Live';
+        iconEl.textContent = '⚡';
+      } else {
+        nameEl.textContent = 'TiketYA!';
+        iconEl.textContent = '🎟️';
+      }
+    }
 
     // Start App
     fetchTicketStatus();
