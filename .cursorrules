@@ -1,0 +1,14 @@
+# .cursorrules — Reglas de Gobernanza para Cursor / Codex / Prime-Agent
+
+rules:
+  - pattern: "src/modules/**"
+    instructions: "Vertical Slice. Cada módulo contiene su lógica, tipos y tests propios. Prohibido depender de internals privados de otros módulos; usa únicamente interfaces públicas."
+  - pattern: "src/integrations/**"
+    instructions: "Conectores externos. NUNCA importar base de datos SQL directamente. Maneja errores con timeout y Circuit Breaker."
+  - pattern: ".agents/tasks/**"
+    instructions: "Contratos de tareas inmutables. NUNCA crees un nuevo archivo sin registrar el correlativo secuencial en .agents/tasks/INDEX.md y ejecutar `npm run validate:tasks`."
+
+invariants:
+  - "Cero secretos hardcodeados (variables de entorno tipadas)."
+  - "Atomicidad: Mutaciones multi-entidad bajo transacciones ACID."
+  - "Zero Half-Done: Todo cambio debe pasar `npm test` y `npm run eval:task` con 100% de aserciones verdes."

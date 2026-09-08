@@ -1,0 +1,30 @@
+{
+  "id": "eval-task-001",
+  "name": "Verificación de Scaffolding y Calidad de Repositorio",
+  "checks": [
+    {
+      "id": "check-agents-md",
+      "description": "El archivo AGENTS.md debe existir en la raíz",
+      "type": "file_exists",
+      "path": "AGENTS.md"
+    },
+    {
+      "id": "check-handoff-md",
+      "description": "El archivo HANDOFF.md debe existir en la raíz",
+      "type": "file_exists",
+      "path": "HANDOFF.md"
+    },
+    {
+      "id": "check-changelog-md",
+      "description": "El archivo CHANGELOG.md debe existir y contener sección Unreleased",
+      "type": "file_exists",
+      "path": "CHANGELOG.md"
+    },
+    {
+      "id": "check-docs-index",
+      "description": "La matriz de trazabilidad docs/INDEX.md debe existir",
+      "type": "file_exists",
+      "path": "docs/INDEX.md"
+    }
+  ]
+}

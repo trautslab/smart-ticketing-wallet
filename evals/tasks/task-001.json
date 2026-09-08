@@ -1,0 +1,36 @@
+{
+  "id": "task-001",
+  "name": "TASK-001: Motor Criptográfico de QR Dinámico (TOTP RFC 6238 - 15s)",
+  "checks": [
+    {
+      "id": "check-task-file",
+      "description": "El archivo de tarea TASK-001 debe existir",
+      "type": "file_exists",
+      "path": ".agents/tasks/TASK-001-dynamic-qr-totp-engine.md"
+    },
+    {
+      "id": "check-totp-engine",
+      "description": "El archivo src/core/totp-engine.ts debe existir",
+      "type": "file_exists",
+      "path": "src/core/totp-engine.ts"
+    },
+    {
+      "id": "check-qr-payload",
+      "description": "El archivo src/core/qr-payload.ts debe existir",
+      "type": "file_exists",
+      "path": "src/core/qr-payload.ts"
+    },
+    {
+      "id": "check-vault",
+      "description": "El archivo src/core/ticket-vault.ts debe existir",
+      "type": "file_exists",
+      "path": "src/core/ticket-vault.ts"
+    },
+    {
+      "id": "check-totp-tests",
+      "description": "Los tests de totp-engine deben pasar exitosamente",
+      "type": "command",
+      "command": "npx tsx --test tests/totp-engine.test.ts"
+    }
+  ]
+}

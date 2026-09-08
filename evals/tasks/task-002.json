@@ -1,0 +1,30 @@
+{
+  "id": "task-002",
+  "name": "TASK-002: Motor de Validación 100% Offline para Torniquetes y Accesos",
+  "checks": [
+    {
+      "id": "check-task-file",
+      "description": "El archivo de tarea TASK-002 debe existir",
+      "type": "file_exists",
+      "path": ".agents/tasks/TASK-002-offline-turnstile-validation.md"
+    },
+    {
+      "id": "check-turnstile-validator",
+      "description": "El archivo src/core/turnstile-validator.ts debe existir",
+      "type": "file_exists",
+      "path": "src/core/turnstile-validator.ts"
+    },
+    {
+      "id": "check-mesh-sync",
+      "description": "El archivo src/core/mesh-sync.ts debe existir",
+      "type": "file_exists",
+      "path": "src/core/mesh-sync.ts"
+    },
+    {
+      "id": "check-turnstile-tests",
+      "description": "Los tests de validación de torniquete deben pasar al 100%",
+      "type": "command",
+      "command": "npx tsx --test tests/turnstile-validator.test.ts"
+    }
+  ]
+}

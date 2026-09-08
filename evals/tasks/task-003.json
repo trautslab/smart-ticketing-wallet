@@ -1,0 +1,24 @@
+{
+  "id": "task-003",
+  "name": "TASK-003: Protocolo P2P de Transferencia Criptográfica y Anti-Revendedores",
+  "checks": [
+    {
+      "id": "check-task-file",
+      "description": "El archivo de tarea TASK-003 debe existir",
+      "type": "file_exists",
+      "path": ".agents/tasks/TASK-003-p2p-transfer-and-anti-scalping.md"
+    },
+    {
+      "id": "check-transfer-service",
+      "description": "El archivo src/core/transfer-service.ts debe existir",
+      "type": "file_exists",
+      "path": "src/core/transfer-service.ts"
+    },
+    {
+      "id": "check-transfer-tests",
+      "description": "Los tests de transferencias P2P y reglas anti-reventa deben pasar al 100%",
+      "type": "command",
+      "command": "npx tsx --test tests/transfer-service.test.ts"
+    }
+  ]
+}

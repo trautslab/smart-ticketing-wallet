@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Ticketing & Cryptographic Wallet — Quentro Engine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #07090e;
+      --bg-card: rgba(16, 21, 32, 0.85);
+      --bg-card-hover: rgba(23, 30, 46, 0.95);
+      --border-color: rgba(56, 189, 248, 0.15);
+      --border-glow: rgba(56, 189, 248, 0.35);
+      --brand-primary: #0ea5e9;
+      --brand-accent: #38bdf8;
+      --color-success: #10b981;
+      --color-danger: #f43f5e;
+      --color-warning: #f59e0b;
+      --color-purple: #a855f7;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(ellipse at 20% 0%, rgba(14, 165, 233, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 100%, rgba(168, 85, 247, 0.08) 0%, transparent 50%);
+    }
+
+    /* TOP NAVBAR */
+    header {
+      background: rgba(11, 15, 25, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.85rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo-badge {
+      background: linear-gradient(135deg, #0284c7, #0ea5e9);
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      box-shadow: 0 0 20px rgba(14, 165, 233, 0.4);
+    }
+
+    .brand-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .header-badges {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .badge-offline {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+      padding: 0.35rem 0.8rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .badge-offline .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    /* MAIN CONTAINER */
+    .dashboard-grid {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* PHONE FRAME */
+    .phone-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .phone-shell {
+      width: 380px;
+      background: #000;
+      border-radius: 46px;
+      padding: 12px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.12);
+      position: relative;
+    }
+
+    .phone-screen {
+      background: #0f1420;
+      border-radius: 36px;
+      overflow: hidden;
+      min-height: 680px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .phone-notch {
+      width: 120px;
+      height: 24px;
+      background: #000;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      border-bottom-left-radius: 14px;
+      border-bottom-right-radius: 14px;
+      z-index: 50;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .phone-camera-lens {
+      width: 8px;
+      height: 8px;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 50%;
+    }
+
+    .wallet-header {
+      padding: 2.2rem 1.25rem 0.75rem 1.25rem;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(14, 165, 233, 0.15) 0%, transparent 100%);
+    }
+
+    .wallet-app-tag {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--brand-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .ticket-card {
+      margin: 0.75rem 1rem 1rem 1rem;
+      background: rgba(22, 29, 44, 0.95);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .event-title {
+      font-size: 1rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 0.25rem;
+    }
+
+    .event-venue {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    /* DYNAMIC QR BOX */
+    .qr-box-wrapper {
+      position: relative;
+      width: 210px;
+      height: 210px;
+      background: #ffffff;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      box-shadow: 0 0 35px rgba(14, 165, 233, 0.2);
+    }
+
+    .qr-canvas-mock {
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-template-rows: repeat(7, 1fr);
+      gap: 4px;
+      padding: 4px;
+    }
+
+    .qr-cell {
+      background: #111827;
+      border-radius: 2px;
+      transition: background-color 0.25s ease;
+    }
+
+    .qr-cell.white {
+      background: #fff;
+    }
+
+    .qr-watermark {
+      position: absolute;
+      width: 38px;
+      height: 38px;
+      background: #0284c7;
+      border: 3px solid #fff;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: #fff;
+      font-weight: 800;
+    }
+
+    /* ROTATING COUNTDOWN SVG */
+    .countdown-widget {
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .ring-container {
+      position: relative;
+      width: 44px;
+      height: 44px;
+    }
+
+    .ring-svg {
+      transform: rotate(-90deg);
+      width: 44px;
+      height: 44px;
+    }
+
+    .ring-circle-bg {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.1);
+      stroke-width: 4;
+    }
+
+    .ring-circle {
+      fill: none;
+      stroke: var(--brand-accent);
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-dasharray: 113;
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 1s linear, stroke 0.3s;
+    }
+
+    .ring-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 0.75rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: var(--text-main);
+    }
+
+    .countdown-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .countdown-label strong {
+      color: var(--text-main);
+      font-size: 0.8rem;
+    }
+
+    /* SEAT PILL */
+    .seat-pills {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      width: 100%;
+    }
+
+    .seat-pill {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 10px;
+      padding: 0.5rem;
+      text-align: center;
+    }
+
+    .seat-pill-label {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .seat-pill-value {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* RIGHT COLUMN: CONTROL PANEL */
+    .control-panels {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .panel-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 1.5rem;
+      backdrop-filter: blur(12px);
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 0.75rem;
+    }
+
+    .panel-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    /* TURNSTILE SCREEN */
+    .turnstile-console {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      align-items: center;
+    }
+
+    @media (max-width: 640px) {
+      .turnstile-console {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .gate-indicator-box {
+      background: #0b0f19;
+      border: 2px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .gate-indicator-box.status-granted {
+      border-color: #10b981;
+      box-shadow: 0 0 35px rgba(16, 185, 129, 0.25);
+    }
+
+    .gate-indicator-box.status-denied {
+      border-color: #f43f5e;
+      box-shadow: 0 0 35px rgba(244, 63, 94, 0.25);
+    }
+
+    .gate-light {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #334155;
+      margin-bottom: 0.75rem;
+      transition: all 0.3s;
+    }
+
+    .gate-light.green {
+      background: #10b981;
+      box-shadow: 0 0 25px #10b981;
+    }
+
+    .gate-light.red {
+      background: #f43f5e;
+      box-shadow: 0 0 25px #f43f5e;
+    }
+
+    .gate-status-text {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+
+    .gate-latency-badge {
+      margin-top: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      background: #0284c7;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: #0369a1;
+      transform: translateY(-1px);
+    }
+
+    .btn-danger {
+      background: rgba(244, 63, 94, 0.15);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      color: #fb7185;
+    }
+
+    .btn-danger:hover {
+      background: rgba(244, 63, 94, 0.25);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    /* P2P TRANSFER */
+    .transfer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 640px) {
+      .transfer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .form-input {
+      background: rgba(11, 15, 25, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 0.6rem 0.85rem;
+      color: #fff;
+      font-family: var(--font-main);
+      font-size: 0.85rem;
+    }
+
+    /* LOGS TABLE */
+    .audit-table-wrapper {
+      max-height: 220px;
+      overflow-y: auto;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+    }
+
+    .audit-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+
+    .audit-table th {
+      background: #0f1420;
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+      color: var(--text-dim);
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+    }
+
+    .audit-table td {
+      padding: 0.5rem 0.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .tag-success { color: #34d399; font-weight: bold; }
+    .tag-error { color: #f87171; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <div class="logo-badge">🎟️</div>
+      <div>
+        <div class="brand-title">Smart Digital Ticketing & Cryptographic Wallet</div>
+        <div class="brand-sub">Motor Quentro TOTP 15s • Validación Offline Sub-80ms • P2P Re-Keying</div>
+      </div>
+    </div>
+    <div class="header-badges">
+      <div class="badge-offline">
+        <span class="dot"></span>
+        <span>MODO FUERA DE LÍNEA ACTIVO</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="dashboard-grid">
+    
+    <!-- LEFT: SMARTPHONE SIMULATION -->
+    <div class="phone-container">
+      <div class="phone-shell">
+        <div class="phone-screen">
+          <div class="phone-notch">
+            <div class="phone-camera-lens"></div>
+          </div>
+
+          <div class="wallet-header">
+            <div class="wallet-app-tag">Quentro-Style Smart Wallet</div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-top: 2px;" id="owner-display">Alice Johnson</div>
+          </div>
+
+          <div class="ticket-card">
+            <div class="event-title" id="event-title">Rock Revolution Tour 2026</div>
+            <div class="event-venue" id="event-venue">Estadio Nacional — Lima</div>
+
+            <!-- DYNAMIC QR DISPLAY -->
+            <div class="qr-box-wrapper">
+              <div class="qr-canvas-mock" id="qr-matrix">
+                <!-- 49 dynamic cells simulating optical QR code -->
+              </div>
+              <div class="qr-watermark">Q</div>
+            </div>
+
+            <!-- 15s COUNTDOWN RING -->
+            <div class="countdown-widget">
+              <div class="ring-container">
+                <svg class="ring-svg">
+                  <circle class="ring-circle-bg" cx="22" cy="22" r="18"></circle>
+                  <circle class="ring-circle" id="progress-circle" cx="22" cy="22" r="18"></circle>
+                </svg>
+                <div class="ring-text" id="countdown-sec">15s</div>
+              </div>
+              <div class="countdown-label">
+                <span>ROTACIÓN AUTOMÁTICA</span>
+                <strong id="counter-hex-display">0000000003b5a12</strong>
+              </div>
+            </div>
+
+            <!-- SEAT INFO -->
+            <div class="seat-pills">
+              <div class="seat-pill">
+                <div class="seat-pill-label">Zona</div>
+                <div class="seat-pill-value" id="ticket-section">VIP Campo A</div>
+              </div>
+              <div class="seat-pill">
+                <div class="seat-pill-label">Asiento</div>
+                <div class="seat-pill-value" id="ticket-seat">Fila 1 - As. 14</div>
+              </div>
+              <div class="seat-pill">
+                <div class="seat-pill-label">Estado</div>
+                <div class="seat-pill-value" id="ticket-status-pill" style="color: #34d399;">ACTIVO</div>
+              </div>
+            </div>
+
+            <div style="margin-top: 0.85rem; font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-dim); word-break: break-all; text-align: center;">
+              Payload: <span id="raw-payload-display" style="color: var(--brand-accent);">STK:...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: TURNSTILE CONTROL & P2P TRANSFER -->
+    <div class="control-panels">
+
+      <!-- 1. TURNSTILE OPERATOR STATION -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🏟️</span> Estación de Torniquetes Perimetrales (Control de Acceso)
+          </div>
+          <select id="gate-select" class="form-input" style="width: auto; padding: 0.3rem 0.6rem;">
+            <option value="GATE-NORTH-01">Puerta Norte 01 (Estadio)</option>
+            <option value="GATE-SOUTH-02">Puerta Sur 02 (Estadio)</option>
+            <option value="GATE-VIP-01">Puerta VIP Preferencial</option>
+          </select>
+        </div>
+
+        <div class="turnstile-console">
+          <div class="gate-indicator-box" id="gate-indicator">
+            <div class="gate-light" id="gate-light"></div>
+            <div class="gate-status-text" id="gate-text">LISTO PARA ESCANEAR</div>
+            <div class="gate-latency-badge" id="gate-latency">Latencia estimada: &lt;80ms</div>
+            <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.4rem;" id="gate-reason">Presente el código QR óptico frente al lector</div>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn" id="btn-scan-valid">
+              <span>⚡</span> Escanear QR Dinámico Activo
+            </button>
+            <button class="btn btn-danger" id="btn-scan-replay">
+              <span>🚨</span> Simular Ataque: Captura / Replay
+            </button>
+            <button class="btn btn-secondary" id="btn-scan-drift">
+              <span>⏱️</span> Simular Desfase de Reloj (+10s)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. P2P TRANSFER WITH ATOMIC RE-KEYING -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>🤝</span> Transferencia P2P con Re-claveado Criptográfico Atómico
+          </div>
+          <div style="font-size: 0.75rem; color: var(--brand-accent); font-weight: 700;">Anti-Scalping Rules Activas</div>
+        </div>
+
+        <div class="transfer-grid">
+          <div class="form-group">
+            <label class="form-label">Nombre del Receptor</label>
+            <input type="text" id="transfer-name" class="form-input" value="Carlos Rodriguez">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email del Receptor</label>
+            <input type="email" id="transfer-email" class="form-input" value="carlos@example.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Precio de Venta ($)</label>
+            <input type="number" id="transfer-price" class="form-input" value="120.00" step="1">
+            <span style="font-size: 0.65rem; color: var(--text-dim);">Tope Facial: $120.00 (Prohibido sobreprecio)</span>
+          </div>
+          <div class="form-group" style="justify-content: flex-end;">
+            <button class="btn" id="btn-execute-transfer" style="background: var(--color-purple);">
+              <span>🔑</span> Re-clavear y Transferir
+            </button>
+          </div>
+        </div>
+        <div id="transfer-alert" style="margin-top: 0.75rem; font-size: 0.8rem; display: none;"></div>
+      </div>
+
+      <!-- 3. AUDIT LOGS & MESH LEDGER -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span>📜</span> Registro de Auditoría y Malla Local (Local Mesh Sync)
+          </div>
+          <button class="btn btn-secondary" id="btn-refresh-audit" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;">
+            Refrescar
+          </button>
+        </div>
+
+        <div class="audit-table-wrapper">
+          <table class="audit-table">
+            <thead>
+              <tr>
+                <th>Hora</th>
+                <th>Puerta</th>
+                <th>Ticket</th>
+                <th>Resultado</th>
+                <th>Latencia</th>
+                <th>Diagnóstico</th>
+              </tr>
+            </thead>
+            <tbody id="audit-tbody">
+              <tr>
+                <td colspan="6" style="text-align: center; color: var(--text-dim);">No hay registros de escaneo aún</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // State
+    let currentTicket = null;
+    let lastUsedPayload = null;
+    const CIRCUMFERENCE = 2 * Math.PI * 18; // ~113
+
+    // Generate random seed for QR visual animation
+    function renderQrMatrix(seed) {
+      const container = document.getElementById('qr-matrix');
+      container.innerHTML = '';
+      let hash = 0;
+      for (let i = 0; i < seed.length; i++) hash = (hash * 31 + seed.charCodeAt(i)) & 0xffffffff;
+      
+      for (let i = 0; i < 49; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'qr-cell';
+        // Corners are finder patterns
+        const row = Math.floor(i / 7);
+        const col = i % 7;
+        const isFinder = (row < 2 && col < 2) || (row < 2 && col > 4) || (row > 4 && col < 2);
+        if (isFinder) {
+          cell.style.backgroundColor = '#0ea5e9';
+        } else {
+          const bit = (hash >> (i % 31)) & 1;
+          cell.className = bit ? 'qr-cell' : 'qr-cell white';
+        }
+        container.appendChild(cell);
+      }
+    }
+
+    async function fetchTicketData() {
+      try {
+        const res = await fetch('/api/tickets');
+        const tickets = await res.json();
+        if (tickets.length > 0) {
+          currentTicket = tickets[0];
+          updateUI(currentTicket);
+        }
+      } catch (err) {
+        console.error('Error fetching ticket:', err);
+      }
+    }
+
+    function updateUI(ticket) {
+      document.getElementById('owner-display').textContent = ticket.ownerName;
+      document.getElementById('event-title').textContent = ticket.eventName;
+      document.getElementById('event-venue').textContent = `${ticket.venue} — Lima`;
+      document.getElementById('ticket-section').textContent = ticket.section;
+      document.getElementById('ticket-seat').textContent = ticket.seat;
+      
+      const statusPill = document.getElementById('ticket-status-pill');
+      statusPill.textContent = ticket.status;
+      if (ticket.status === 'ACTIVE') {
+        statusPill.style.color = '#34d399';
+      } else if (ticket.status === 'USED') {
+        statusPill.style.color = '#f59e0b';
+      } else {
+        statusPill.style.color = '#f43f5e';
+      }
+
+      if (ticket.currentQr) {
+        lastUsedPayload = ticket.currentQr.rawPayload;
+        document.getElementById('raw-payload-display').textContent = ticket.currentQr.rawPayload;
+        document.getElementById('counter-hex-display').textContent = ticket.currentQr.counterHex;
+        renderQrMatrix(ticket.currentQr.authMac);
+      }
+    }
+
+    // Dynamic 15s Countdown Timer Loop
+    setInterval(() => {
+      const now = Date.now();
+      const step = 15;
+      const elapsed = (now / 1000) % step;
+      const remaining = Math.max(0, Math.ceil(step - elapsed));
+      const fraction = remaining / step;
+
+      const circle = document.getElementById('progress-circle');
+      const text = document.getElementById('countdown-sec');
+      text.textContent = `${remaining}s`;
+
+      const offset = CIRCUMFERENCE * (1 - fraction);
+      circle.style.strokeDashoffset = offset;
+
+      if (remaining <= 3) {
+        circle.style.stroke = '#f43f5e';
+      } else if (remaining <= 7) {
+        circle.style.stroke = '#f59e0b';
+      } else {
+        circle.style.stroke = '#38bdf8';
+      }
+
+      // If tick is at rotation boundary, refresh ticket payload
+      if (remaining === 15) {
+        fetchTicketData();
+      }
+    }, 500);
+
+    // Turnstile Scan Interaction
+    async function executeScan(rawPayload, timestampMs = null) {
+      const gateId = document.getElementById('gate-select').value;
+      const body = { gateId, rawPayload, timestampMs };
+
+      try {
+        const res = await fetch('/api/scan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        const result = await res.json();
+        renderGateResult(result);
+        fetchTicketData();
+        fetchAuditLogs();
+      } catch (err) {
+        console.error('Scan error:', err);
+      }
+    }
+
+    function renderGateResult(result) {
+      const box = document.getElementById('gate-indicator');
+      const light = document.getElementById('gate-light');
+      const statusText = document.getElementById('gate-text');
+      const latencyText = document.getElementById('gate-latency');
+      const reasonText = document.getElementById('gate-reason');
+
+      latencyText.textContent = `Latencia: ${result.latencyMs} ms (Target <80ms)`;
+      reasonText.textContent = result.reason;
+
+      if (result.status === 'ACCESS_GRANTED') {
+        box.className = 'gate-indicator-box status-granted';
+        light.className = 'gate-light green';
+        statusText.textContent = 'ACCESO CONCEDIDO ✔';
+        statusText.style.color = '#10b981';
+      } else {
+        box.className = 'gate-indicator-box status-denied';
+        light.className = 'gate-light red';
+        statusText.textContent = `DENEGADO: ${result.status}`;
+        statusText.style.color = '#f43f5e';
+      }
+    }
+
+    // Fetch Audit Logs
+    async function fetchAuditLogs() {
+      try {
+        const res = await fetch('/api/audit');
+        const data = await res.json();
+        const tbody = document.getElementById('audit-tbody');
+        if (data.scans.length === 0) return;
+
+        tbody.innerHTML = data.scans.slice(0, 10).map(s => {
+          const isOk = s.status === 'ACCESS_GRANTED';
+          const time = new Date(s.timestamp).toLocaleTimeString();
+          return `
+            <tr>
+              <td>${time}</td>
+              <td>${s.gateId}</td>
+              <td>${s.ticketId}</td>
+              <td class="${isOk ? 'tag-success' : 'tag-error'}">${s.status}</td>
+              <td>${s.latencyMs}ms</td>
+              <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${s.reason}</td>
+            </tr>
+          `;
+        }).join('');
+      } catch (err) {
+        console.error('Audit log fetch error:', err);
+      }
+    }
+
+    // Event Handlers
+    document.getElementById('btn-scan-valid').addEventListener('click', () => {
+      if (lastUsedPayload) {
+        executeScan(lastUsedPayload);
+      }
+    });
+
+    document.getElementById('btn-scan-replay').addEventListener('click', () => {
+      if (lastUsedPayload) {
+        // Scan the same payload again to trigger Replay Attack detection
+        executeScan(lastUsedPayload);
+      }
+    });
+
+    document.getElementById('btn-scan-drift').addEventListener('click', () => {
+      if (lastUsedPayload) {
+        // Phone 10 seconds ahead
+        executeScan(lastUsedPayload, Date.now() + 10000);
+      }
+    });
+
+    document.getElementById('btn-refresh-audit').addEventListener('click', fetchAuditLogs);
+
+    // Transfer Ticket
+    document.getElementById('btn-execute-transfer').addEventListener('click', async () => {
+      const toUserName = document.getElementById('transfer-name').value;
+      const toUserEmail = document.getElementById('transfer-email').value;
+      const transferPrice = document.getElementById('transfer-price').value;
+      const alertBox = document.getElementById('transfer-alert');
+
+      if (!currentTicket) return;
+
+      const body = {
+        ticketId: currentTicket.id,
+        fromUserId: currentTicket.currentOwnerId,
+        toUserId: 'USR-' + Math.random().toString(36).substring(2, 7).toUpperCase(),
+        toUserName,
+        toUserEmail,
+        transferPrice
+      };
+
+      try {
+        const res = await fetch('/api/transfer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        const result = await res.json();
+
+        alertBox.style.display = 'block';
+        if (result.success) {
+          alertBox.style.color = '#34d399';
+          alertBox.innerHTML = `✔ Transferencia exitosa. Semilla re-claveada (${result.record.newSeedFingerprint}). Nuevo titular: ${result.updatedTicket.ownerName}`;
+          fetchTicketData();
+          fetchAuditLogs();
+        } else {
+          alertBox.style.color = '#f43f5e';
+          alertBox.textContent = `❌ ${result.error}`;
+        }
+      } catch (err) {
+        console.error('Transfer error:', err);
+      }
+    });
+
+    // Initial Load
+    fetchTicketData();
+    fetchAuditLogs();
+  </script>
+</body>
+</html>

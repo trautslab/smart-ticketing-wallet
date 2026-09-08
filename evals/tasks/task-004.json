@@ -1,0 +1,30 @@
+{
+  "id": "task-004",
+  "name": "TASK-004: Consola de Simulación CLI en Vivo y Dashboard de Observabilidad Web",
+  "checks": [
+    {
+      "id": "check-task-file",
+      "description": "El archivo de tarea TASK-004 debe existir",
+      "type": "file_exists",
+      "path": ".agents/tasks/TASK-004-realtime-simulation-and-dashboard.md"
+    },
+    {
+      "id": "check-demo-script",
+      "description": "El script scripts/demo-live.ts debe existir",
+      "type": "file_exists",
+      "path": "scripts/demo-live.ts"
+    },
+    {
+      "id": "check-dashboard-html",
+      "description": "El archivo observability/index.html debe existir",
+      "type": "file_exists",
+      "path": "observability/index.html"
+    },
+    {
+      "id": "check-typecheck",
+      "description": "El proyecto debe compilar sin errores de TypeScript",
+      "type": "command",
+      "command": "npm run typecheck"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schema.json",
+  "name": "repo-tools",
+  "description": "Herramientas de inspección, evaluación y base de datos locales para el agente",
+  "mcpServers": {
+    "repo-inspector": {
+      "command": "node",
+      "args": ["scripts/mcp-repo-inspector.mjs"],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "capabilities": {
+        "tools": [
+          {
+            "name": "inspect_api_routes",
+            "description": "Lista todas las rutas HTTP registradas, métodos y middleware aplicados"
+          },
+          {
+            "name": "query_test_coverage",
+            "description": "Retorna el reporte de cobertura de tests para un archivo o módulo específico"
+          },
+          {
+            "name": "db_seed_fixtures",
+            "description": "Puebla la base de datos de pruebas con fixtures reproducibles"
+          }
+        ]
+      }
+    }
+  }
+}

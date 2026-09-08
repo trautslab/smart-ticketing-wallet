@@ -1,0 +1,7 @@
+# lefthook.yml — Quality Gates Deterministas Ultra-Robustos
+pre-commit:
+  parallel: false
+  commands:
+    quality-gatekeeper:
+      run: node scripts/pre-commit-guard.mjs
+
