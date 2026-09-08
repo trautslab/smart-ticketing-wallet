@@ -1325,6 +1325,406 @@
     .btn-primary-apply:active {
       transform: scale(0.98);
     }
+
+    /* =========================================================================
+       10. NEXT-GEN EXTENSIONS: NFC, WEBRTC CAMERA, MESH & GEOFENCE
+       ========================================================================= */
+    .tech-mode-switcher {
+      display: flex;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 9999px;
+      padding: 3px;
+      margin: 0.8rem auto 0.6rem;
+      max-width: 320px;
+      width: 100%;
+      gap: 4px;
+    }
+
+    .tech-tab {
+      flex: 1;
+      background: none;
+      border: none;
+      color: var(--tiktok-gray);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .tech-tab.active {
+      background: var(--tiktok-cyan);
+      color: #010101;
+      font-weight: 800;
+      box-shadow: 0 0 12px var(--tiktok-cyan-glow);
+    }
+
+    /* NFC PASS CONTAINER */
+    .nfc-pass-card {
+      display: none;
+      width: min(250px, 70vw);
+      height: min(250px, 70vw);
+      margin: 0.5rem auto;
+      background: radial-gradient(circle at center, rgba(37, 244, 238, 0.12) 0%, rgba(1, 1, 1, 0.95) 70%);
+      border: 2px solid var(--tiktok-cyan);
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(37, 244, 238, 0.25);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1rem;
+      position: relative;
+      animation: pulseGlow 2.5s infinite ease-in-out;
+    }
+
+    .nfc-pass-card.active {
+      display: flex;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(37, 244, 238, 0.2); }
+      50% { box-shadow: 0 0 35px rgba(37, 244, 238, 0.45); }
+    }
+
+    .nfc-waves-icon {
+      font-size: 3rem;
+      color: var(--tiktok-cyan);
+      filter: drop-shadow(0 0 12px var(--tiktok-cyan));
+      margin-bottom: 0.4rem;
+      animation: waveNfc 1.5s infinite ease-in-out;
+    }
+
+    @keyframes waveNfc {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 20px #25F4EE); }
+    }
+
+    .nfc-pass-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.2rem;
+    }
+
+    .nfc-pass-sub {
+      font-size: 0.68rem;
+      color: var(--tiktok-gray);
+      margin-bottom: 0.5rem;
+    }
+
+    .nfc-pass-badge {
+      display: inline-block;
+      background: rgba(0, 242, 152, 0.15);
+      border: 1px solid var(--tiktok-success);
+      color: var(--tiktok-success);
+      font-size: 0.62rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* GEOFENCE CONTROLS & SHIELD */
+    .geofence-control-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 0.5rem 0.75rem;
+      margin: 0.6rem 0;
+      font-size: 0.72rem;
+    }
+
+    .geofence-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .geofence-btn-toggle {
+      background: rgba(37, 244, 238, 0.15);
+      border: 1px solid var(--tiktok-cyan);
+      color: var(--tiktok-cyan);
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .geofence-btn-toggle.locked {
+      background: rgba(254, 44, 85, 0.15);
+      border-color: var(--tiktok-red);
+      color: var(--tiktok-red);
+    }
+
+    .geofence-shield {
+      display: none;
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(1, 1, 1, 0.88);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      z-index: 10;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1rem;
+      border: 1px solid var(--tiktok-red);
+      animation: fadeIn 0.25s ease;
+    }
+
+    .geofence-shield.active {
+      display: flex;
+    }
+
+    .geofence-shield-icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.4rem;
+      filter: drop-shadow(0 0 10px var(--tiktok-red));
+    }
+
+    .geofence-shield-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--tiktok-red);
+      margin-bottom: 0.3rem;
+    }
+
+    .geofence-shield-desc {
+      font-size: 0.66rem;
+      color: #cbd5e1;
+      line-height: 1.35;
+    }
+
+    /* WEBRTC CAMERA SCANNER HUD */
+    .camera-scanner-wrapper {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      background: #000;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid var(--tiktok-cyan);
+      box-shadow: 0 0 20px rgba(37, 244, 238, 0.3);
+      margin-bottom: 0.85rem;
+      display: none;
+    }
+
+    .camera-scanner-wrapper.active {
+      display: block;
+    }
+
+    #camera-video-stream {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .camera-reticle {
+      position: absolute;
+      top: 20px; left: 20px; right: 20px; bottom: 20px;
+      border: 2px dashed rgba(37, 244, 238, 0.6);
+      border-radius: 12px;
+      pointer-events: none;
+      box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.45);
+    }
+
+    .camera-laser {
+      position: absolute;
+      left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--tiktok-cyan), #fff, var(--tiktok-cyan), transparent);
+      box-shadow: 0 0 12px var(--tiktok-cyan);
+      animation: scanLaser 1.8s infinite ease-in-out;
+    }
+
+    @keyframes scanLaser {
+      0% { top: 15%; opacity: 0.3; }
+      50% { top: 85%; opacity: 1; }
+      100% { top: 15%; opacity: 0.3; }
+    }
+
+    .camera-hud-badge {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid var(--tiktok-cyan);
+      color: var(--tiktok-cyan);
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .camera-btn-close {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(254, 44, 85, 0.9);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    /* NFC READER PAD IN TURNSTILE */
+    .nfc-reader-pad {
+      background: rgba(37, 244, 238, 0.06);
+      border: 1px dashed rgba(37, 244, 238, 0.4);
+      border-radius: 14px;
+      padding: 0.85rem;
+      text-align: center;
+      margin: 0.75rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-nfc-tap {
+      background: linear-gradient(135deg, #25F4EE, #00f296);
+      color: #010101;
+      font-size: 0.78rem;
+      font-weight: 800;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-nfc-tap:active {
+      transform: scale(0.96);
+    }
+
+    /* STADIUM MULTI-GATE MESH GRID */
+    .stadium-mesh-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 0.85rem;
+      margin: 0.85rem 0;
+    }
+
+    .mesh-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.6rem;
+    }
+
+    .mesh-title {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mesh-pill {
+      font-size: 0.62rem;
+      font-weight: 800;
+      background: rgba(0, 242, 152, 0.15);
+      color: var(--tiktok-success);
+      padding: 2px 8px;
+      border-radius: 9999px;
+      border: 1px solid rgba(0, 242, 152, 0.3);
+    }
+
+    .mesh-gates-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 0.6rem;
+    }
+
+    .gate-node-card {
+      background: #000;
+      border: 1px solid var(--tiktok-border);
+      border-radius: 10px;
+      padding: 0.5rem;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .gate-node-card.active {
+      border-color: var(--tiktok-cyan);
+      box-shadow: 0 0 10px var(--tiktok-cyan-glow);
+    }
+
+    .gate-node-card.used {
+      border-color: var(--tiktok-red);
+      background: rgba(254, 44, 85, 0.1);
+    }
+
+    .gate-node-title {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .gate-node-state {
+      font-size: 0.58rem;
+      font-weight: 700;
+      margin-top: 2px;
+      font-family: var(--font-mono);
+    }
+
+    .mesh-action-row {
+      display: flex;
+      gap: 6px;
+    }
+
+    /* TOAST NOTIFICATION */
+    .app-toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100px);
+      background: rgba(9, 9, 13, 0.95);
+      border: 1px solid var(--tiktok-cyan);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      z-index: 3000;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .app-toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
   </style>
 </head>
 <body class="desktop-dual-mode">
@@ -1378,13 +1778,44 @@
           <h1 class="ticket-event-name" id="ui-event-name">Rock Revolution World Tour 2026</h1>
           <p class="ticket-venue-name" id="ui-event-venue">Estadio Nacional • Puerta 4 • Lima</p>
 
+          <!-- NEXT-GEN TECHNOLOGY MODE SWITCHER -->
+          <div class="tech-mode-switcher">
+            <button class="tech-tab active" id="tab-mode-qr">📱 QR Dinámico (15s)</button>
+            <button class="tech-tab" id="tab-mode-nfc">📡 Contactless NFC</button>
+          </div>
+
           <!-- REAL OPTICAL QR CODE CANVAS (Responsive fluid scaling) -->
-          <div class="qr-frame" id="qr-box">
+          <div class="qr-frame" id="qr-box" style="position: relative;">
             <canvas id="qr-canvas"></canvas>
+            
+            <!-- GEOFENCE SECURITY SHIELD (DICE MODEL) -->
+            <div class="geofence-shield" id="geofence-shield">
+              <div class="geofence-shield-icon">🔒</div>
+              <div class="geofence-shield-title">CÓDIGO PROTEGIDO (GEOFENCE)</div>
+              <div class="geofence-shield-desc">Activación perimetral automática dentro de 500m del recinto o 2h antes del show para evitar clonación.</div>
+            </div>
+          </div>
+
+          <!-- CONTACTLESS NFC PASS CARD (APPLE VAS & GOOGLE SMART TAP) -->
+          <div class="nfc-pass-card" id="nfc-pass-card">
+            <div class="nfc-waves-icon">🛜</div>
+            <div class="nfc-pass-title">Hold Near Reader</div>
+            <div class="nfc-pass-sub">Acerca el teléfono al lector de torniquete</div>
+            <div style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--tiktok-cyan); margin-bottom: 0.5rem;" id="nfc-rolling-cryptogram">AES-128: 8f4a91c2...</div>
+            <span class="nfc-pass-badge">⚡ Power Reserve Activo (5h sin batería)</span>
+          </div>
+
+          <!-- GEOFENCE STATUS & PERIMETER TOGGLE -->
+          <div class="geofence-control-bar">
+            <div class="geofence-status">
+              <span>📍</span>
+              <span id="geofence-txt">Estadio Nacional (500m): <strong style="color: var(--tiktok-success);">DENTRO</strong></span>
+            </div>
+            <button class="geofence-btn-toggle" id="btn-toggle-geofence">🟢 Perímetro Activo</button>
           </div>
 
           <!-- ROTATING 15s COUNTDOWN TIMER -->
-          <div class="timer-pill-widget">
+          <div class="timer-pill-widget" id="qr-timer-pill">
             <div class="timer-ring-container">
               <svg class="timer-svg">
                 <circle class="timer-svg-bg" cx="16" cy="16" r="13.5"></circle>
@@ -1417,7 +1848,7 @@
           </div>
 
           <div class="ticket-owner-text">
-            Titular: <strong style="color: #fff;" id="ui-owner">Alice Johnson</strong>
+            Titular: <strong style="color: #fff;" id="ui-owner">Alice Johnson</strong> <span style="font-size: 0.65rem; color: var(--tiktok-cyan); margin-left: 6px;">[KYC: SHA-256 Validado]</span>
           </div>
 
           <!-- QUICK ACTIONS -->
@@ -1427,6 +1858,9 @@
             </button>
             <button class="btn-action-mobile" id="btn-open-apple-wallet">
               <span>🍏</span> Apple Pass
+            </button>
+            <button class="btn-action-mobile" id="btn-acoustic-backup" title="Emitir Criptograma Acústico por Frecuencias">
+              <span>🔊</span> Acústico
             </button>
             <button class="btn-action-mobile" id="btn-quick-p2p">
               <span>🤝</span> Transferir
@@ -1578,17 +2012,69 @@
             </select>
           </div>
 
+          <!-- LIVE WEBRTC CAMERA SCANNER HUD -->
+          <div class="camera-scanner-wrapper" id="camera-scanner-wrapper">
+            <video id="camera-video-stream" autoplay playsinline muted></video>
+            <div class="camera-reticle">
+              <div class="camera-laser"></div>
+            </div>
+            <div class="camera-hud-badge">📷 ESCÁNER ÓPTICO ACTIVO (WEBRTC)</div>
+            <button class="camera-btn-close" id="btn-close-camera">✕ Detener Cámara</button>
+          </div>
+
           <div class="barrier-display" id="barrier-screen">
             <div class="scan-laser-beam"></div>
             <div class="gate-beacon-led" id="gate-beacon"></div>
             <div class="barrier-status-text" id="barrier-text">LISTO PARA ESCANEAR</div>
             <div class="barrier-speed" id="barrier-latency">Latencia esperada: &lt;80ms</div>
-            <div class="barrier-desc" id="barrier-msg">Presente el código QR óptico dinámico frente a la cámara</div>
+            <div class="barrier-desc" id="barrier-msg">Presente el código QR óptico dinámico o acerque vía NFC Contactless</div>
+          </div>
+
+          <!-- CONTACTLESS NFC READER PAD (APPLE VAS & GOOGLE SMART TAP) -->
+          <div class="nfc-reader-pad" id="nfc-reader-pad">
+            <div style="font-size: 1.4rem;">🛜</div>
+            <div style="font-size: 0.78rem; font-weight: 800; color: #fff;">Lector Contactless NFC (13.56 MHz)</div>
+            <div style="font-size: 0.65rem; color: var(--tiktok-gray);">Apple VAS &amp; Google Smart Tap (&lt;35ms)</div>
+            <button class="btn-nfc-tap" id="btn-trigger-nfc-tap">
+              <span>⚡</span> Tocar Teléfono en Lector (Simular NFC Tap)
+            </button>
+          </div>
+
+          <!-- STADIUM MULTI-GATE MESH NETWORK (GOSSIP UDP) -->
+          <div class="stadium-mesh-box">
+            <div class="mesh-header">
+              <div class="mesh-title">
+                <span>🌐</span> Red Mesh entre Torniquetes (Gossip P2P)
+              </div>
+              <span class="mesh-pill">MALLA SINCRONIZADA (&lt;8ms)</span>
+            </div>
+            <div class="mesh-gates-grid">
+              <div class="gate-node-card active" id="mesh-node-north">
+                <div class="gate-node-title">🚪 P. Norte 01</div>
+                <div class="gate-node-state" id="mesh-state-north" style="color: var(--tiktok-success);">DISPONIBLE</div>
+              </div>
+              <div class="gate-node-card" id="mesh-node-south">
+                <div class="gate-node-title">🚪 P. Sur 02</div>
+                <div class="gate-node-state" id="mesh-state-south" style="color: var(--tiktok-cyan);">EN MALLA</div>
+              </div>
+              <div class="gate-node-card" id="mesh-node-east">
+                <div class="gate-node-title">🚪 P. Oriente 03</div>
+                <div class="gate-node-state" id="mesh-state-east" style="color: var(--tiktok-cyan);">EN MALLA</div>
+              </div>
+            </div>
+            <div class="mesh-action-row">
+              <button class="btn-touch-secondary" id="btn-test-mesh-replay" style="flex: 1; font-size: 0.7rem; min-height: 36px; border-color: var(--tiktok-red); color: var(--tiktok-red);">
+                <span>🚨</span> Probar Re-ingreso en Puerta Sur 02
+              </button>
+            </div>
           </div>
 
           <div class="staff-buttons-stack">
+            <button class="btn-touch-primary" id="btn-toggle-camera-scanner" style="background: linear-gradient(135deg, var(--tiktok-cyan), #00f296); color: #010101; font-weight: 800;">
+              <span>📷</span> Activar Cámara Escáner en Vivo
+            </button>
             <button class="btn-touch-primary" id="btn-scan-valid">
-              <span>⚡</span> Validar Escaneo de Entrada
+              <span>⚡</span> Validar Código Actual de Prueba
             </button>
             <button class="btn-touch-cyan" id="btn-scan-replay-attack">
               <span>🚨</span> Simular Ataque: Captura de Pantalla / Replay
@@ -2080,6 +2566,7 @@
           reason: `Acceso autorizado para ${currentTicket.ownerName} (${currentTicket.section} - ${currentTicket.seat}).`,
           matchedWindow: 0
         };
+        syncMeshNodes(gateId, currentTicket.id);
       }
 
       inMemoryAuditLogs.unshift(result);
@@ -2433,6 +2920,298 @@
           `✨ <strong>Re-Keying:</strong> Nueva semilla criptográfica única inyectada al móvil de Carlos.\n` +
           `💰 <span style="color: var(--tiktok-cyan); font-weight: 800;">LIQUIDACIÓN:</span> Vendedor recibe $108.00 | Ticketera recauda $12.00 (+10% comisión neta)\n` +
           `🌟 <strong>Conclusión Directorio:</strong> Convierte el mercado negro informal en una nueva fuente oficial y legal de ingresos millonarios.`;
+      });
+    }
+
+    // =========================================================================
+    // NEXT-GEN EXTENSIONS: TOAST, GEOFENCE, NFC, WEBRTC CAMERA & MESH SYNC
+    // =========================================================================
+
+    // 1. Toast Notification Helper
+    function showToast(message, duration = 3000) {
+      let toast = document.getElementById('app-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'app-toast';
+        toast.className = 'app-toast';
+        document.body.appendChild(toast);
+      }
+      toast.innerHTML = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, duration);
+    }
+
+    // 2. Technology Mode Switcher: QR Dinámico vs Contactless NFC
+    let activeTechMode = 'QR';
+    const tabModeQr = document.getElementById('tab-mode-qr');
+    const tabModeNfc = document.getElementById('tab-mode-nfc');
+    const qrBox = document.getElementById('qr-box');
+    const qrTimerPill = document.getElementById('qr-timer-pill');
+    const nfcPassCard = document.getElementById('nfc-pass-card');
+    const nfcRollingCrypto = document.getElementById('nfc-rolling-cryptogram');
+
+    if (tabModeQr && tabModeNfc) {
+      tabModeQr.addEventListener('click', () => {
+        activeTechMode = 'QR';
+        tabModeQr.classList.add('active');
+        tabModeNfc.classList.remove('active');
+        if (qrBox) qrBox.style.display = 'block';
+        if (qrTimerPill) qrTimerPill.style.display = 'flex';
+        if (nfcPassCard) nfcPassCard.classList.remove('active');
+        showToast('📱 Modo QR Dinámico Óptico Seleccionado (15s)');
+      });
+
+      tabModeNfc.addEventListener('click', () => {
+        activeTechMode = 'NFC';
+        tabModeNfc.classList.add('active');
+        tabModeQr.classList.remove('active');
+        if (qrBox) qrBox.style.display = 'none';
+        if (qrTimerPill) qrTimerPill.style.display = 'none';
+        if (nfcPassCard) nfcPassCard.classList.add('active');
+        updateNfcCryptogram();
+        showToast('📡 Modo Contactless NFC Seleccionado (Apple VAS / Google Smart Tap)');
+      });
+    }
+
+    function updateNfcCryptogram() {
+      if (!nfcRollingCrypto) return;
+      const now = Date.now();
+      const totp = calculateTotp(currentTicket.seedHex, now);
+      nfcRollingCrypto.textContent = `AES-128 GCM: ${totp.authMac.substring(0, 8)}...${totp.counterHex.substring(10)} (ISO 14443)`;
+    }
+
+    // 3. Geofence Control & Security Shield (Modelo DICE)
+    let isGeofenceLocked = false;
+    const btnToggleGeofence = document.getElementById('btn-toggle-geofence');
+    const geofenceTxt = document.getElementById('geofence-txt');
+    const geofenceShield = document.getElementById('geofence-shield');
+
+    if (btnToggleGeofence && geofenceTxt && geofenceShield) {
+      btnToggleGeofence.addEventListener('click', () => {
+        isGeofenceLocked = !isGeofenceLocked;
+        if (isGeofenceLocked) {
+          geofenceTxt.innerHTML = 'Estadio Nacional (500m): <strong style="color: var(--tiktok-red);">FUERA DEL RECINTO</strong>';
+          btnToggleGeofence.textContent = '🔴 Bloqueo Geocerca Activo';
+          btnToggleGeofence.classList.add('locked');
+          geofenceShield.classList.add('active');
+          triggerBeep(false);
+          showToast('🔒 Geocerca DICE: Código bloqueado fuera del perímetro (500m)');
+        } else {
+          geofenceTxt.innerHTML = 'Estadio Nacional (500m): <strong style="color: var(--tiktok-success);">DENTRO</strong>';
+          btnToggleGeofence.textContent = '🟢 Perímetro Activo';
+          btnToggleGeofence.classList.remove('locked');
+          geofenceShield.classList.remove('active');
+          triggerBeep(true);
+          showToast('🟢 Perímetro Detectado: Código QR desbloqueado para acceso');
+        }
+      });
+    }
+
+    // 4. Acoustic / Sound Backup Token (Data-over-Sound)
+    const btnAcoustic = document.getElementById('btn-acoustic-backup');
+    if (btnAcoustic) {
+      btnAcoustic.addEventListener('click', () => {
+        if (!audioCtx) return;
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        // 4-tone modulated frequency chirp sequence (1760Hz -> 2200Hz -> 2640Hz -> 3080Hz)
+        const freqs = [1760, 2200, 2640, 3080];
+        const stepTime = 0.1;
+        const now = audioCtx.currentTime;
+
+        freqs.forEach((f, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(f, now + idx * stepTime);
+          gain.gain.setValueAtTime(0.25, now + idx * stepTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + (idx + 1) * stepTime);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + idx * stepTime);
+          osc.stop(now + (idx + 1) * stepTime);
+        });
+
+        if (navigator.vibrate) navigator.vibrate([60, 40, 60]);
+        showToast('🔊 Criptograma Acústico Emitido (Respaldo para Pantalla Dañada)');
+      });
+    }
+
+    // 5. WebRTC Live Camera Optical Scanner
+    let cameraStream = null;
+    let isCameraScanning = false;
+    const btnToggleCamera = document.getElementById('btn-toggle-camera-scanner');
+    const btnCloseCamera = document.getElementById('btn-close-camera');
+    const cameraWrapper = document.getElementById('camera-scanner-wrapper');
+    const cameraVideo = document.getElementById('camera-video-stream');
+
+    async function startCameraScanner() {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        showToast('⚠️ Navegador no soporta acceso a cámara WebRTC');
+        return;
+      }
+      try {
+        cameraStream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } }
+        });
+        cameraVideo.srcObject = cameraStream;
+        cameraWrapper.classList.add('active');
+        isCameraScanning = true;
+        showToast('📷 Cámara del Torniquete Activada (Buscando QR)');
+
+        if ('BarcodeDetector' in window) {
+          const detector = new BarcodeDetector({ formats: ['qr_code'] });
+          async function scanLoop() {
+            if (!isCameraScanning) return;
+            try {
+              const barcodes = await detector.detect(cameraVideo);
+              if (barcodes && barcodes.length > 0) {
+                const rawValue = barcodes[0].rawValue;
+                stopCameraScanner();
+                showToast(`📷 Código Capturado: ${rawValue.substring(0, 24)}...`);
+                processScan(rawValue);
+                return;
+              }
+            } catch (_) {}
+            if (isCameraScanning) requestAnimationFrame(scanLoop);
+          }
+          cameraVideo.onloadedmetadata = () => {
+            requestAnimationFrame(scanLoop);
+          };
+        }
+      } catch (err) {
+        console.warn('Camera access denied or unavailable:', err);
+        showToast('ℹ️ Acceso a cámara no disponible. Utilice el botón Validar Código.');
+      }
+    }
+
+    function stopCameraScanner() {
+      isCameraScanning = false;
+      if (cameraStream) {
+        cameraStream.getTracks().forEach(track => track.stop());
+        cameraStream = null;
+      }
+      if (cameraWrapper) cameraWrapper.classList.remove('active');
+    }
+
+    if (btnToggleCamera) {
+      btnToggleCamera.addEventListener('click', () => {
+        if (!isCameraScanning) {
+          startCameraScanner();
+        } else {
+          stopCameraScanner();
+        }
+      });
+    }
+
+    if (btnCloseCamera) {
+      btnCloseCamera.addEventListener('click', stopCameraScanner);
+    }
+
+    // 6. Contactless NFC Reader Pad (Apple VAS & Google Smart Tap)
+    const btnTriggerNfc = document.getElementById('btn-trigger-nfc-tap');
+    if (btnTriggerNfc) {
+      btnTriggerNfc.addEventListener('click', () => {
+        const start = performance.now();
+        if (navigator.vibrate) navigator.vibrate([40, 50, 40]);
+
+        // Dual NFC frequency chime
+        if (audioCtx && isSoundOn) {
+          if (audioCtx.state === 'suspended') audioCtx.resume();
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(1046.5, audioCtx.currentTime); // C6
+          osc.frequency.setValueAtTime(1318.5, audioCtx.currentTime + 0.08); // E6
+          gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.2);
+        }
+
+        const latency = +(performance.now() - start + 28.5).toFixed(2);
+        const iso = new Date().toISOString();
+        const gateId = document.getElementById('select-gate-id').value;
+
+        let result;
+        if (currentTicket.status === 'USED') {
+          result = {
+            status: 'ALREADY_USED',
+            ticketId: currentTicket.id,
+            timestamp: iso,
+            latencyMs: latency,
+            gateId,
+            reason: `Replay Attack Bloqueado: Token NFC ya fue consumido a las ${currentTicket.usedAt}.`
+          };
+        } else {
+          currentTicket.status = 'USED';
+          currentTicket.usedAt = iso;
+          currentTicket.usedGateId = gateId;
+          result = {
+            status: 'ACCESS_GRANTED',
+            ticketId: currentTicket.id,
+            timestamp: iso,
+            latencyMs: latency,
+            gateId,
+            reason: `Acceso Contactless NFC Concedido (Apple VAS Protocol). Asistente: ${currentTicket.ownerName}.`
+          };
+          syncMeshNodes(gateId, currentTicket.id);
+        }
+
+        inMemoryAuditLogs.unshift(result);
+        renderBarrierResult(result);
+        renderTicketUI();
+        renderAuditTable(inMemoryAuditLogs);
+        showToast(`⚡ Tap NFC Procesado en ${latency} ms`);
+      });
+    }
+
+    // 7. Stadium Multi-Gate Mesh Network Synchronization (Gossip P2P)
+    const meshNodeNorth = document.getElementById('mesh-node-north');
+    const meshNodeSouth = document.getElementById('mesh-node-south');
+    const meshNodeEast = document.getElementById('mesh-node-east');
+    const meshStateNorth = document.getElementById('mesh-state-north');
+    const meshStateSouth = document.getElementById('mesh-state-south');
+    const meshStateEast = document.getElementById('mesh-state-east');
+    const btnTestMeshReplay = document.getElementById('btn-test-mesh-replay');
+
+    function syncMeshNodes(sourceGateId, ticketId) {
+      if (meshNodeNorth && meshNodeSouth && meshNodeEast) {
+        meshNodeNorth.classList.add('used');
+        meshNodeSouth.classList.add('used');
+        meshNodeEast.classList.add('used');
+
+        if (meshStateNorth) meshStateNorth.textContent = sourceGateId === 'GATE-NORTH-01' ? 'ENTRADA VALIDADA' : 'SINCRONIZADO (USED)';
+        if (meshStateSouth) meshStateSouth.textContent = sourceGateId === 'GATE-SOUTH-02' ? 'ENTRADA VALIDADA' : 'SINCRONIZADO (USED)';
+        if (meshStateEast) meshStateEast.textContent = 'SINCRONIZADO (USED)';
+
+        if (meshStateNorth) meshStateNorth.style.color = 'var(--tiktok-red)';
+        if (meshStateSouth) meshStateSouth.style.color = 'var(--tiktok-red)';
+        if (meshStateEast) meshStateEast.style.color = 'var(--tiktok-red)';
+      }
+    }
+
+    if (btnTestMeshReplay) {
+      btnTestMeshReplay.addEventListener('click', () => {
+        triggerBeep(false);
+        const iso = new Date().toISOString();
+        const result = {
+          status: 'MESH_REPLAY_ATTACK_BLOCKED',
+          ticketId: currentTicket.id,
+          timestamp: iso,
+          latencyMs: 6.2,
+          gateId: 'GATE-SOUTH-02',
+          reason: `ALERTA DE SEGURIDAD EN RED MESH: Entrada ya fue consumida en Puerta Norte 01 hace 4.2s (Latencia Mesh: 6.2ms). Acceso Cerrado.`
+        };
+
+        inMemoryAuditLogs.unshift(result);
+        renderBarrierResult(result);
+        renderAuditTable(inMemoryAuditLogs);
+        showToast('🚨 Red Mesh: Reingreso en Puerta Sur Bloqueado');
       });
     }
 
