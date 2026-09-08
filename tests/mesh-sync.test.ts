@@ -32,3 +32,23 @@ test('GateMeshNode: broadcasts ticket usage to peer gates over local mesh', () =
   assert.equal(history[0].ticketId, 'TKT-ROCK-101');
   assert.equal(history[0].senderGateId, 'GATE-NORTH-01');
 });
+
+test('GateMeshNode: prevents double entry at Gate B when ticket was already used at Gate A', () => {
+  const mesh = LocalMeshNetwork.getInstance();
+  mesh.clear();
+
+  const vaultA = TicketVault.createDemoVault();
+  const vaultB = TicketVault.createDemoVault();
+
+  const gateA = new GateMeshNode('GATE-NORTH-01', vaultA);
+  const gateB = new GateMeshNode('GATE-SOUTH-02', vaultB);
+
+  // Gate A admits user
+  vaultA.updateStatus('TKT-ROCK-101', 'USED', { usedGateId: 'GATE-NORTH-01', usedAt: new Date().toISOString() });
+  gateA.notifyTicketUsed('TKT-ROCK-101');
+
+  // Verify Gate B rejects re-entry because ticket status is already USED
+  const ticketAtGateB = vaultB.getTicket('TKT-ROCK-101');
+  assert.equal(ticketAtGateB?.status, 'USED');
+  assert.equal(ticketAtGateB?.usedGateId, 'GATE-NORTH-01');
+});
