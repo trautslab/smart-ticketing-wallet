@@ -10,3 +10,5 @@ export * from './core/ticket-vault.js';
 export * from './core/turnstile-validator.js';
 export * from './core/transfer-service.js';
 export * from './core/mesh-sync.js';
+export * from './core/reconciliation-service.js';
+export * from './core/wallet-pass-adapter.js';

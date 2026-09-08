@@ -25,6 +25,13 @@
           }
         ]
       }
+    },
+    "cloudflare": {
+      "command": "npx",
+      "args": ["-y", "@cloudflare/mcp-server-cloudflare", "run"],
+      "env": {
+        "CLOUDFLARE_ACCOUNT_ID": "5e2e6021eae3bd30ed9272317a575f60"
+      }
     }
   }
 }

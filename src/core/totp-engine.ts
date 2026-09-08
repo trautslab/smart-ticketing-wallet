@@ -1,4 +1,4 @@
-import { createHmac, randomBytes } from 'node:crypto';
+import { createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
 
 export interface TotpResult {
   counter: number;
@@ -98,8 +98,11 @@ export class TotpEngine {
       const targetCounter = currentCounter + offset;
       if (targetCounter === claimedCounter) {
         const expectedHmac = this.computeHmac(seedHex, targetCounter);
-        const expectedMac = expectedHmac.subarray(0, 8).toString('hex');
-        if (expectedMac.toLowerCase() === candidateMac.toLowerCase()) {
+        const expectedMac = expectedHmac.subarray(0, 8).toString('hex').toLowerCase();
+        const candidateNorm = candidateMac.toLowerCase();
+        const expectedBuf = Buffer.from(expectedMac, 'utf-8');
+        const candidateBuf = Buffer.from(candidateNorm, 'utf-8');
+        if (expectedBuf.length === candidateBuf.length && timingSafeEqual(expectedBuf, candidateBuf)) {
           return { valid: true, matchedWindow: offset };
         }
       }

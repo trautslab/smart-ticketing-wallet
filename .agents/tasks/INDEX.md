@@ -14,8 +14,9 @@ Este archivo es la **fuente única de verdad** para la asignación de identifica
 | `TASK-002` | Motor de Validación 100% Offline para Torniquetes y Accesos | `src/core/turnstile-validator.ts`, `src/core/mesh-sync.ts` | CRITICAL | `COMPLETED` | `feat/task-002-turnstile-validator` |
 | `TASK-003` | Protocolo P2P de Transferencia Criptográfica y Anti-Revendedores | `src/core/transfer-service.ts`, `src/types/index.ts` | HIGH | `COMPLETED` | `feat/task-003-p2p-transfer` |
 | `TASK-004` | Consola de Simulación CLI en Vivo y Dashboard de Observabilidad Web | `scripts/demo-live.ts`, `observability/index.html`, `scripts/serve-dashboard.ts` | MEDIUM | `COMPLETED` | `feat/task-004-simulation-dashboard` |
+| `TASK-005` | Motor de Conciliación de Lotes Offline y Compatibilidad Wallet Passes | `src/core/reconciliation-service.ts`, `src/core/wallet-pass-adapter.ts` | HIGH | `COMPLETED` | `feat/task-005-reconciliation-passes` |
 
 ---
 
-## 🔒 Próximo Correlativo Disponible: `TASK-005`
+## 🔒 Próximo Correlativo Disponible: `TASK-006`
 Cualquier nuevo requerimiento debe reclamar estrictamente el siguiente correlativo secuencial disponible.

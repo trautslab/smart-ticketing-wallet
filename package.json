@@ -1,6 +1,6 @@
 {
   "name": "smart-ticketing-wallet",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Smart Digital Ticketing Engine & Wallet inspired by Quentro (Dynamic QR TOTP 15s, 100% Offline Turnstile Check-in, P2P Transfers & Anti-Scalping Governance) conforming to AI-SDLC Framework",
   "main": "dist/index.js",
   "type": "module",
@@ -13,6 +13,7 @@
     "precommit:audit": "node scripts/pre-commit-guard.mjs",
     "dashboard": "npx tsx scripts/serve-dashboard.ts",
     "demo:live": "npx tsx scripts/demo-live.ts",
+    "deploy:cf": "npx wrangler pages deploy ./public --project-name smart-ticketing-wallet --branch main",
     "eval:task": "node evals/harness.mjs --task task-001",
     "eval:task:002": "node evals/harness.mjs --task task-002",
     "eval:task:003": "node evals/harness.mjs --task task-003",
