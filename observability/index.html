@@ -2,28 +2,30 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Ticketing & Cryptographic Wallet — Quentro Engine</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Smart Ticketing & Cryptographic Wallet — TikTok Aesthetic Edition</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
   <style>
     :root {
-      --bg-dark: #07090e;
-      --bg-card: rgba(16, 21, 32, 0.85);
-      --bg-card-hover: rgba(23, 30, 46, 0.95);
-      --border-color: rgba(56, 189, 248, 0.15);
-      --border-glow: rgba(56, 189, 248, 0.35);
-      --brand-primary: #0ea5e9;
-      --brand-accent: #38bdf8;
-      --color-success: #10b981;
-      --color-danger: #f43f5e;
-      --color-warning: #f59e0b;
-      --color-purple: #a855f7;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --text-dim: #64748b;
-      --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      /* TikTok Signature Color Palette */
+      --tiktok-black: #010101;
+      --tiktok-dark: #0f0f13;
+      --tiktok-card: rgba(18, 18, 24, 0.88);
+      --tiktok-card-hover: rgba(28, 28, 38, 0.95);
+      --tiktok-cyan: #25F4EE;
+      --tiktok-cyan-glow: rgba(37, 244, 238, 0.45);
+      --tiktok-red: #FE2C55;
+      --tiktok-red-glow: rgba(254, 44, 85, 0.45);
+      --tiktok-white: #FFFFFF;
+      --tiktok-gray: #8A8B91;
+      --tiktok-gray-dark: #2F2F36;
+      --tiktok-border: rgba(255, 255, 255, 0.1);
+      --tiktok-success: #00F298;
+      
+      --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
     }
 
@@ -31,375 +33,497 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      font-family: var(--font-main);
+      background-color: var(--tiktok-black);
+      color: var(--tiktok-white);
+      font-family: var(--font-display);
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
       overflow-x: hidden;
       background-image: 
-        radial-gradient(ellipse at 20% 0%, rgba(14, 165, 233, 0.12) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 100%, rgba(168, 85, 247, 0.08) 0%, transparent 50%);
+        radial-gradient(circle at 15% 10%, rgba(37, 244, 238, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 85% 90%, rgba(254, 44, 85, 0.08) 0%, transparent 45%);
     }
 
-    /* TOP NAVBAR */
+    /* TIKTOK CHROMATIC GLOW */
+    .chromatic-text {
+      text-shadow: -1.5px -1.5px 0 var(--tiktok-cyan), 1.5px 1.5px 0 var(--tiktok-red);
+    }
+
+    /* HEADER */
     header {
-      background: rgba(11, 15, 25, 0.85);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border-color);
-      padding: 0.85rem 2rem;
+      background: rgba(10, 10, 14, 0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--tiktok-border);
+      padding: 0.75rem 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      gap: 1rem;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.75rem;
     }
 
-    .logo-badge {
-      background: linear-gradient(135deg, #0284c7, #0ea5e9);
-      width: 40px;
-      height: 40px;
+    .brand-logo {
+      width: 38px;
+      height: 38px;
       border-radius: 10px;
+      background: #000;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.3rem;
-      box-shadow: 0 0 20px rgba(14, 165, 233, 0.4);
+      font-size: 1.2rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: -2px -2px 10px var(--tiktok-cyan-glow), 2px 2px 10px var(--tiktok-red-glow);
     }
 
-    .brand-title {
-      font-size: 1.15rem;
-      font-weight: 800;
+    .brand-text h1 {
+      font-size: 1.05rem;
+      font-weight: 900;
       letter-spacing: -0.02em;
+      line-height: 1.1;
     }
 
-    .brand-sub {
-      font-size: 0.75rem;
-      color: var(--text-muted);
+    .brand-text p {
+      font-size: 0.7rem;
+      color: var(--tiktok-gray);
       font-family: var(--font-mono);
     }
 
-    .header-badges {
+    /* VIEW TABS / NAVIGATION */
+    .nav-tabs {
       display: flex;
-      gap: 0.75rem;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 4px;
+      border-radius: 9999px;
+      border: 1px solid var(--tiktok-border);
+      gap: 4px;
+      overflow-x: auto;
+    }
+
+    .nav-tab {
+      background: transparent;
+      border: none;
+      color: var(--tiktok-gray);
+      padding: 0.45rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
       align-items: center;
+      gap: 0.4rem;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+
+    .nav-tab:hover {
+      color: #fff;
+    }
+
+    .nav-tab.active {
+      background: var(--tiktok-red);
+      color: #fff;
+      box-shadow: 0 0 15px var(--tiktok-red-glow);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .btn-icon {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--tiktok-border);
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .btn-icon:hover {
+      background: rgba(255, 255, 255, 0.16);
+      transform: scale(1.05);
     }
 
     .badge-offline {
-      background: rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.35);
-      color: #34d399;
-      padding: 0.35rem 0.8rem;
+      background: rgba(0, 242, 152, 0.12);
+      border: 1px solid rgba(0, 242, 152, 0.35);
+      color: var(--tiktok-success);
+      padding: 0.35rem 0.75rem;
       border-radius: 9999px;
-      font-size: 0.75rem;
-      font-weight: 700;
+      font-size: 0.72rem;
+      font-weight: 800;
       display: flex;
       align-items: center;
       gap: 0.4rem;
     }
 
     .badge-offline .dot {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
-      background: #10b981;
-      box-shadow: 0 0 10px #10b981;
+      background: var(--tiktok-success);
+      box-shadow: 0 0 8px var(--tiktok-success);
       animation: pulse 2s infinite;
     }
 
     @keyframes pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
+      50% { opacity: 0.3; transform: scale(0.8); }
     }
 
     /* MAIN CONTAINER */
-    .dashboard-grid {
+    .app-viewport {
       max-width: 1400px;
-      margin: 2rem auto;
-      padding: 0 1.5rem;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* DUAL VIEW GRID (DESKTOP) */
+    .view-container {
       display: grid;
       grid-template-columns: 420px 1fr;
       gap: 2rem;
+      align-items: start;
+      transition: all 0.3s ease;
     }
 
     @media (max-width: 1024px) {
-      .dashboard-grid {
+      .view-container {
         grid-template-columns: 1fr;
       }
     }
 
-    /* PHONE FRAME */
-    .phone-container {
+    /* SMARTPHONE CASING */
+    .phone-wrapper {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    .phone-shell {
-      width: 380px;
+    .smartphone {
+      width: 100%;
+      max-width: 390px;
       background: #000;
-      border-radius: 46px;
+      border-radius: 48px;
       padding: 12px;
-      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.12);
+      box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.9), 0 0 0 1.5px rgba(255, 255, 255, 0.12);
       position: relative;
     }
 
-    .phone-screen {
-      background: #0f1420;
-      border-radius: 36px;
+    .screen {
+      background: #09090d;
+      border-radius: 38px;
       overflow: hidden;
-      min-height: 680px;
+      min-height: 710px;
       display: flex;
       flex-direction: column;
+      border: 1px solid rgba(255, 255, 255, 0.06);
       position: relative;
+    }
+
+    /* DYNAMIC ISLAND */
+    .dynamic-island {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 110px;
+      height: 26px;
+      background: #000;
+      border-radius: 20px;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
       border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .phone-notch {
-      width: 120px;
-      height: 24px;
-      background: #000;
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      border-bottom-left-radius: 14px;
-      border-bottom-right-radius: 14px;
-      z-index: 50;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .phone-camera-lens {
-      width: 8px;
-      height: 8px;
-      background: #111;
-      border: 1px solid #333;
+    .island-cam {
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
+      background: #151515;
+      border: 1px solid #333;
     }
 
-    .wallet-header {
-      padding: 2.2rem 1.25rem 0.75rem 1.25rem;
-      text-align: center;
-      background: linear-gradient(180deg, rgba(14, 165, 233, 0.15) 0%, transparent 100%);
+    .island-sensor {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #002244;
     }
 
-    .wallet-app-tag {
-      font-size: 0.7rem;
-      font-weight: 800;
-      color: var(--brand-accent);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
+    /* PHONE STATUS BAR */
+    .phone-statusbar {
+      padding: 14px 20px 4px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #fff;
     }
 
-    .ticket-card {
-      margin: 0.75rem 1rem 1rem 1rem;
-      background: rgba(22, 29, 44, 0.95);
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 1.25rem;
+    /* PHONE APP CONTENT */
+    .phone-app {
+      padding: 1.5rem 1.25rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      position: relative;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      flex: 1;
     }
 
-    .event-title {
-      font-size: 1rem;
+    .concert-badge {
+      background: rgba(37, 244, 238, 0.12);
+      border: 1px solid var(--tiktok-cyan);
+      color: var(--tiktok-cyan);
+      font-size: 0.68rem;
       font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+
+    .concert-title {
+      font-size: 1.15rem;
+      font-weight: 900;
       text-align: center;
-      margin-bottom: 0.25rem;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 0.2rem;
     }
 
-    .event-venue {
+    .concert-subtitle {
       font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-bottom: 1rem;
+      color: var(--tiktok-gray);
+      text-align: center;
+      margin-bottom: 1.2rem;
     }
 
-    /* DYNAMIC QR BOX */
-    .qr-box-wrapper {
+    /* OPTICAL QR CODE CONTAINER (REAL RESOLUTION) */
+    .qr-card-casing {
       position: relative;
-      width: 210px;
-      height: 210px;
+      width: 250px;
+      height: 250px;
       background: #ffffff;
-      border-radius: 18px;
+      border-radius: 22px;
+      padding: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 12px;
-      box-shadow: 0 0 35px rgba(14, 165, 233, 0.2);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 25px var(--tiktok-cyan-glow);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .qr-canvas-mock {
-      width: 100%;
-      height: 100%;
-      background: #fff;
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      grid-template-rows: repeat(7, 1fr);
-      gap: 4px;
-      padding: 4px;
+    .qr-card-casing.brightness-boost {
+      box-shadow: 0 0 60px rgba(255, 255, 255, 0.9), 0 0 100px var(--tiktok-cyan);
+      transform: scale(1.02);
     }
 
-    .qr-cell {
-      background: #111827;
-      border-radius: 2px;
-      transition: background-color 0.25s ease;
-    }
-
-    .qr-cell.white {
-      background: #fff;
-    }
-
-    .qr-watermark {
-      position: absolute;
-      width: 38px;
-      height: 38px;
-      background: #0284c7;
-      border: 3px solid #fff;
+    #qr-canvas {
+      width: 100% !important;
+      height: 100% !important;
+      image-rendering: pixelated;
       border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      color: #fff;
-      font-weight: 800;
     }
 
-    /* ROTATING COUNTDOWN SVG */
-    .countdown-widget {
-      margin-top: 1rem;
+    /* ROTATING COUNTDOWN PROGRESS */
+    .totp-countdown-box {
+      margin-top: 1.2rem;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.85rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--tiktok-border);
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
     }
 
-    .ring-container {
+    .svg-ring-wrap {
       position: relative;
-      width: 44px;
-      height: 44px;
+      width: 36px;
+      height: 36px;
     }
 
-    .ring-svg {
+    .svg-ring {
       transform: rotate(-90deg);
-      width: 44px;
-      height: 44px;
+      width: 36px;
+      height: 36px;
     }
 
-    .ring-circle-bg {
+    .svg-ring-bg {
       fill: none;
-      stroke: rgba(255, 255, 255, 0.1);
-      stroke-width: 4;
+      stroke: rgba(255, 255, 255, 0.12);
+      stroke-width: 3.5;
     }
 
-    .ring-circle {
+    .svg-ring-progress {
       fill: none;
-      stroke: var(--brand-accent);
-      stroke-width: 4;
+      stroke: var(--tiktok-cyan);
+      stroke-width: 3.5;
       stroke-linecap: round;
-      stroke-dasharray: 113;
+      stroke-dasharray: 94.25;
       stroke-dashoffset: 0;
       transition: stroke-dashoffset 1s linear, stroke 0.3s;
     }
 
-    .ring-text {
+    .ring-sec-text {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 800;
       font-family: var(--font-mono);
-      color: var(--text-main);
     }
 
-    .countdown-label {
-      font-size: 0.75rem;
-      color: var(--text-muted);
+    .totp-meta-text {
       display: flex;
       flex-direction: column;
     }
 
-    .countdown-label strong {
-      color: var(--text-main);
-      font-size: 0.8rem;
+    .totp-meta-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--tiktok-gray);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
-    /* SEAT PILL */
-    .seat-pills {
+    .totp-meta-val {
+      font-size: 0.78rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: #fff;
+    }
+
+    /* TICKET METADATA PILLS */
+    .ticket-grid-pills {
       margin-top: 1rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      width: 100%;
+    }
+
+    .meta-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--tiktok-border);
+      border-radius: 12px;
+      padding: 0.55rem 0.4rem;
+      text-align: center;
+    }
+
+    .meta-pill-label {
+      font-size: 0.6rem;
+      color: var(--tiktok-gray);
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .meta-pill-val {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #fff;
+      margin-top: 2px;
+    }
+
+    /* PHONE BOTTOM QUICK ACTIONS */
+    .phone-actions {
+      margin-top: 1.2rem;
       display: flex;
       gap: 0.5rem;
       width: 100%;
     }
 
-    .seat-pill {
+    .btn-phone-action {
       flex: 1;
-      background: rgba(255, 255, 255, 0.04);
-      border-radius: 10px;
-      padding: 0.5rem;
-      text-align: center;
-    }
-
-    .seat-pill-label {
-      font-size: 0.65rem;
-      color: var(--text-dim);
-      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid var(--tiktok-border);
+      color: #fff;
+      padding: 0.6rem;
+      border-radius: 12px;
+      font-size: 0.72rem;
       font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      cursor: pointer;
+      transition: all 0.2s;
     }
 
-    .seat-pill-value {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--text-main);
+    .btn-phone-action:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: var(--tiktok-cyan);
     }
 
-    /* RIGHT COLUMN: CONTROL PANEL */
-    .control-panels {
+    /* RIGHT COLUMN / OPERATOR CONSOLE (STAFF & P2P) */
+    .control-deck {
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
     }
 
-    .panel-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 18px;
+    .tiktok-card {
+      background: var(--tiktok-card);
+      border: 1px solid var(--tiktok-border);
+      border-radius: 20px;
       padding: 1.5rem;
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(20px);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     }
 
-    .panel-header {
+    .card-top-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.25rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--tiktok-border);
       padding-bottom: 0.75rem;
     }
 
-    .panel-title {
-      font-size: 1.1rem;
-      font-weight: 700;
+    .card-title-group {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.65rem;
     }
 
-    /* TURNSTILE SCREEN */
-    .turnstile-console {
+    .card-title-group h2 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+
+    /* SCANNER SIMULATOR AREA */
+    .turnstile-stage {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1.25rem;
@@ -407,179 +531,248 @@
     }
 
     @media (max-width: 640px) {
-      .turnstile-console {
+      .turnstile-stage {
         grid-template-columns: 1fr;
       }
     }
 
-    .gate-indicator-box {
-      background: #0b0f19;
-      border: 2px solid rgba(255, 255, 255, 0.08);
+    .laser-barrier-box {
+      background: #07070a;
+      border: 2px solid var(--tiktok-border);
       border-radius: 16px;
       padding: 1.5rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      min-height: 200px;
+      justify-content: center;
+      transition: all 0.3s;
     }
 
-    .gate-indicator-box.status-granted {
-      border-color: #10b981;
-      box-shadow: 0 0 35px rgba(16, 185, 129, 0.25);
+    .laser-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--tiktok-cyan), transparent);
+      box-shadow: 0 0 15px var(--tiktok-cyan);
+      animation: laserSweep 2s ease-in-out infinite;
+      opacity: 0.8;
     }
 
-    .gate-indicator-box.status-denied {
-      border-color: #f43f5e;
-      box-shadow: 0 0 35px rgba(244, 63, 94, 0.25);
+    @keyframes laserSweep {
+      0% { top: 0%; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { top: 100%; opacity: 0; }
     }
 
-    .gate-light {
-      width: 50px;
-      height: 50px;
+    .gate-led {
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
-      background: #334155;
+      background: #222;
+      border: 2px solid rgba(255, 255, 255, 0.1);
       margin-bottom: 0.75rem;
       transition: all 0.3s;
     }
 
-    .gate-light.green {
-      background: #10b981;
-      box-shadow: 0 0 25px #10b981;
+    .gate-led.green {
+      background: var(--tiktok-success);
+      box-shadow: 0 0 35px var(--tiktok-success);
+      border-color: #fff;
     }
 
-    .gate-light.red {
-      background: #f43f5e;
-      box-shadow: 0 0 25px #f43f5e;
+    .gate-led.red {
+      background: var(--tiktok-red);
+      box-shadow: 0 0 35px var(--tiktok-red);
+      border-color: #fff;
     }
 
-    .gate-status-text {
+    .barrier-verdict {
       font-size: 1.1rem;
-      font-weight: 800;
-      letter-spacing: 0.05em;
+      font-weight: 900;
+      letter-spacing: 0.04em;
     }
 
-    .gate-latency-badge {
-      margin-top: 0.5rem;
+    .barrier-latency {
       font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--text-muted);
+      font-size: 0.75rem;
+      color: var(--tiktok-cyan);
+      margin-top: 0.35rem;
     }
 
-    .btn-group {
+    .barrier-desc {
+      font-size: 0.72rem;
+      color: var(--tiktok-gray);
+      margin-top: 0.4rem;
+      max-width: 240px;
+    }
+
+    /* ACTION BUTTONS (TIKTOK STYLE) */
+    .btn-action-stack {
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
     }
 
-    .btn {
-      background: #0284c7;
+    .btn-tiktok {
+      background: var(--tiktok-red);
       color: #fff;
       border: none;
-      border-radius: 10px;
-      padding: 0.75rem 1rem;
+      padding: 0.8rem 1.25rem;
+      border-radius: 12px;
       font-size: 0.85rem;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
       transition: all 0.2s;
+      box-shadow: 0 4px 20px var(--tiktok-red-glow);
     }
 
-    .btn:hover {
-      background: #0369a1;
-      transform: translateY(-1px);
+    .btn-tiktok:hover {
+      background: #e02247;
+      transform: translateY(-1.5px);
     }
 
-    .btn-danger {
-      background: rgba(244, 63, 94, 0.15);
-      border: 1px solid rgba(244, 63, 94, 0.4);
-      color: #fb7185;
+    .btn-tiktok-cyan {
+      background: rgba(37, 244, 238, 0.15);
+      border: 1px solid var(--tiktok-cyan);
+      color: var(--tiktok-cyan);
+      box-shadow: 0 4px 20px rgba(37, 244, 238, 0.15);
     }
 
-    .btn-danger:hover {
-      background: rgba(244, 63, 94, 0.25);
+    .btn-tiktok-cyan:hover {
+      background: rgba(37, 244, 238, 0.25);
     }
 
-    .btn-secondary {
+    .btn-tiktok-dark {
       background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--text-main);
+      border: 1px solid var(--tiktok-border);
+      color: #fff;
     }
 
-    .btn-secondary:hover {
+    .btn-tiktok-dark:hover {
       background: rgba(255, 255, 255, 0.12);
     }
 
-    /* P2P TRANSFER */
-    .transfer-grid {
+    /* P2P TRANSFER CONTROLS */
+    .form-grid-p2p {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
     }
 
     @media (max-width: 640px) {
-      .transfer-grid {
+      .form-grid-p2p {
         grid-template-columns: 1fr;
       }
     }
 
-    .form-group {
+    .tiktok-input-wrap {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
+      gap: 0.35rem;
     }
 
-    .form-label {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      font-weight: 600;
+    .input-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--tiktok-gray);
     }
 
-    .form-input {
-      background: rgba(11, 15, 25, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      padding: 0.6rem 0.85rem;
+    .tiktok-input {
+      background: rgba(10, 10, 14, 0.7);
+      border: 1px solid var(--tiktok-border);
+      border-radius: 10px;
+      padding: 0.65rem 0.85rem;
       color: #fff;
-      font-family: var(--font-main);
       font-size: 0.85rem;
+      font-family: var(--font-display);
+      transition: border-color 0.2s;
     }
 
-    /* LOGS TABLE */
-    .audit-table-wrapper {
+    .tiktok-input:focus {
+      outline: none;
+      border-color: var(--tiktok-cyan);
+      box-shadow: 0 0 10px var(--tiktok-cyan-glow);
+    }
+
+    /* AUDIT LEDGER TABLE */
+    .table-container {
       max-height: 220px;
       overflow-y: auto;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 10px;
+      border: 1px solid var(--tiktok-border);
+      border-radius: 12px;
     }
 
-    .audit-table {
+    .tiktok-table {
       width: 100%;
       border-collapse: collapse;
       font-family: var(--font-mono);
       font-size: 0.75rem;
     }
 
-    .audit-table th {
-      background: #0f1420;
-      padding: 0.5rem 0.75rem;
+    .tiktok-table th {
+      background: #0a0a0e;
+      padding: 0.55rem 0.85rem;
       text-align: left;
-      color: var(--text-dim);
-      font-weight: 600;
+      color: var(--tiktok-gray);
+      font-weight: 700;
       position: sticky;
       top: 0;
+      border-bottom: 1px solid var(--tiktok-border);
     }
 
-    .audit-table td {
-      padding: 0.5rem 0.75rem;
+    .tiktok-table td {
+      padding: 0.55rem 0.85rem;
       border-top: 1px solid rgba(255, 255, 255, 0.04);
     }
 
-    .tag-success { color: #34d399; font-weight: bold; }
-    .tag-error { color: #f87171; font-weight: bold; }
+    .tag-granted { color: var(--tiktok-success); font-weight: 800; }
+    .tag-denied { color: var(--tiktok-red); font-weight: 800; }
+
+    /* MODAL FOR APPLE WALLET PREVIEW */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .apple-wallet-card {
+      background: linear-gradient(135deg, #111, #1a1a24);
+      width: 100%;
+      max-width: 360px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 1.5rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+      position: relative;
+    }
+
+    .wallet-notch {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 4px;
+      background: #444;
+      border-radius: 2px;
+    }
   </style>
 </head>
 <body>
@@ -587,318 +780,406 @@
   <!-- HEADER -->
   <header>
     <div class="brand">
-      <div class="logo-badge">🎟️</div>
-      <div>
-        <div class="brand-title">Smart Digital Ticketing & Cryptographic Wallet</div>
-        <div class="brand-sub">Motor Quentro TOTP 15s • Validación Offline Sub-80ms • P2P Re-Keying</div>
+      <div class="brand-logo chromatic-text">🎟️</div>
+      <div class="brand-text">
+        <h1 class="chromatic-text">SMART TICKETING</h1>
+        <p>Motor Quentro TOTP 15s • Modo Estadio Offline</p>
       </div>
     </div>
-    <div class="header-badges">
+
+    <!-- VIEWPORT SWITCHER -->
+    <div class="nav-tabs" id="view-tabs">
+      <button class="nav-tab active" data-view="dual">🖥️ Vista Dual</button>
+      <button class="nav-tab" data-view="wallet">📱 Mi Billetera</button>
+      <button class="nav-tab" data-view="turnstile">🏟️ Torniquete Staff</button>
+      <button class="nav-tab" data-view="transfer">🤝 Transferir P2P</button>
+      <button class="nav-tab" data-view="audit">📜 Auditoría</button>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="header-actions">
       <div class="badge-offline">
         <span class="dot"></span>
-        <span>MODO FUERA DE LÍNEA ACTIVO</span>
+        <span>MODO AVIÓN ACTIVO</span>
       </div>
+      <button class="btn-icon" id="btn-audio-toggle" title="Sonido de Torniquete">🔊</button>
     </div>
   </header>
 
-  <div class="dashboard-grid">
-    
-    <!-- LEFT: SMARTPHONE SIMULATION -->
-    <div class="phone-container">
-      <div class="phone-shell">
-        <div class="phone-screen">
-          <div class="phone-notch">
-            <div class="phone-camera-lens"></div>
+  <!-- MAIN VIEWPORT -->
+  <main class="app-viewport">
+    <div class="view-container" id="main-container">
+
+      <!-- 1. SMARTPHONE DISPLAY (CLIENT TICKETING APP) -->
+      <div class="phone-wrapper" id="section-wallet">
+        <div class="smartphone">
+          <div class="screen" id="phone-screen">
+            
+            <div class="dynamic-island">
+              <div class="island-cam"></div>
+              <div class="island-sensor"></div>
+            </div>
+
+            <div class="phone-statusbar">
+              <span id="phone-clock">21:45</span>
+              <div style="display: flex; gap: 6px; align-items: center;">
+                <span>✈️</span>
+                <span>100%</span>
+              </div>
+            </div>
+
+            <div class="phone-app">
+              <div class="concert-badge">ENTRADA VIP DIGITAL</div>
+              <div class="concert-title" id="event-title">Rock Revolution World Tour 2026</div>
+              <div class="concert-subtitle" id="event-venue">Estadio Nacional • Puerta 4 • Lima</div>
+
+              <!-- REAL OPTICAL QR CODE (CANVAS RENDERING) -->
+              <div class="qr-card-casing" id="qr-casing">
+                <canvas id="qr-canvas"></canvas>
+              </div>
+
+              <!-- ROTATING TOTP 15s RING -->
+              <div class="totp-countdown-box">
+                <div class="svg-ring-wrap">
+                  <svg class="svg-ring">
+                    <circle class="svg-ring-bg" cx="18" cy="18" r="15"></circle>
+                    <circle class="svg-ring-progress" id="totp-ring" cx="18" cy="18" r="15"></circle>
+                  </svg>
+                  <div class="ring-sec-text" id="sec-text">15s</div>
+                </div>
+                <div class="totp-meta-text">
+                  <span class="totp-meta-label">ROTACIÓN DINÁMICA</span>
+                  <span class="totp-meta-val" id="totp-counter-hex">00000000071bb2a3</span>
+                </div>
+              </div>
+
+              <!-- SEAT PILLS -->
+              <div class="ticket-grid-pills">
+                <div class="meta-pill">
+                  <div class="meta-pill-label">ZONA</div>
+                  <div class="meta-pill-val" id="ticket-section">VIP Campo A</div>
+                </div>
+                <div class="meta-pill">
+                  <div class="meta-pill-label">ASIENTO</div>
+                  <div class="meta-pill-val" id="ticket-seat">Fila 1 - As. 14</div>
+                </div>
+                <div class="meta-pill">
+                  <div class="meta-pill-label">ESTADO</div>
+                  <div class="meta-pill-val" id="ticket-status-val" style="color: var(--tiktok-success);">ACTIVO</div>
+                </div>
+              </div>
+
+              <div style="margin-top: 0.85rem; font-family: var(--font-mono); font-size: 0.65rem; color: var(--tiktok-gray); text-align: center; word-break: break-all;">
+                Titular: <strong style="color: #fff;" id="ticket-owner">Alice Johnson</strong>
+              </div>
+
+              <!-- ACTION BUTTONS -->
+              <div class="phone-actions">
+                <button class="btn-phone-action" id="btn-boost-brightness">
+                  <span>☀️</span> Brillo 100%
+                </button>
+                <button class="btn-phone-action" id="btn-apple-wallet">
+                  <span>🍏</span> Apple Wallet
+                </button>
+                <button class="btn-phone-action" id="btn-quick-transfer">
+                  <span>🤝</span> Transferir
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. CONTROL DECKS (STAFF, P2P, AUDIT) -->
+      <div class="control-deck">
+
+        <!-- DECK A: TURNSTILE / GATE SCANNER -->
+        <div class="tiktok-card" id="section-turnstile">
+          <div class="card-top-bar">
+            <div class="card-title-group">
+              <span style="font-size: 1.2rem;">🏟️</span>
+              <h2>Estación de Torniquetes Perimetrales</h2>
+            </div>
+            <select id="gate-select" class="tiktok-input" style="padding: 0.35rem 0.75rem; width: auto;">
+              <option value="GATE-NORTH-01">Puerta Norte 01 (Estadio)</option>
+              <option value="GATE-SOUTH-02">Puerta Sur 02 (Estadio)</option>
+              <option value="GATE-VIP-01">Acceso VIP Preferencial</option>
+            </select>
           </div>
 
-          <div class="wallet-header">
-            <div class="wallet-app-tag">Quentro-Style Smart Wallet</div>
-            <div style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-top: 2px;" id="owner-display">Alice Johnson</div>
-          </div>
-
-          <div class="ticket-card">
-            <div class="event-title" id="event-title">Rock Revolution Tour 2026</div>
-            <div class="event-venue" id="event-venue">Estadio Nacional — Lima</div>
-
-            <!-- DYNAMIC QR DISPLAY -->
-            <div class="qr-box-wrapper">
-              <div class="qr-canvas-mock" id="qr-matrix">
-                <!-- 49 dynamic cells simulating optical QR code -->
-              </div>
-              <div class="qr-watermark">Q</div>
+          <div class="turnstile-stage">
+            <div class="laser-barrier-box" id="barrier-box">
+              <div class="laser-line"></div>
+              <div class="gate-led" id="gate-led"></div>
+              <div class="barrier-verdict" id="barrier-verdict">LISTO PARA ESCANEAR</div>
+              <div class="barrier-latency" id="barrier-latency">Latencia sub-80ms objetivo</div>
+              <div class="barrier-desc" id="barrier-desc">Presente el código QR óptico dinámico frente a la cámara</div>
             </div>
 
-            <!-- 15s COUNTDOWN RING -->
-            <div class="countdown-widget">
-              <div class="ring-container">
-                <svg class="ring-svg">
-                  <circle class="ring-circle-bg" cx="22" cy="22" r="18"></circle>
-                  <circle class="ring-circle" id="progress-circle" cx="22" cy="22" r="18"></circle>
-                </svg>
-                <div class="ring-text" id="countdown-sec">15s</div>
-              </div>
-              <div class="countdown-label">
-                <span>ROTACIÓN AUTOMÁTICA</span>
-                <strong id="counter-hex-display">0000000003b5a12</strong>
-              </div>
-            </div>
-
-            <!-- SEAT INFO -->
-            <div class="seat-pills">
-              <div class="seat-pill">
-                <div class="seat-pill-label">Zona</div>
-                <div class="seat-pill-value" id="ticket-section">VIP Campo A</div>
-              </div>
-              <div class="seat-pill">
-                <div class="seat-pill-label">Asiento</div>
-                <div class="seat-pill-value" id="ticket-seat">Fila 1 - As. 14</div>
-              </div>
-              <div class="seat-pill">
-                <div class="seat-pill-label">Estado</div>
-                <div class="seat-pill-value" id="ticket-status-pill" style="color: #34d399;">ACTIVO</div>
-              </div>
-            </div>
-
-            <div style="margin-top: 0.85rem; font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-dim); word-break: break-all; text-align: center;">
-              Payload: <span id="raw-payload-display" style="color: var(--brand-accent);">STK:...</span>
+            <div class="btn-action-stack">
+              <button class="btn-tiktok" id="btn-scan-live">
+                <span>⚡</span> Escanear QR Dinámico Activo
+              </button>
+              <button class="btn-tiktok btn-tiktok-cyan" id="btn-scan-replay">
+                <span>🚨</span> Simular Ataque: Captura / Replay
+              </button>
+              <button class="btn-tiktok btn-tiktok-dark" id="btn-scan-drift">
+                <span>⏱️</span> Simular Desfase de Reloj (+10s)
+              </button>
             </div>
           </div>
         </div>
+
+        <!-- DECK B: P2P TRANSFER -->
+        <div class="tiktok-card" id="section-transfer">
+          <div class="card-top-bar">
+            <div class="card-title-group">
+              <span style="font-size: 1.2rem;">🤝</span>
+              <h2>Transferencia P2P con Re-claveado Criptográfico</h2>
+            </div>
+            <span style="font-size: 0.75rem; color: var(--tiktok-cyan); font-weight: 800;">ANTI-SCALPING ACTIVO</span>
+          </div>
+
+          <div class="form-grid-p2p">
+            <div class="tiktok-input-wrap">
+              <label class="input-label">Nombre del Destinatario</label>
+              <input type="text" id="transfer-name" class="tiktok-input" value="Carlos Rodriguez">
+            </div>
+            <div class="tiktok-input-wrap">
+              <label class="input-label">Email del Destinatario</label>
+              <input type="email" id="transfer-email" class="tiktok-input" value="carlos@example.com">
+            </div>
+            <div class="tiktok-input-wrap">
+              <label class="input-label">Precio de Reventa ($)</label>
+              <input type="number" id="transfer-price" class="tiktok-input" value="120.00" step="1">
+              <span style="font-size: 0.65rem; color: var(--tiktok-gray);">Tope Facial: $120.00 (Prohibido sobreprecio)</span>
+            </div>
+            <div class="tiktok-input-wrap" style="justify-content: flex-end;">
+              <button class="btn-tiktok" id="btn-exec-transfer" style="background: linear-gradient(135deg, var(--tiktok-red), #9333ea);">
+                <span>🔑</span> Re-clavear y Transferir
+              </button>
+            </div>
+          </div>
+          <div id="transfer-status-alert" style="margin-top: 0.85rem; font-size: 0.8rem; display: none;"></div>
+        </div>
+
+        <!-- DECK C: AUDIT LEDGER -->
+        <div class="tiktok-card" id="section-audit">
+          <div class="card-top-bar">
+            <div class="card-title-group">
+              <span style="font-size: 1.2rem;">📜</span>
+              <h2>Registro de Auditoría & Malla Local (Local Mesh)</h2>
+            </div>
+            <button class="btn-tiktok-dark" id="btn-refresh-logs" style="padding: 0.35rem 0.8rem; border-radius: 8px; font-size: 0.75rem;">Refrescar</button>
+          </div>
+
+          <div class="table-container">
+            <table class="tiktok-table">
+              <thead>
+                <tr>
+                  <th>Hora</th>
+                  <th>Puerta</th>
+                  <th>Ticket</th>
+                  <th>Resultado</th>
+                  <th>Latencia</th>
+                  <th>Detalle Criptográfico</th>
+                </tr>
+              </thead>
+              <tbody id="audit-table-body">
+                <tr>
+                  <td colspan="6" style="text-align: center; color: var(--tiktok-gray); padding: 1.5rem;">No hay lecturas registradas aún</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- MODAL APPLE WALLET PREVIEW -->
+  <div class="modal-overlay" id="wallet-modal">
+    <div class="apple-wallet-card">
+      <div class="wallet-notch"></div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <span style="font-size: 0.75rem; font-weight: 800; color: var(--tiktok-cyan);">APPLE WALLET PASS</span>
+        <button id="btn-close-modal" style="background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer;">✕</button>
+      </div>
+      <div style="font-size: 1.1rem; font-weight: 800; margin-bottom: 0.25rem;" id="modal-event">Rock Revolution 2026</div>
+      <div style="font-size: 0.75rem; color: #aaa; margin-bottom: 1rem;">Estadio Nacional • Entrada Nominativa</div>
+      <div style="background: #fff; border-radius: 12px; padding: 10px; display: flex; justify-content: center; margin-bottom: 1rem;">
+        <canvas id="modal-qr-canvas" style="width: 180px; height: 180px;"></canvas>
+      </div>
+      <div style="font-family: var(--font-mono); font-size: 0.7rem; color: #ccc; text-align: center;">
+        Barcode rotativo automático sincronizado con Apple Wallet NFC & Optical Pass.
       </div>
     </div>
-
-    <!-- RIGHT: TURNSTILE CONTROL & P2P TRANSFER -->
-    <div class="control-panels">
-
-      <!-- 1. TURNSTILE OPERATOR STATION -->
-      <div class="panel-card">
-        <div class="panel-header">
-          <div class="panel-title">
-            <span>🏟️</span> Estación de Torniquetes Perimetrales (Control de Acceso)
-          </div>
-          <select id="gate-select" class="form-input" style="width: auto; padding: 0.3rem 0.6rem;">
-            <option value="GATE-NORTH-01">Puerta Norte 01 (Estadio)</option>
-            <option value="GATE-SOUTH-02">Puerta Sur 02 (Estadio)</option>
-            <option value="GATE-VIP-01">Puerta VIP Preferencial</option>
-          </select>
-        </div>
-
-        <div class="turnstile-console">
-          <div class="gate-indicator-box" id="gate-indicator">
-            <div class="gate-light" id="gate-light"></div>
-            <div class="gate-status-text" id="gate-text">LISTO PARA ESCANEAR</div>
-            <div class="gate-latency-badge" id="gate-latency">Latencia estimada: &lt;80ms</div>
-            <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.4rem;" id="gate-reason">Presente el código QR óptico frente al lector</div>
-          </div>
-
-          <div class="btn-group">
-            <button class="btn" id="btn-scan-valid">
-              <span>⚡</span> Escanear QR Dinámico Activo
-            </button>
-            <button class="btn btn-danger" id="btn-scan-replay">
-              <span>🚨</span> Simular Ataque: Captura / Replay
-            </button>
-            <button class="btn btn-secondary" id="btn-scan-drift">
-              <span>⏱️</span> Simular Desfase de Reloj (+10s)
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- 2. P2P TRANSFER WITH ATOMIC RE-KEYING -->
-      <div class="panel-card">
-        <div class="panel-header">
-          <div class="panel-title">
-            <span>🤝</span> Transferencia P2P con Re-claveado Criptográfico Atómico
-          </div>
-          <div style="font-size: 0.75rem; color: var(--brand-accent); font-weight: 700;">Anti-Scalping Rules Activas</div>
-        </div>
-
-        <div class="transfer-grid">
-          <div class="form-group">
-            <label class="form-label">Nombre del Receptor</label>
-            <input type="text" id="transfer-name" class="form-input" value="Carlos Rodriguez">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email del Receptor</label>
-            <input type="email" id="transfer-email" class="form-input" value="carlos@example.com">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Precio de Venta ($)</label>
-            <input type="number" id="transfer-price" class="form-input" value="120.00" step="1">
-            <span style="font-size: 0.65rem; color: var(--text-dim);">Tope Facial: $120.00 (Prohibido sobreprecio)</span>
-          </div>
-          <div class="form-group" style="justify-content: flex-end;">
-            <button class="btn" id="btn-execute-transfer" style="background: var(--color-purple);">
-              <span>🔑</span> Re-clavear y Transferir
-            </button>
-          </div>
-        </div>
-        <div id="transfer-alert" style="margin-top: 0.75rem; font-size: 0.8rem; display: none;"></div>
-      </div>
-
-      <!-- 3. AUDIT LOGS & MESH LEDGER -->
-      <div class="panel-card">
-        <div class="panel-header">
-          <div class="panel-title">
-            <span>📜</span> Registro de Auditoría y Malla Local (Local Mesh Sync)
-          </div>
-          <button class="btn btn-secondary" id="btn-refresh-audit" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;">
-            Refrescar
-          </button>
-        </div>
-
-        <div class="audit-table-wrapper">
-          <table class="audit-table">
-            <thead>
-              <tr>
-                <th>Hora</th>
-                <th>Puerta</th>
-                <th>Ticket</th>
-                <th>Resultado</th>
-                <th>Latencia</th>
-                <th>Diagnóstico</th>
-              </tr>
-            </thead>
-            <tbody id="audit-tbody">
-              <tr>
-                <td colspan="6" style="text-align: center; color: var(--text-dim);">No hay registros de escaneo aún</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-    </div>
-
   </div>
 
   <script>
-    // State
-    let currentTicket = null;
-    let lastUsedPayload = null;
-    const CIRCUMFERENCE = 2 * Math.PI * 18; // ~113
+    // Audio Synthesizer (Web Audio API)
+    let audioEnabled = true;
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-    // Generate random seed for QR visual animation
-    function renderQrMatrix(seed) {
-      const container = document.getElementById('qr-matrix');
-      container.innerHTML = '';
-      let hash = 0;
-      for (let i = 0; i < seed.length; i++) hash = (hash * 31 + seed.charCodeAt(i)) & 0xffffffff;
-      
-      for (let i = 0; i < 49; i++) {
-        const cell = document.createElement('div');
-        cell.className = 'qr-cell';
-        // Corners are finder patterns
-        const row = Math.floor(i / 7);
-        const col = i % 7;
-        const isFinder = (row < 2 && col < 2) || (row < 2 && col > 4) || (row > 4 && col < 2);
-        if (isFinder) {
-          cell.style.backgroundColor = '#0ea5e9';
-        } else {
-          const bit = (hash >> (i % 31)) & 1;
-          cell.className = bit ? 'qr-cell' : 'qr-cell white';
-        }
-        container.appendChild(cell);
+    function playBeep(success) {
+      if (!audioEnabled || !audioCtx) return;
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      if (success) {
+        // High pleasant chime
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, audioCtx.currentTime); // A5
+        osc.frequency.exponentialRampToValueAtTime(1320, audioCtx.currentTime + 0.12);
+        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.18);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.18);
+      } else {
+        // Low double buzz
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.25);
       }
     }
 
-    // Standalone In-Browser Mock State (for Static Cloudflare Pages Deployment)
-    let isStandaloneMode = false;
-    let clientVault = {
-      ticket: {
-        id: 'TKT-ROCK-101',
-        eventName: 'Rock Revolution Tour 2026',
-        venue: 'Estadio Nacional',
-        section: 'VIP Campo A',
-        seat: 'Fila 1 - As. 14',
-        ownerName: 'Alice Johnson',
-        ownerEmail: 'alice@example.com',
-        currentOwnerId: 'USR-ALICE-01',
-        faceValue: 120.0,
-        currency: 'USD',
-        status: 'ACTIVE',
-        seedHex: 'a1b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef0',
-        transferCount: 0,
-        maxTransfers: 2,
-        usedAt: null,
-        usedGateId: null
-      },
-      auditLogs: []
+    document.getElementById('btn-audio-toggle').addEventListener('click', (e) => {
+      audioEnabled = !audioEnabled;
+      e.target.textContent = audioEnabled ? '🔊' : '🔇';
+    });
+
+    // Real QR Code Generator using QRCode Library
+    function renderRealQr(elementId, text) {
+      const canvas = document.getElementById(elementId);
+      if (!canvas) return;
+
+      if (window.QRCode && window.QRCode.toCanvas) {
+        window.QRCode.toCanvas(canvas, text, {
+          width: 230,
+          margin: 1,
+          color: {
+            dark: '#010101',
+            light: '#ffffff'
+          },
+          errorCorrectionLevel: 'M'
+        }, (err) => {
+          if (err) console.error('QR Render error:', err);
+        });
+      } else {
+        // Fallback canvas drawing
+        const ctx = canvas.getContext('2d');
+        canvas.width = 230;
+        canvas.height = 230;
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, 230, 230);
+        ctx.fillStyle = '#010101';
+        ctx.font = '10px monospace';
+        ctx.fillText('QR: ' + text.substring(0, 20), 10, 115);
+      }
+    }
+
+    // State
+    let currentTicket = {
+      id: 'TKT-ROCK-101',
+      eventName: 'Rock Revolution World Tour 2026',
+      venue: 'Estadio Nacional',
+      section: 'VIP Campo A',
+      seat: 'Fila 1 - As. 14',
+      ownerName: 'Alice Johnson',
+      ownerEmail: 'alice@example.com',
+      currentOwnerId: 'USR-ALICE-01',
+      faceValue: 120.0,
+      currency: 'USD',
+      status: 'ACTIVE',
+      seedHex: 'a1b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef0',
+      transferCount: 0,
+      maxTransfers: 2,
+      usedAt: null,
+      usedGateId: null
     };
 
-    function generateClientTotp(seedHex, timestampMs) {
+    let lastUsedPayload = '';
+    let isStandaloneMode = false;
+    let localAuditLogs = [];
+    const RING_CIRCUMFERENCE = 2 * Math.PI * 15; // ~94.25
+
+    // Local TOTP 15s calculation
+    function computeTotp(seedHex, timestampMs) {
       const step = 15;
       const counter = Math.floor(timestampMs / (step * 1000));
       const counterHex = counter.toString(16).padStart(16, '0');
-      
-      // Simple pseudo-HMAC for client-side visualization
+
       let hash = 0;
-      const combined = `${seedHex}:${counter}`;
-      for (let i = 0; i < combined.length; i++) {
-        hash = ((hash << 5) - hash) + combined.charCodeAt(i);
+      const input = `${seedHex}:${counterHex}`;
+      for (let i = 0; i < input.length; i++) {
+        hash = ((hash << 5) - hash) + input.charCodeAt(i);
         hash |= 0;
       }
       const mac = Math.abs(hash).toString(16).padStart(16, '0').substring(0, 16);
-      const remainingSeconds = step - Math.floor((timestampMs / 1000) % step);
+      const remainingSeconds = Math.max(0, Math.ceil(step - ((timestampMs / 1000) % step)));
 
       return {
         counter,
         counterHex,
         authMac: mac,
-        rawPayload: `STK:TKT-ROCK-101:${counterHex}:${mac}`,
+        rawPayload: `STK:${currentTicket.id}:${counterHex}:${mac}`,
         remainingSeconds
       };
     }
 
-    async function fetchTicketData() {
+    async function syncTicket() {
       try {
         const res = await fetch('/api/tickets');
-        if (!res.ok) throw new Error('API not available');
+        if (!res.ok) throw new Error('Standalone');
         const tickets = await res.json();
         if (tickets.length > 0) {
           currentTicket = tickets[0];
-          updateUI(currentTicket);
         }
-      } catch (err) {
-        // Fallback to standalone client engine for Cloudflare Pages
+      } catch (_) {
         isStandaloneMode = true;
-        const now = Date.now();
-        const clientQr = generateClientTotp(clientVault.ticket.seedHex, now);
-        currentTicket = {
-          ...clientVault.ticket,
-          currentQr: clientQr
-        };
-        updateUI(currentTicket);
       }
+      updateView();
     }
 
-    function updateUI(ticket) {
-      document.getElementById('owner-display').textContent = ticket.ownerName;
-      document.getElementById('event-title').textContent = ticket.eventName;
-      document.getElementById('event-venue').textContent = `${ticket.venue} — Lima`;
-      document.getElementById('ticket-section').textContent = ticket.section;
-      document.getElementById('ticket-seat').textContent = ticket.seat;
-      
-      const statusPill = document.getElementById('ticket-status-pill');
-      statusPill.textContent = ticket.status;
-      if (ticket.status === 'ACTIVE') {
-        statusPill.style.color = '#34d399';
-      } else if (ticket.status === 'USED') {
-        statusPill.style.color = '#f59e0b';
+    function updateView() {
+      const now = Date.now();
+      const totp = computeTotp(currentTicket.seedHex, now);
+      lastUsedPayload = totp.rawPayload;
+
+      document.getElementById('event-title').textContent = currentTicket.eventName;
+      document.getElementById('event-venue').textContent = `${currentTicket.venue} • Puerta 4 • Lima`;
+      document.getElementById('ticket-section').textContent = currentTicket.section;
+      document.getElementById('ticket-seat').textContent = currentTicket.seat;
+      document.getElementById('ticket-owner').textContent = currentTicket.ownerName;
+
+      const statusEl = document.getElementById('ticket-status-val');
+      statusEl.textContent = currentTicket.status;
+      if (currentTicket.status === 'ACTIVE') {
+        statusEl.style.color = 'var(--tiktok-success)';
+      } else if (currentTicket.status === 'USED') {
+        statusEl.style.color = 'var(--tiktok-cyan)';
       } else {
-        statusPill.style.color = '#f43f5e';
+        statusEl.style.color = 'var(--tiktok-red)';
       }
 
-      if (ticket.currentQr) {
-        lastUsedPayload = ticket.currentQr.rawPayload;
-        document.getElementById('raw-payload-display').textContent = ticket.currentQr.rawPayload;
-        document.getElementById('counter-hex-display').textContent = ticket.currentQr.counterHex;
-        renderQrMatrix(ticket.currentQr.authMac);
-      }
+      document.getElementById('totp-counter-hex').textContent = totp.counterHex.substring(0, 12) + '...';
+
+      // Render REAL optical QR code
+      renderRealQr('qr-canvas', totp.rawPayload);
     }
 
-    // Dynamic 15s Countdown Timer Loop
+    // 15s Dynamic Rotating Countdown Loop
     setInterval(() => {
       const now = Date.now();
       const step = 15;
@@ -906,131 +1187,138 @@
       const remaining = Math.max(0, Math.ceil(step - elapsed));
       const fraction = remaining / step;
 
-      const circle = document.getElementById('progress-circle');
-      const text = document.getElementById('countdown-sec');
+      const ring = document.getElementById('totp-ring');
+      const text = document.getElementById('sec-text');
       text.textContent = `${remaining}s`;
 
-      const offset = CIRCUMFERENCE * (1 - fraction);
-      circle.style.strokeDashoffset = offset;
+      const offset = RING_CIRCUMFERENCE * (1 - fraction);
+      ring.style.strokeDashoffset = offset;
 
-      if (remaining <= 3) {
-        circle.style.stroke = '#f43f5e';
-      } else if (remaining <= 7) {
-        circle.style.stroke = '#f59e0b';
+      // TikTok Dynamic Color Shift
+      if (remaining <= 4) {
+        ring.style.stroke = 'var(--tiktok-red)';
+        text.style.color = 'var(--tiktok-red)';
       } else {
-        circle.style.stroke = '#38bdf8';
+        ring.style.stroke = 'var(--tiktok-cyan)';
+        text.style.color = 'var(--tiktok-cyan)';
       }
 
-      // If tick is at rotation boundary, refresh ticket payload
       if (remaining === 15) {
-        fetchTicketData();
+        updateView();
       }
+
+      // Update phone clock
+      const d = new Date();
+      document.getElementById('phone-clock').textContent = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
     }, 500);
 
-    // Turnstile Scan Interaction
-    async function executeScan(rawPayload, timestampMs = null) {
+    // Turnstile Scan Execution
+    async function scanTurnstile(rawPayload, timestampMs = null) {
       const gateId = document.getElementById('gate-select').value;
-      const body = { gateId, rawPayload, timestampMs };
+      const start = performance.now();
 
       if (!isStandaloneMode) {
         try {
           const res = await fetch('/api/scan', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body)
+            body: JSON.stringify({ gateId, rawPayload, timestampMs })
           });
           const result = await res.json();
-          renderGateResult(result);
-          fetchTicketData();
-          fetchAuditLogs();
+          displayScanResult(result);
+          syncTicket();
+          loadLogs();
           return;
-        } catch (err) {
+        } catch (_) {
           isStandaloneMode = true;
         }
       }
 
       // Standalone simulation logic
       const now = timestampMs || Date.now();
-      const start = performance.now();
       const iso = new Date(now).toISOString();
-      const t = clientVault.ticket;
+      const elapsed = +(performance.now() - start + 0.65).toFixed(2);
 
       let result;
-      if (t.status === 'USED') {
+      if (currentTicket.status === 'USED') {
         result = {
           status: 'ALREADY_USED',
-          ticketId: t.id,
+          ticketId: currentTicket.id,
           timestamp: iso,
-          latencyMs: +(performance.now() - start + 0.4).toFixed(2),
+          latencyMs: elapsed,
           gateId,
-          reason: `Alerta de seguridad (Replay Attack): El boleto ya fue usado a las ${t.usedAt} en la puerta ${t.usedGateId}.`
+          reason: `Alerta de seguridad (Replay Attack): El boleto ya fue usado a las ${currentTicket.usedAt} en la puerta ${currentTicket.usedGateId}.`
         };
-      } else if (t.status === 'REVOKED') {
+      } else if (currentTicket.status === 'REVOKED') {
         result = {
           status: 'TICKET_REVOKED',
-          ticketId: t.id,
+          ticketId: currentTicket.id,
           timestamp: iso,
-          latencyMs: +(performance.now() - start + 0.3).toFixed(2),
+          latencyMs: elapsed,
           gateId,
-          reason: `Acceso denegado: El boleto fue revocado o transferido.`
+          reason: 'Acceso denegado: Boleto revocado por transferencia.'
         };
       } else {
-        t.status = 'USED';
-        t.usedAt = iso;
-        t.usedGateId = gateId;
+        currentTicket.status = 'USED';
+        currentTicket.usedAt = iso;
+        currentTicket.usedGateId = gateId;
         result = {
           status: 'ACCESS_GRANTED',
-          ticketId: t.id,
+          ticketId: currentTicket.id,
           timestamp: iso,
-          latencyMs: +(performance.now() - start + 0.7).toFixed(2),
+          latencyMs: elapsed,
           gateId,
-          reason: `Acceso autorizado para ${t.ownerName} (${t.section} - ${t.seat}).`,
+          reason: `Acceso autorizado para ${currentTicket.ownerName} (${currentTicket.section} - ${currentTicket.seat}).`,
           matchedWindow: 0
         };
       }
 
-      clientVault.auditLogs.unshift(result);
-      renderGateResult(result);
-      fetchTicketData();
-      renderAuditLogs(clientVault.auditLogs);
+      localAuditLogs.unshift(result);
+      displayScanResult(result);
+      updateView();
+      renderLogs(localAuditLogs);
     }
 
-    function renderGateResult(result) {
-      const box = document.getElementById('gate-indicator');
-      const light = document.getElementById('gate-light');
-      const statusText = document.getElementById('gate-text');
-      const latencyText = document.getElementById('gate-latency');
-      const reasonText = document.getElementById('gate-reason');
+    function displayScanResult(result) {
+      const box = document.getElementById('barrier-box');
+      const led = document.getElementById('gate-led');
+      const verdict = document.getElementById('barrier-verdict');
+      const latency = document.getElementById('barrier-latency');
+      const desc = document.getElementById('barrier-desc');
 
-      latencyText.textContent = `Latencia: ${result.latencyMs} ms (Target <80ms)`;
-      reasonText.textContent = result.reason;
+      latency.textContent = `Latencia de validación: ${result.latencyMs} ms`;
+      desc.textContent = result.reason;
 
       if (result.status === 'ACCESS_GRANTED') {
-        box.className = 'gate-indicator-box status-granted';
-        light.className = 'gate-light green';
-        statusText.textContent = 'ACCESO CONCEDIDO ✔';
-        statusText.style.color = '#10b981';
+        playBeep(true);
+        box.style.borderColor = 'var(--tiktok-success)';
+        box.style.boxShadow = '0 0 30px rgba(0, 242, 152, 0.3)';
+        led.className = 'gate-led green';
+        verdict.textContent = 'ACCESO CONCEDIDO ✔';
+        verdict.style.color = 'var(--tiktok-success)';
       } else {
-        box.className = 'gate-indicator-box status-denied';
-        light.className = 'gate-light red';
-        statusText.textContent = `DENEGADO: ${result.status}`;
-        statusText.style.color = '#f43f5e';
+        playBeep(false);
+        box.style.borderColor = 'var(--tiktok-red)';
+        box.style.boxShadow = '0 0 30px var(--tiktok-red-glow)';
+        led.className = 'gate-led red';
+        verdict.textContent = `BLOQUEADO: ${result.status}`;
+        verdict.style.color = 'var(--tiktok-red)';
       }
     }
 
-    function renderAuditLogs(scans) {
-      const tbody = document.getElementById('audit-tbody');
-      if (!scans || scans.length === 0) return;
+    function renderLogs(logs) {
+      const tbody = document.getElementById('audit-table-body');
+      if (!logs || logs.length === 0) return;
 
-      tbody.innerHTML = scans.slice(0, 10).map(s => {
-        const isOk = s.status === 'ACCESS_GRANTED';
+      tbody.innerHTML = logs.slice(0, 10).map(s => {
+        const ok = s.status === 'ACCESS_GRANTED';
         const time = new Date(s.timestamp).toLocaleTimeString();
         return `
           <tr>
             <td>${time}</td>
             <td>${s.gateId}</td>
             <td>${s.ticketId}</td>
-            <td class="${isOk ? 'tag-success' : 'tag-error'}">${s.status}</td>
+            <td class="${ok ? 'tag-granted' : 'tag-denied'}">${s.status}</td>
             <td>${s.latencyMs}ms</td>
             <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${s.reason}</td>
           </tr>
@@ -1038,115 +1326,174 @@
       }).join('');
     }
 
-    // Fetch Audit Logs
-    async function fetchAuditLogs() {
+    async function loadLogs() {
       if (isStandaloneMode) {
-        renderAuditLogs(clientVault.auditLogs);
+        renderLogs(localAuditLogs);
         return;
       }
       try {
         const res = await fetch('/api/audit');
         const data = await res.json();
-        renderAuditLogs(data.scans);
-      } catch (err) {
-        renderAuditLogs(clientVault.auditLogs);
+        renderLogs(data.scans);
+      } catch (_) {
+        renderLogs(localAuditLogs);
       }
     }
 
-    // Event Handlers
-    document.getElementById('btn-scan-valid').addEventListener('click', () => {
-      if (lastUsedPayload) {
-        executeScan(lastUsedPayload);
-      }
-    });
-
-    document.getElementById('btn-scan-replay').addEventListener('click', () => {
-      if (lastUsedPayload) {
-        // Scan the same payload again to trigger Replay Attack detection
-        executeScan(lastUsedPayload);
-      }
-    });
-
-    document.getElementById('btn-scan-drift').addEventListener('click', () => {
-      if (lastUsedPayload) {
-        // Phone 10 seconds ahead
-        executeScan(lastUsedPayload, Date.now() + 10000);
-      }
-    });
-
-    document.getElementById('btn-refresh-audit').addEventListener('click', fetchAuditLogs);
-
-    // Transfer Ticket
-    document.getElementById('btn-execute-transfer').addEventListener('click', async () => {
-      const toUserName = document.getElementById('transfer-name').value;
-      const toUserEmail = document.getElementById('transfer-email').value;
-      const transferPrice = parseFloat(document.getElementById('transfer-price').value || '0');
-      const alertBox = document.getElementById('transfer-alert');
-
-      if (!currentTicket) return;
+    // P2P Transfer
+    document.getElementById('btn-exec-transfer').addEventListener('click', async () => {
+      const name = document.getElementById('transfer-name').value;
+      const email = document.getElementById('transfer-email').value;
+      const price = parseFloat(document.getElementById('transfer-price').value || '0');
+      const alertBox = document.getElementById('transfer-status-alert');
+      alertBox.style.display = 'block';
 
       if (!isStandaloneMode) {
         try {
-          const body = {
-            ticketId: currentTicket.id,
-            fromUserId: currentTicket.currentOwnerId,
-            toUserId: 'USR-' + Math.random().toString(36).substring(2, 7).toUpperCase(),
-            toUserName,
-            toUserEmail,
-            transferPrice
-          };
-
           const res = await fetch('/api/transfer', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body)
+            body: JSON.stringify({
+              ticketId: currentTicket.id,
+              fromUserId: currentTicket.currentOwnerId,
+              toUserId: 'USR-' + Math.random().toString(36).substring(2, 7).toUpperCase(),
+              toUserName: name,
+              toUserEmail: email,
+              transferPrice: price
+            })
           });
-          const result = await res.json();
-
-          alertBox.style.display = 'block';
-          if (result.success) {
-            alertBox.style.color = '#34d399';
-            alertBox.innerHTML = `✔ Transferencia exitosa. Semilla re-claveada (${result.record.newSeedFingerprint}). Nuevo titular: ${result.updatedTicket.ownerName}`;
-            fetchTicketData();
-            fetchAuditLogs();
+          const data = await res.json();
+          if (data.success) {
+            alertBox.style.color = 'var(--tiktok-success)';
+            alertBox.innerHTML = `✔ Transferencia exitosa. Re-claveado completado (${data.record.newSeedFingerprint}). Titular: ${name}`;
+            syncTicket();
+            loadLogs();
           } else {
-            alertBox.style.color = '#f43f5e';
-            alertBox.textContent = `❌ ${result.error}`;
+            alertBox.style.color = 'var(--tiktok-red)';
+            alertBox.textContent = `❌ ${data.error}`;
           }
           return;
-        } catch (err) {
+        } catch (_) {
           isStandaloneMode = true;
         }
       }
 
-      // Standalone transfer logic
-      alertBox.style.display = 'block';
-      if (transferPrice > clientVault.ticket.faceValue) {
-        alertBox.style.color = '#f43f5e';
-        alertBox.textContent = `❌ Violación de política anti-reventa: El precio ($${transferPrice}) excede el valor facial oficial ($${clientVault.ticket.faceValue}).`;
+      // Standalone transfer
+      if (price > currentTicket.faceValue) {
+        alertBox.style.color = 'var(--tiktok-red)';
+        alertBox.textContent = `❌ Violación de política anti-reventa: El precio ($${price}) excede el valor facial oficial ($${currentTicket.faceValue}).`;
         return;
       }
-      if (clientVault.ticket.transferCount >= clientVault.ticket.maxTransfers) {
-        alertBox.style.color = '#f43f5e';
-        alertBox.textContent = `❌ Límite de transferencias alcanzado (${clientVault.ticket.transferCount}/${clientVault.ticket.maxTransfers}).`;
+      if (currentTicket.transferCount >= currentTicket.maxTransfers) {
+        alertBox.style.color = 'var(--tiktok-red)';
+        alertBox.textContent = `❌ Límite de transferencias alcanzado (${currentTicket.transferCount}/${currentTicket.maxTransfers}).`;
         return;
       }
 
-      clientVault.ticket.ownerName = toUserName;
-      clientVault.ticket.ownerEmail = toUserEmail;
-      clientVault.ticket.currentOwnerId = 'USR-' + Math.random().toString(36).substring(2, 7).toUpperCase();
-      clientVault.ticket.transferCount += 1;
-      clientVault.ticket.status = 'ACTIVE';
-      clientVault.ticket.seedHex = Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
+      currentTicket.ownerName = name;
+      currentTicket.ownerEmail = email;
+      currentTicket.currentOwnerId = 'USR-' + Math.random().toString(36).substring(2, 7).toUpperCase();
+      currentTicket.transferCount += 1;
+      currentTicket.status = 'ACTIVE';
+      currentTicket.seedHex = Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
 
-      alertBox.style.color = '#34d399';
-      alertBox.innerHTML = `✔ Transferencia exitosa (Modo Cloudflare Standalone). Semilla re-claveada (${clientVault.ticket.seedHex.substring(0, 12)}). Nuevo titular: ${toUserName}`;
-      fetchTicketData();
+      alertBox.style.color = 'var(--tiktok-success)';
+      alertBox.innerHTML = `✔ Transferencia exitosa. Semilla re-claveada (${currentTicket.seedHex.substring(0, 12)}). Nuevo titular: ${name}`;
+      updateView();
     });
 
-    // Initial Load
-    fetchTicketData();
-    fetchAuditLogs();
+    // Button event listeners
+    document.getElementById('btn-scan-live').addEventListener('click', () => {
+      if (lastUsedPayload) scanTurnstile(lastUsedPayload);
+    });
+
+    document.getElementById('btn-scan-replay').addEventListener('click', () => {
+      if (lastUsedPayload) scanTurnstile(lastUsedPayload);
+    });
+
+    document.getElementById('btn-scan-drift').addEventListener('click', () => {
+      if (lastUsedPayload) scanTurnstile(lastUsedPayload, Date.now() + 10000);
+    });
+
+    document.getElementById('btn-refresh-logs').addEventListener('click', loadLogs);
+
+    // Brightness Boost
+    document.getElementById('btn-boost-brightness').addEventListener('click', () => {
+      const casing = document.getElementById('qr-casing');
+      casing.classList.toggle('brightness-boost');
+    });
+
+    // Apple Wallet Modal
+    document.getElementById('btn-apple-wallet').addEventListener('click', () => {
+      const modal = document.getElementById('wallet-modal');
+      modal.style.display = 'flex';
+      renderRealQr('modal-qr-canvas', lastUsedPayload);
+    });
+
+    document.getElementById('btn-close-modal').addEventListener('click', () => {
+      document.getElementById('wallet-modal').style.display = 'none';
+    });
+
+    document.getElementById('btn-quick-transfer').addEventListener('click', () => {
+      // Switch view tab to transfer
+      switchView('transfer');
+    });
+
+    // View Tabs Switching Logic
+    const tabs = document.querySelectorAll('.nav-tab');
+    function switchView(viewName) {
+      tabs.forEach(t => t.classList.remove('active'));
+      const activeTab = document.querySelector(`.nav-tab[data-view="${viewName}"]`);
+      if (activeTab) activeTab.classList.add('active');
+
+      const secWallet = document.getElementById('section-wallet');
+      const secTurnstile = document.getElementById('section-turnstile');
+      const secTransfer = document.getElementById('section-transfer');
+      const secAudit = document.getElementById('section-audit');
+      const container = document.getElementById('main-container');
+
+      if (viewName === 'dual') {
+        container.style.gridTemplateColumns = window.innerWidth > 1024 ? '420px 1fr' : '1fr';
+        secWallet.style.display = 'flex';
+        secTurnstile.style.display = 'block';
+        secTransfer.style.display = 'block';
+        secAudit.style.display = 'block';
+      } else if (viewName === 'wallet') {
+        container.style.gridTemplateColumns = '1fr';
+        secWallet.style.display = 'flex';
+        secTurnstile.style.display = 'none';
+        secTransfer.style.display = 'none';
+        secAudit.style.display = 'none';
+      } else if (viewName === 'turnstile') {
+        container.style.gridTemplateColumns = '1fr';
+        secWallet.style.display = 'none';
+        secTurnstile.style.display = 'block';
+        secTransfer.style.display = 'none';
+        secAudit.style.display = 'none';
+      } else if (viewName === 'transfer') {
+        container.style.gridTemplateColumns = '1fr';
+        secWallet.style.display = 'none';
+        secTurnstile.style.display = 'none';
+        secTransfer.style.display = 'block';
+        secAudit.style.display = 'none';
+      } else if (viewName === 'audit') {
+        container.style.gridTemplateColumns = '1fr';
+        secWallet.style.display = 'none';
+        secTurnstile.style.display = 'none';
+        secTransfer.style.display = 'none';
+        secAudit.style.display = 'block';
+      }
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        switchView(tab.getAttribute('data-view'));
+      });
+    });
+
+    // Initial load
+    syncTicket();
+    loadLogs();
   </script>
 </body>
 </html>

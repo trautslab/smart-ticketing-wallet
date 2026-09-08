@@ -9,6 +9,7 @@
  * 5. Transferencia P2P con re-claveado criptográfico atómico.
  */
 
+import QRCode from 'qrcode';
 import { TicketVault } from '../src/core/ticket-vault.js';
 import { TurnstileValidator } from '../src/core/turnstile-validator.js';
 import { QrPayloadEncoder } from '../src/core/qr-payload.js';
@@ -72,6 +73,13 @@ async function runDemo() {
     console.log(`   ${colors.bright}Paso ${step}:${colors.reset} [Contador: ${colors.cyan}${payload.counterHex}${colors.reset}] [MAC: ${colors.magenta}${payload.authMac}${colors.reset}]`);
     console.log(`   ↳ Payload QR Crudo: ${colors.dim}${payload.rawPayload}${colors.reset}`);
     console.log(`   ↳ Expira en: ${colors.yellow}${remaining}s${colors.reset} ${'█'.repeat(remaining)}${'░'.repeat(15 - remaining)}`);
+    
+    if (step === 1) {
+      console.log(`\n   ${colors.cyan}CÓDIGO QR ÓPTICO REAL (ISO/IEC 18004) ESCANEABLE CON TU TELÉFONO:${colors.reset}`);
+      const qrTerminal = await QRCode.toString(payload.rawPayload, { type: 'terminal', small: true });
+      const indentedQr = qrTerminal.split('\n').map(line => '   ' + line).join('\n');
+      console.log(indentedQr);
+    }
     console.log('');
     await sleep(1000);
   }
