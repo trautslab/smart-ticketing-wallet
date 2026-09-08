@@ -28,7 +28,7 @@ export const GeofenceControlBar: React.FC<GeofenceControlBarProps> = ({
             {venueName} (Perímetro 500m)
           </div>
           <div className="geofence-status">
-            {isInsideGeofence ? '📍 DENTRO DEL PERÍMETRO — TICKET DESBLOQUEADO' : '🚫 FUERA DEL PERÍMETRO — TICKET EN REPOSO'}
+            {isInsideGeofence ? '📍 DENTRO DEL PERÍMETRO' : '🚫 FUERA DEL PERÍMETRO'}
           </div>
         </div>
       </div>

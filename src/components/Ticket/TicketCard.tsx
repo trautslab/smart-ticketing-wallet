@@ -42,7 +42,7 @@ export const TicketCard: React.FC<TicketCardProps> = ({
           id="btn-mode-qr"
         >
           <span>📱</span>
-          <span>QR Dinámico (15s)</span>
+          <span>QR Dinámico</span>
         </button>
         <button
           className={`tech-btn ${techMode === 'NFC' ? 'active' : ''}`}
@@ -50,7 +50,7 @@ export const TicketCard: React.FC<TicketCardProps> = ({
           id="btn-mode-nfc"
         >
           <span>💳</span>
-          <span>NFC Contactless</span>
+          <span>Contactless NFC</span>
         </button>
       </div>
 
@@ -120,7 +120,7 @@ export const TicketCard: React.FC<TicketCardProps> = ({
             title="Envía instantáneamente este token al torniquete para verificar acceso"
           >
             <span>🚀</span>
-            <span>Escanear en Torniquete Instantáneo (&lt;42ms)</span>
+            <span>Escanear en Torniquete (&lt;42ms)</span>
           </button>
         </div>
 

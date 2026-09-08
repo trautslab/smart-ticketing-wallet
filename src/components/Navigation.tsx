@@ -4,17 +4,23 @@ import { ActiveTab } from '../types';
 interface NavigationProps {
   activeTab: ActiveTab;
   onSelectTab: (tab: ActiveTab) => void;
+  isDesktop?: boolean;
 }
 
-export const Navigation: React.FC<NavigationProps> = ({ activeTab, onSelectTab }) => {
-  const navItems: { id: ActiveTab; label: string; icon: string; badge?: string }[] = [
+export const Navigation: React.FC<NavigationProps> = ({ activeTab, onSelectTab, isDesktop = false }) => {
+  const isLargeScreen = isDesktop || (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(min-width: 900px)').matches);
+
+  const baseNavItems: { id: ActiveTab; label: string; icon: string; badge?: string }[] = [
     { id: 'ticket', label: 'Boleto', icon: '🎫' },
     { id: 'turnstile', label: 'Torniquete', icon: '🛡️' },
-    { id: 'boardroom', label: 'Junta Directiva', icon: '📊', badge: 'ROI' },
+    { id: 'boardroom', label: 'Directorio', icon: '📊', badge: 'ROI' },
     { id: 'transfer', label: 'Transferir', icon: '🔄' },
-    { id: 'audit', label: 'Auditoría', icon: '📜' },
-    { id: 'dual', label: 'Vista Dual', icon: '🖥️' }
+    { id: 'audit', label: 'Auditoría', icon: '📜' }
   ];
+
+  const navItems = isLargeScreen
+    ? [...baseNavItems, { id: 'dual' as ActiveTab, label: 'Vista Dual', icon: '🖥️' }]
+    : baseNavItems;
 
   return (
     <nav className="bottom-nav">
@@ -24,7 +30,7 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, onSelectTab }
           <button
             key={item.id}
             id={`nav-${item.id}`}
-            className={`nav-item ${isActive ? 'active' : ''}`}
+            className={`nav-item ${item.id === 'dual' ? 'nav-item-dual' : ''} ${isActive ? 'active' : ''}`}
             onClick={() => onSelectTab(item.id)}
             aria-label={item.label}
           >

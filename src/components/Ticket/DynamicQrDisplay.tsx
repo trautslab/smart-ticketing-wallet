@@ -163,7 +163,7 @@ export const DynamicQrDisplay: React.FC<DynamicQrDisplayProps> = ({
         </div>
 
         <div className="totp-pin-box">
-          <span className="pin-label">PIN DINÁMICO</span>
+          <span className="pin-label">PIN TOTP</span>
           <span className="pin-value">
             {totp ? `${totp.pin.slice(0, 4)} ${totp.pin.slice(4)}` : '•••• ••••'}
           </span>
@@ -177,7 +177,7 @@ export const DynamicQrDisplay: React.FC<DynamicQrDisplayProps> = ({
           title="Transmite el código por ráfagas de audio de alta frecuencia si tu pantalla está rota"
         >
           <span>🔊</span>
-          <span>Respaldo Acústico (Pantalla Rota)</span>
+          <span>Respaldo Acústico (18kHz)</span>
         </button>
 
         <div className="wallet-pass-row">
@@ -186,14 +186,14 @@ export const DynamicQrDisplay: React.FC<DynamicQrDisplayProps> = ({
             onClick={() => handleDownloadWallet('apple')}
           >
             <span></span>
-            <span>Add to Apple Wallet</span>
+            <span>Apple Wallet</span>
           </button>
           <button
             className="btn-wallet google-wallet"
             onClick={() => handleDownloadWallet('google')}
           >
-            <span style={{ color: '#4285F4' }}>G</span>
-            <span>Add to Google Wallet</span>
+            <span style={{ color: '#4285F4', fontWeight: 800 }}>G</span>
+            <span>Google Wallet</span>
           </button>
         </div>
       </div>

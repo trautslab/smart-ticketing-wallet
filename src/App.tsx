@@ -42,6 +42,17 @@ export const App: React.FC = () => {
   const [isBrandModalOpen, setIsBrandModalOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isOffline, setIsOffline] = useState<boolean>(typeof navigator !== 'undefined' ? !navigator.onLine : false);
+  const [isDesktop, setIsDesktop] = useState<boolean>(
+    typeof window !== 'undefined' ? window.innerWidth >= 900 : false
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 900);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Core Hooks for Turnstile and Mesh Networking
   const mesh = useMeshNetwork();
@@ -110,6 +121,7 @@ export const App: React.FC = () => {
         customBrandName={customBrandName}
         onOpenBrandModal={() => setIsBrandModalOpen(true)}
         isOffline={isOffline}
+        isDesktop={isDesktop}
       />
 
       {/* Main Content View Switcher */}
@@ -165,7 +177,7 @@ export const App: React.FC = () => {
       </main>
 
       {/* Navigation Bar (Mobile bottom bar / Desktop pills) */}
-      <Navigation activeTab={activeTab} onSelectTab={setActiveTab} />
+      <Navigation activeTab={activeTab} onSelectTab={setActiveTab} isDesktop={isDesktop} />
 
       {/* Organizer Custom Branding Modal */}
       <BrandingModal

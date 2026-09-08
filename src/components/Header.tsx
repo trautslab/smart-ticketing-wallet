@@ -6,13 +6,15 @@ interface HeaderProps {
   customBrandName: string;
   onOpenBrandModal: () => void;
   isOffline: boolean;
+  isDesktop?: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   brand,
   customBrandName,
   onOpenBrandModal,
-  isOffline
+  isOffline,
+  isDesktop = false
 }) => {
   const getBrandDisplayName = () => {
     switch (brand) {
@@ -29,7 +31,7 @@ export const Header: React.FC<HeaderProps> = ({
     <header>
       <div className="brand-header" onClick={onOpenBrandModal} style={{ cursor: 'pointer' }} title="Cambiar organizador o logo">
         <div className="brand-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path
               d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"
               fill="url(#brandGrad)"
@@ -46,7 +48,7 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
         <div>
           <div className="brand-title">
-            {getBrandDisplayName()} <span style={{ fontSize: '0.68rem', color: 'var(--tiktok-cyan)' }}>PRO</span>
+            {getBrandDisplayName()} <span style={{ fontSize: '0.65rem', color: 'var(--tiktok-cyan)' }}>PRO</span>
           </div>
           <div className="brand-tagline">SMART TICKETING ENGINE</div>
         </div>
@@ -55,29 +57,16 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="header-badges">
         <button
           onClick={onOpenBrandModal}
-          className="brand-badge"
-          style={{
-            background: 'rgba(255, 255, 255, 0.06)',
-            border: '1px solid rgba(255, 255, 255, 0.12)',
-            borderRadius: '16px',
-            color: 'var(--tiktok-white)',
-            padding: '4px 10px',
-            fontSize: '0.75rem',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px'
-          }}
+          className="brand-badge-btn"
+          title="Cambiar marca / organizador"
         >
           <span>🎨</span>
-          <span style={{ maxWidth: '90px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-            {getBrandDisplayName()}
-          </span>
+          {isDesktop && <span className="brand-badge-label">{getBrandDisplayName()}</span>}
         </button>
 
         <div className="offline-pill" title="Protocolo 100% Offline RFC 6238">
           <span className="live-dot" />
-          <span>{isOffline ? 'MODO AVION (OFFLINE)' : 'OFFLINE AIRPLANE-READY'}</span>
+          <span>{isOffline ? 'MODO AVIÓN' : '100% OFFLINE'}</span>
         </div>
       </div>
     </header>
