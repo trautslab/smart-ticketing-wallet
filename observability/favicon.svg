@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="tkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#25F4EE"/>
+      <stop offset="100%" stop-color="#FE2C55"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#25F4EE" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#FE2C55" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Dark Rounded App Squircle -->
+  <rect width="64" height="64" rx="16" fill="#010101"/>
+  <rect width="62" height="62" x="1" y="1" rx="15" fill="#0c0c12" stroke="url(#tkGrad)" stroke-width="2"/>
+  
+  <!-- Ticket Body with Notches -->
+  <path d="M 14 20 C 14 17, 17 14, 20 14 L 44 14 C 47 14, 50 17, 50 20 L 50 28 C 47 28, 45 30, 45 32 C 45 34, 47 36, 50 36 L 50 44 C 50 47, 47 50, 44 50 L 20 50 C 17 50, 14 47, 14 44 L 14 36 C 17 36, 19 34, 19 32 C 19 30, 17 28, 14 28 Z" fill="#181822" stroke="url(#tkGrad)" stroke-width="1.8"/>
+
+  <!-- Perforated Line -->
+  <line x1="26" y1="18" x2="26" y2="46" stroke="#8A8B91" stroke-width="1.5" stroke-dasharray="2.5,2.5" stroke-linecap="round"/>
+
+  <!-- Monogram TY! -->
+  <text x="37" y="32" font-family="-apple-system, system-ui, 'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="12" fill="#25F4EE" text-anchor="middle">TY</text>
+  <text x="44" y="32" font-family="-apple-system, system-ui, 'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="12" fill="#FE2C55" text-anchor="middle">!</text>
+
+  <!-- Small rotating dot indicator -->
+  <circle cx="38" cy="42" r="2.5" fill="#00F298"/>
+</svg>
