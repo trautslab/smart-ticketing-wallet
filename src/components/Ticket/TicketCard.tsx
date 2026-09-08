@@ -18,7 +18,10 @@ export const TicketCard: React.FC<TicketCardProps> = ({
   onShowToast,
   showSimulateScan = false
 }) => {
+  const searchParams = new URLSearchParams(window.location.search);
+  const initialInside = searchParams.get('geofence') !== 'outside';
   const [techMode, setTechMode] = useState<TechMode>('QR');
+  const [isInsideGeofence, setIsInsideGeofence] = useState<boolean>(initialInside);
 
   const { totp, remainingSeconds, progressPercent } = useDynamicQr({
     ticketId: ticket.id,
@@ -56,8 +59,12 @@ export const TicketCard: React.FC<TicketCardProps> = ({
         </button>
       </div>
 
-      {/* Geofence Perimeter Bar */}
-      <GeofenceControlBar venueName={ticket.venue} />
+      {/* Geofence Perimeter Bar connected to real state */}
+      <GeofenceControlBar
+        venueName={ticket.venue}
+        isInside={isInsideGeofence}
+        onGeofenceToggle={setIsInsideGeofence}
+      />
 
       {/* Main Ticket Glass Card */}
       <div className="ticket-card-wrapper">
@@ -104,6 +111,7 @@ export const TicketCard: React.FC<TicketCardProps> = ({
               progressPercent={progressPercent}
               ticketId={ticket.id}
               onShowToast={onShowToast}
+              isInsideGeofence={isInsideGeofence}
             />
           ) : (
             <ContactlessNfcCard
@@ -128,16 +136,16 @@ export const TicketCard: React.FC<TicketCardProps> = ({
           </div>
         )}
 
-        {/* Security & Ownership Footer */}
+        {/* Security & Ownership Footer (Consumer-friendly) */}
         <div className="ticket-security-footer">
           <div className="owner-info">
             <span className="owner-title">TITULAR NOMINATIVO</span>
             <span className="owner-name">{ticket.ownerName}</span>
             <span className="owner-id">ID: {ticket.currentOwnerId} • DNI: 74829104</span>
           </div>
-          <div className="crypto-badge">
+          <div className="crypto-badge" title="Protección criptográfica anti-clonación activa">
             <span className="shield-icon">🛡️</span>
-            <span>SEED CRIPTOGRÁFICO ROTATIVO</span>
+            <span>ENTRADA OFICIAL SEGURA</span>
           </div>
         </div>
       </div>

@@ -6,7 +6,6 @@ interface NavigationProps {
   onSelectTab: (tab: ActiveTab) => void;
   userRole: UserAppRole;
   staffUser: StaffUser | null;
-  onOpenStaffModal: () => void;
   onLogoutStaff: () => void;
   isDesktop?: boolean;
 }
@@ -15,22 +14,20 @@ export const Navigation: React.FC<NavigationProps> = ({
   activeTab,
   onSelectTab,
   userRole,
-  staffUser,
-  onOpenStaffModal,
+  staffUser: _staffUser,
   onLogoutStaff,
   isDesktop = false
 }) => {
   const isLargeScreen = isDesktop || (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(min-width: 900px)').matches);
 
   // Define navigation items depending on current Role (RBAC/ABAC)
-  let navItems: { id: ActiveTab | 'staff_login' | 'logout'; label: string; icon: string; badge?: string }[] = [];
+  let navItems: { id: ActiveTab | 'logout'; label: string; icon: string; badge?: string }[] = [];
 
   if (userRole === 'attendee') {
-    // Pure Attendee Wallet Navigation
+    // Pure Attendee Wallet Navigation: strictly customer-facing
     navItems = [
       { id: 'ticket', label: 'Mi Entrada', icon: '🎫' },
-      { id: 'transfer', label: 'Transferir', icon: '🔄' },
-      { id: 'staff_login', label: 'Staff', icon: '🔒' }
+      { id: 'transfer', label: 'Transferir', icon: '🔄' }
     ];
 
     if (isLargeScreen) {
@@ -64,9 +61,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       {navItems.map(item => {
         const isActive = activeTab === item.id;
         const handleClick = () => {
-          if (item.id === 'staff_login') {
-            onOpenStaffModal();
-          } else if (item.id === 'logout') {
+          if (item.id === 'logout') {
             onLogoutStaff();
           } else {
             onSelectTab(item.id as ActiveTab);

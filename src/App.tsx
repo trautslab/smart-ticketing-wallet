@@ -7,8 +7,6 @@ import { TurnstileStation } from './components/Turnstile/TurnstileStation';
 import { BoardroomPitch } from './components/Boardroom/BoardroomPitch';
 import { P2PTransferForm } from './components/Transfer/P2PTransferForm';
 import { AuditLedgerTable } from './components/Audit/AuditLedgerTable';
-import { BrandingModal } from './components/Common/BrandingModal';
-import { StaffLoginModal } from './components/Auth/StaffLoginModal';
 import { ToastNotification } from './components/Common/ToastNotification';
 import { useMeshNetwork } from './hooks/useMeshNetwork';
 import { useTurnstileGate } from './hooks/useTurnstileGate';
@@ -39,61 +37,60 @@ export const App: React.FC = () => {
   // Role-Based State Management (RBAC/ABAC)
   const [userRole, setUserRole] = useState<UserAppRole>('attendee');
   const [staffUser, setStaffUser] = useState<StaffUser | null>(null);
-  const [isStaffModalOpen, setIsStaffModalOpen] = useState<boolean>(false);
 
   const [activeTab, setActiveTab] = useState<ActiveTab>('ticket');
   const [ticket, setTicket] = useState<Ticket>(INITIAL_TICKET);
-  const [brand, setBrand] = useState<OrganizerBrand>('tiketya');
-  const [customBrandName, setCustomBrandName] = useState<string>('TiketYA!');
-  const [isBrandModalOpen, setIsBrandModalOpen] = useState<boolean>(false);
+  const [brand] = useState<OrganizerBrand>('tiketya');
+  const [customBrandName] = useState<string>('TiketYA!');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isOffline, setIsOffline] = useState<boolean>(typeof navigator !== 'undefined' ? !navigator.onLine : false);
   const [isDesktop, setIsDesktop] = useState<boolean>(
     typeof window !== 'undefined' ? window.innerWidth >= 900 : false
   );
 
-  // Parse URL query parameter on initial load (e.g. ?role=operator)
+  // Parse URL query parameter or path on initial load (e.g. ?role=operator or ?ticket=TKT-LIMA-2026-002)
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const params = new URLSearchParams(window.location.search);
-    const roleParam = params.get('role')?.toLowerCase();
+    const path = window.location.pathname.toLowerCase();
+    const roleParam = (params.get('role') || '').toLowerCase();
 
-    if (roleParam === 'operator' || roleParam === 'turnstile') {
+    if (roleParam === 'operator' || roleParam === 'turnstile' || path.includes('/operator')) {
       const opUser: StaffUser = {
-        id: 'staff-op-url',
+        id: 'staff-op-01',
         name: 'Juan Pérez (Torniquete)',
         role: 'operator',
         title: 'Operador de Control de Accesos',
         badgeId: 'BADGE-OP-741',
         permissions: ['scan_qr', 'scan_nfc', 'switch_gate', 'view_station_stats'],
         assignedGate: 'GATE-A',
-        token: 'URL_OP_TOKEN'
+        token: 'STAFF_JWT_OPERATOR'
       };
       setStaffUser(opUser);
       setUserRole('operator');
       setActiveTab('turnstile');
-    } else if (roleParam === 'auditor') {
+    } else if (roleParam === 'auditor' || path.includes('/auditor')) {
       const audUser: StaffUser = {
-        id: 'staff-aud-url',
+        id: 'staff-aud-01',
         name: 'Elena Rostova (CISO)',
         role: 'auditor',
         title: 'Auditora de Seguridad Criptográfica',
         badgeId: 'BADGE-SEC-009',
         permissions: ['view_audit_ledger', 'reconcile_mesh', 'export_ledger'],
-        token: 'URL_AUD_TOKEN'
+        token: 'STAFF_JWT_AUDITOR'
       };
       setStaffUser(audUser);
       setUserRole('auditor');
       setActiveTab('audit');
-    } else if (roleParam === 'boardroom' || roleParam === 'directorio') {
+    } else if (roleParam === 'boardroom' || roleParam === 'directorio' || path.includes('/boardroom')) {
       const dirUser: StaffUser = {
-        id: 'staff-dir-url',
+        id: 'staff-dir-01',
         name: 'Directorio Ejecutivo TrautsLab',
         role: 'boardroom',
         title: 'Directorio & Inversionistas',
         badgeId: 'BADGE-DIR-001',
         permissions: ['view_boardroom_roi', 'view_fraud_metrics'],
-        token: 'URL_DIR_TOKEN'
+        token: 'STAFF_JWT_BOARDROOM'
       };
       setStaffUser(dirUser);
       setUserRole('boardroom');
@@ -101,11 +98,14 @@ export const App: React.FC = () => {
     }
   }, []);
 
-  // Fetch ticket metadata from server API if online
+  // Fetch ticket metadata from server API (supports ?ticket=TKT-LIMA-2026-002, etc.)
   useEffect(() => {
     const fetchServerTicket = async () => {
       try {
-        const res = await fetch('/api/ticket?id=TKT-LIMA-2026-VIP');
+        const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+        const requestedId = params?.get('ticket') || 'TKT-LIMA-2026-VIP';
+
+        const res = await fetch(`/api/ticket?id=${encodeURIComponent(requestedId)}`);
         if (res.ok) {
           const data = await res.json() as any;
           if (data && data.id) {
@@ -123,7 +123,7 @@ export const App: React.FC = () => {
           }
         }
       } catch {
-        // Continue with initial ticket if offline
+        // Fallback to initial ticket on network failure
       }
     };
     fetchServerTicket();
@@ -179,19 +179,6 @@ export const App: React.FC = () => {
     }
   };
 
-  // Staff Login Handler
-  const handleStaffLogin = (user: StaffUser) => {
-    setStaffUser(user);
-    setUserRole(user.role);
-    if (user.role === 'operator') {
-      setActiveTab('turnstile');
-    } else if (user.role === 'auditor') {
-      setActiveTab('audit');
-    } else if (user.role === 'boardroom') {
-      setActiveTab('boardroom');
-    }
-  };
-
   // Staff Logout Handler
   const handleStaffLogout = () => {
     setStaffUser(null);
@@ -202,6 +189,7 @@ export const App: React.FC = () => {
       url.searchParams.delete('role');
       window.history.replaceState({}, '', url.pathname);
     }
+    showToast('👋 Sesión cerrada. Regresando a la billetera del cliente.');
   };
 
   // Handle P2P Transfer execution
@@ -223,16 +211,14 @@ export const App: React.FC = () => {
 
   return (
     <div className="app-layout">
-      {/* Header with Organizer Branding and Role / Offline status */}
+      {/* Header with Official Branding and Connection Status */}
       <Header
         brand={brand}
         customBrandName={customBrandName}
-        onOpenBrandModal={() => setIsBrandModalOpen(true)}
         isOffline={isOffline}
         isDesktop={isDesktop}
         userRole={userRole}
         staffUser={staffUser}
-        onOpenStaffModal={() => setIsStaffModalOpen(true)}
         onLogoutStaff={handleStaffLogout}
       />
 
@@ -261,13 +247,11 @@ export const App: React.FC = () => {
             </div>
           </div>
         ) : activeTab === 'ticket' ? (
-          <>
-            <TicketCard
-              ticket={ticket}
-              onShowToast={showToast}
-              showSimulateScan={false}
-            />
-          </>
+          <TicketCard
+            ticket={ticket}
+            onShowToast={showToast}
+            showSimulateScan={false}
+          />
         ) : activeTab === 'turnstile' ? (
           <TurnstileStation
             ticket={ticket}
@@ -293,39 +277,14 @@ export const App: React.FC = () => {
         )}
       </main>
 
-      {/* Navigation Bar (Role-Aware Bottom Bar) */}
+      {/* Navigation Bar (Role-Aware Bottom Bar: Only 'Mi Entrada' & 'Transferir' for customer) */}
       <Navigation
         activeTab={activeTab}
         onSelectTab={setActiveTab}
         userRole={userRole}
         staffUser={staffUser}
-        onOpenStaffModal={() => setIsStaffModalOpen(true)}
         onLogoutStaff={handleStaffLogout}
         isDesktop={isDesktop}
-      />
-
-      {/* Organizer Custom Branding Modal */}
-      <BrandingModal
-        isOpen={isBrandModalOpen}
-        onClose={() => setIsBrandModalOpen(false)}
-        currentBrand={brand}
-        currentCustomName={customBrandName}
-        onSaveBrand={(newBrand, newName) => {
-          setBrand(newBrand);
-          setCustomBrandName(newName);
-          showToast(`🎨 Marca actualizada: ${newBrand === 'custom' ? newName : newBrand.toUpperCase()}`);
-        }}
-      />
-
-      {/* Staff Intranet & RBAC Login Modal */}
-      <StaffLoginModal
-        isOpen={isStaffModalOpen}
-        onClose={() => setIsStaffModalOpen(false)}
-        currentUserRole={userRole}
-        staffUser={staffUser}
-        onLogin={handleStaffLogin}
-        onLogout={handleStaffLogout}
-        onShowToast={showToast}
       />
 
       {/* Toast Feedback Notification Pill */}

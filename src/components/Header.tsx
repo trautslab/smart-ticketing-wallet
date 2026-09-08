@@ -4,24 +4,20 @@ import { OrganizerBrand, UserAppRole, StaffUser } from '../types';
 interface HeaderProps {
   brand: OrganizerBrand;
   customBrandName: string;
-  onOpenBrandModal: () => void;
   isOffline: boolean;
   isDesktop?: boolean;
   userRole?: UserAppRole;
   staffUser?: StaffUser | null;
-  onOpenStaffModal?: () => void;
   onLogoutStaff?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   brand,
   customBrandName,
-  onOpenBrandModal,
   isOffline,
   isDesktop = false,
   userRole = 'attendee',
   staffUser = null,
-  onOpenStaffModal,
   onLogoutStaff
 }) => {
   const getBrandDisplayName = () => {
@@ -39,12 +35,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header>
-      <div
-        className="brand-header"
-        onClick={onOpenBrandModal}
-        style={{ cursor: 'pointer' }}
-        title="Cambiar organizador o logo"
-      >
+      <div className="brand-header">
         <div className="brand-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path
@@ -106,27 +97,6 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         ) : (
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            {onOpenStaffModal && (
-              <button
-                onClick={onOpenStaffModal}
-                className="brand-badge-btn"
-                title="Acceso al Portal de Personal / Operadores"
-                style={{ borderColor: 'rgba(0, 242, 254, 0.25)' }}
-              >
-                <span>🔒</span>
-                {isDesktop && <span className="brand-badge-label">Staff</span>}
-              </button>
-            )}
-
-            <button
-              onClick={onOpenBrandModal}
-              className="brand-badge-btn"
-              title="Cambiar marca / organizador"
-            >
-              <span>🎨</span>
-              {isDesktop && <span className="brand-badge-label">{getBrandDisplayName()}</span>}
-            </button>
-
             <div className="offline-pill" title="Protocolo 100% Offline RFC 6238">
               <span className="live-dot" />
               <span>{isOffline ? 'MODO AVIÓN' : '100% OFFLINE'}</span>
