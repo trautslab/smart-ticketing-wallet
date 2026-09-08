@@ -744,7 +744,7 @@
       border: none;
       color: var(--tiktok-gray);
       cursor: pointer;
-      width: 25%;
+      flex: 1;
       height: 100%;
       gap: 3px;
       transition: all 0.15s ease;
@@ -875,85 +875,421 @@
       border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.15);
       padding: 1.25rem;
-    /* ORGANIZER & TIKETYA BRANDING STYLES */
-    .organizer-brand-banner {
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+    }
+
+    /* REFINED EXECUTIVE TICKET HEADER & SEAT STRIP */
+    .ticket-header-compact {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 0.6rem;
+      padding: 0 0.2rem;
+    }
+
+    .btn-gear-brand {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-gear-brand:hover {
+      background: rgba(37, 244, 238, 0.15);
+      border-color: var(--tiktok-cyan);
+      color: var(--tiktok-cyan);
+    }
+
+    .seat-strip-unified {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid var(--tiktok-border);
+      border-radius: 16px;
+      padding: 0.65rem 0.5rem;
+      width: 100%;
+      margin-top: 0.85rem;
+    }
+
+    .seat-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
-      width: 100%;
+      gap: 2px;
+      flex: 1;
     }
 
-    .organizer-brand-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      background: linear-gradient(135deg, rgba(37, 244, 238, 0.15), rgba(254, 44, 85, 0.15));
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 9999px;
-      padding: 6px 16px;
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
-    }
-
-    .organizer-icon {
-      font-size: 15px;
-    }
-
-    .organizer-title {
-      font-size: 13.5px;
-      font-weight: 800;
-      letter-spacing: 0.5px;
-      background: linear-gradient(90deg, var(--tiktok-cyan), #ffffff, var(--tiktok-red));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .organizer-tag {
-      font-size: 10px;
+    .seat-label {
+      font-size: 0.62rem;
       color: var(--tiktok-gray);
       text-transform: uppercase;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.06em;
       font-weight: 700;
-      margin-left: 4px;
-      border-left: 1px solid rgba(255, 255, 255, 0.18);
-      padding-left: 8px;
     }
 
-    .organizer-selector-pills {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .pill-btn, .pill-btn-upload {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: var(--tiktok-gray);
-      font-size: 11px;
-      font-weight: 600;
-      padding: 5px 12px;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      user-select: none;
-    }
-
-    .pill-btn:hover, .pill-btn-upload:hover {
-      background: rgba(255, 255, 255, 0.12);
+    .seat-value {
+      font-size: 0.8rem;
+      font-weight: 800;
       color: #fff;
     }
 
-    .pill-btn.active {
-      background: rgba(37, 244, 238, 0.18);
-      border-color: var(--tiktok-cyan);
+    .seat-divider {
+      width: 1px;
+      height: 22px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* BOARDROOM & EXECUTIVE PITCH STYLES */
+    .boardroom-container {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      padding-bottom: 2rem;
+    }
+
+    .boardroom-hero {
+      background: linear-gradient(135deg, rgba(22, 22, 30, 0.95), rgba(9, 9, 13, 0.98));
+      border: 1px solid rgba(37, 244, 238, 0.3);
+      border-radius: 20px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+    }
+
+    .badge-boardroom {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(90deg, rgba(37, 244, 238, 0.15), rgba(254, 44, 85, 0.15));
+      border: 1px solid var(--tiktok-cyan);
       color: var(--tiktok-cyan);
-      box-shadow: 0 0 10px rgba(37, 244, 238, 0.3);
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 999px;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.6rem;
+    }
+
+    .boardroom-main-title {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 0.4rem;
+      line-height: 1.2;
+    }
+
+    .boardroom-lead {
+      font-size: 0.82rem;
+      color: var(--tiktok-gray);
+      line-height: 1.45;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .kpi-card {
+      background: var(--tiktok-card);
+      border: 1px solid var(--tiktok-border);
+      border-radius: 16px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .kpi-metric {
+      font-size: 1.7rem;
+      font-weight: 900;
+      font-family: var(--font-mono);
+      line-height: 1;
+    }
+
+    .kpi-title {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .kpi-desc {
+      font-size: 0.68rem;
+      color: var(--tiktok-gray);
+      line-height: 1.35;
+    }
+
+    .demo-sandbox-card {
+      background: var(--tiktok-card);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 1.25rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .sandbox-badge {
+      font-size: 0.65rem;
+      color: var(--tiktok-cyan);
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .demo-sandbox-card h3 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+
+    .demo-sandbox-card p {
+      font-size: 0.75rem;
+      color: var(--tiktok-gray);
+      margin-bottom: 0.85rem;
+    }
+
+    .sandbox-actions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 0.65rem;
+      margin-bottom: 1rem;
+    }
+
+    .sandbox-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 0.75rem 0.85rem;
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      transition: all 0.2s ease;
+      color: #fff;
+    }
+
+    .sandbox-btn:hover {
+      background: rgba(37, 244, 238, 0.12);
+      border-color: var(--tiktok-cyan);
+      transform: translateY(-2px);
+    }
+
+    .sandbox-btn .s-icon {
+      font-size: 1.2rem;
+    }
+
+    .sandbox-btn .s-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .sandbox-btn .s-sub {
+      font-size: 0.66rem;
+      color: var(--tiktok-gray);
+    }
+
+    .sandbox-terminal {
+      background: #06060a;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      overflow: hidden;
+      font-family: var(--font-mono);
+      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.8);
+    }
+
+    .term-header {
+      background: #111118;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 6px 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .term-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27c93f; }
+
+    .term-title {
+      font-size: 0.65rem;
+      color: var(--tiktok-gray);
+      margin-left: 6px;
+      letter-spacing: 0.04em;
+    }
+
+    .term-body {
+      padding: 0.85rem;
+      font-size: 0.72rem;
+      color: var(--tiktok-cyan);
+      line-height: 1.5;
+      min-height: 90px;
+      white-space: pre-wrap;
+    }
+
+    .comparison-card {
+      background: var(--tiktok-card);
+      border: 1px solid var(--tiktok-border);
+      border-radius: 20px;
+      padding: 1.25rem;
+    }
+
+    .comp-title {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+      color: #fff;
+    }
+
+    .comp-table-wrapper {
+      overflow-x: auto;
+    }
+
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.74rem;
+      text-align: left;
+    }
+
+    .comp-table th, .comp-table td {
+      padding: 0.55rem 0.65rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .comp-table th {
+      color: var(--tiktok-gray);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.66rem;
+    }
+
+    .col-bad { color: var(--tiktok-red); }
+    .col-good { color: var(--tiktok-success); }
+    .col-star { color: var(--tiktok-cyan); font-weight: 800; }
+
+    /* MODAL DE PERSONALIZACIÓN Y AJUSTES DE MARCA */
+    .branding-modal-card {
+      background: #14141b;
+      width: 100%;
+      max-width: 380px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 1.35rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.95);
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .modal-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header-row h3 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .modal-subtext {
+      font-size: 0.72rem;
+      color: var(--tiktok-gray);
+      line-height: 1.4;
+    }
+
+    .brand-options-grid {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .brand-option-card {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 0.65rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      color: #fff;
+      transition: all 0.2s ease;
+    }
+
+    .brand-option-card.active {
+      background: rgba(37, 244, 238, 0.15);
+      border-color: var(--tiktok-cyan);
+      box-shadow: 0 0 12px rgba(37, 244, 238, 0.25);
+    }
+
+    .opt-icon { font-size: 1.2rem; }
+    .opt-info { display: flex; flex-direction: column; text-align: left; }
+    .opt-name { font-size: 0.76rem; font-weight: 800; }
+    .opt-desc { font-size: 0.62rem; color: var(--tiktok-gray); }
+
+    .upload-custom-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px dashed rgba(255, 255, 255, 0.18);
+      border-radius: 12px;
+      padding: 0.85rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .btn-upload-file {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--tiktok-cyan);
+      cursor: pointer;
+    }
+
+    .upload-hint {
+      font-size: 0.62rem;
+      color: var(--tiktok-gray);
+      line-height: 1.3;
+    }
+
+    .btn-primary-apply {
+      background: linear-gradient(90deg, var(--tiktok-cyan), #1ee2dc);
+      color: #010101;
+      font-size: 0.82rem;
+      font-weight: 800;
+      padding: 0.65rem;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+      transition: transform 0.15s ease;
+    }
+
+    .btn-primary-apply:active {
+      transform: scale(0.98);
     }
   </style>
 </head>
@@ -971,6 +1307,7 @@
 
     <!-- DESKTOP TOP TABS -->
     <div class="desktop-tabs" id="desktop-nav">
+      <button class="desktop-tab" data-target="boardroom">🏛️ Pitch Directorio</button>
       <button class="desktop-tab active" data-target="dual">🖥️ Vista Dual</button>
       <button class="desktop-tab" data-target="ticket">📱 Mi Boleto</button>
       <button class="desktop-tab" data-target="turnstile">🏟️ Torniquete Staff</button>
@@ -996,24 +1333,14 @@
       <div class="ticket-container">
         <div class="ticket-card-native">
           
-          <!-- ORGANIZER / TIKETYA BRANDING BANNER -->
-          <div class="organizer-brand-banner">
-            <div class="organizer-brand-badge" id="organizer-badge-display">
-              <span class="organizer-icon" id="organizer-icon-el">🎟️</span>
-              <span class="organizer-title" id="organizer-name-el">TiketYA!</span>
-              <span class="organizer-tag">Organizador Oficial</span>
-            </div>
-            <div class="organizer-selector-pills">
-              <button class="pill-btn active" data-org="tiketya" id="btn-org-tiketya">🎟️ TiketYA!</button>
-              <button class="pill-btn" data-org="rock" id="btn-org-rock">⚡ RockFest</button>
-              <label class="pill-btn-upload" title="Subir logo personalizado del organizador">
-                <span>📁 Subir Logo</span>
-                <input type="file" id="input-custom-logo" accept="image/*" style="display:none;">
-              </label>
-            </div>
+          <!-- SLEEK TOP BAR -->
+          <div class="ticket-header-compact">
+            <span class="badge-event-type">ENTRADA VIP OFICIAL</span>
+            <button class="btn-gear-brand" id="btn-open-branding-modal" title="Personalizar Organizador y Evento">
+              <span>⚙️</span> <span class="gear-brand-label" id="brand-tag-label">TiketYA!</span>
+            </button>
           </div>
 
-          <div class="badge-event-type">ENTRADA VIP OFICIAL</div>
           <h1 class="ticket-event-name" id="ui-event-name">Rock Revolution World Tour 2026</h1>
           <p class="ticket-venue-name" id="ui-event-venue">Estadio Nacional • Puerta 4 • Lima</p>
 
@@ -1032,24 +1359,26 @@
               <span class="timer-val-text" id="ring-sec">15s</span>
             </div>
             <div class="timer-meta-group">
-              <span class="timer-meta-label">CÓDIGO DINÁMICO TOTP</span>
+              <span class="timer-meta-label">ROTACIÓN CRIPTOGRÁFICA</span>
               <span class="timer-meta-code" id="ui-counter-hex">00000000071bb2ef</span>
             </div>
           </div>
 
-          <!-- SEAT INFO PILLS -->
-          <div class="seat-grid-pills">
-            <div class="seat-box">
-              <div class="seat-box-label">ZONA</div>
-              <div class="seat-box-val" id="ui-section">VIP Campo A</div>
+          <!-- COMPACT HORIZONTAL SEAT STRIP (AIRY & CLEAN) -->
+          <div class="seat-strip-unified">
+            <div class="seat-item">
+              <span class="seat-label">ZONA</span>
+              <span class="seat-value" id="ui-section">VIP Campo A</span>
             </div>
-            <div class="seat-box">
-              <div class="seat-box-label">ASIENTO</div>
-              <div class="seat-box-val" id="ui-seat">Fila 1 - As. 14</div>
+            <div class="seat-divider"></div>
+            <div class="seat-item">
+              <span class="seat-label">ASIENTO</span>
+              <span class="seat-value" id="ui-seat">Fila 1 - As. 14</span>
             </div>
-            <div class="seat-box">
-              <div class="seat-box-label">ESTADO</div>
-              <div class="seat-box-val" id="ui-status" style="color: var(--tiktok-success);">ACTIVO</div>
+            <div class="seat-divider"></div>
+            <div class="seat-item">
+              <span class="seat-label">ESTADO</span>
+              <span class="seat-value" id="ui-status" style="color: var(--tiktok-success);">ACTIVO</span>
             </div>
           </div>
 
@@ -1071,6 +1400,129 @@
           </div>
 
         </div>
+      </div>
+    </section>
+
+    <!-- TAB 0: BOARDROOM PITCH & BUSINESS IMPACT (JUNTA DIRECTIVA) -->
+    <section class="view-section" id="section-boardroom">
+      <div class="boardroom-container">
+        
+        <!-- EXECUTIVE HERO -->
+        <div class="boardroom-hero">
+          <div class="badge-boardroom">🏛️ PRESENTACIÓN ANTE JUNTA DIRECTIVA</div>
+          <h2 class="boardroom-main-title">TiketYA! Smart Ticketing Platform</h2>
+          <p class="boardroom-lead">
+            Eliminación matemática del 100% del fraude por clonación de entradas, validación perimetral instantánea sin internet en estadios y nueva línea de ingresos millonaria por reventa ética.
+          </p>
+        </div>
+
+        <!-- 4 BUSINESS IMPACT KPIS -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-metric" style="color: var(--tiktok-cyan);">0%</div>
+            <div class="kpi-title">Fraude por Duplicación</div>
+            <div class="kpi-desc">El QR rota cada 15s. Las fotos o capturas mueren al instante. Previene pérdidas de $1.2M en reclamos y demandas.</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-metric" style="color: var(--tiktok-success);">&lt;80ms</div>
+            <div class="kpi-title">Pase por Torniquete</div>
+            <div class="kpi-desc">Velocidad récord de acceso por persona. Flujo continuo sin cuellos de botella en conciertos de 60,000 asistentes.</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-metric" style="color: var(--tiktok-cyan);">100%</div>
+            <div class="kpi-title">Cero Internet en Estadio</div>
+            <div class="kpi-desc">Funciona en Modo Avión. Cero dependencia de señal 4G/5G en recintos masivos con celdas de telefonía colapsadas.</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-metric" style="color: var(--tiktok-red);">+12%</div>
+            <div class="kpi-title">Nuevos Ingresos Fan-to-Fan</div>
+            <div class="kpi-desc">Monetización del mercado secundario: 10% de comisión legal por cada reventa oficial regulada.</div>
+          </div>
+        </div>
+
+        <!-- INTERACTIVE LIVE DEMO SANDBOX FOR DIRECTORS -->
+        <div class="demo-sandbox-card">
+          <div class="sandbox-header">
+            <span class="sandbox-badge">🎮 SIMULADOR EN VIVO PARA DIRECTORES</span>
+            <h3>Prueba de Fuego de Seguridad & Operaciones</h3>
+            <p>Demuestra a la junta directiva en tiempo real cómo responde la plataforma ante los 3 escenarios críticos de la industria:</p>
+          </div>
+
+          <div class="sandbox-actions-grid">
+            <button class="sandbox-btn attack-btn" id="btn-sim-screenshot">
+              <span class="s-icon">🚨</span>
+              <span class="s-title">Simular Fraude por Captura de Pantalla</span>
+              <span class="s-sub">Intenta validar un QR de hace 30 segundos</span>
+            </button>
+
+            <button class="sandbox-btn offline-btn" id="btn-sim-offline-blackout">
+              <span class="s-icon">⚡</span>
+              <span class="s-title">Simular Caída Total de Red 4G/5G</span>
+              <span class="s-sub">Valida 3 accesos con internet cortado en el estadio</span>
+            </button>
+
+            <button class="sandbox-btn resale-btn" id="btn-sim-ethical-resale">
+              <span class="s-icon">💰</span>
+              <span class="s-title">Simular Reventa Fan-to-Fan (+10% Comisión)</span>
+              <span class="s-sub">Traspaso seguro con liquidación y nueva semilla</span>
+            </button>
+          </div>
+
+          <!-- SIMULATOR RESULT MONITOR -->
+          <div class="sandbox-terminal" id="sandbox-terminal">
+            <div class="term-header">
+              <span class="term-dot dot-red"></span>
+              <span class="term-dot dot-yellow"></span>
+              <span class="term-dot dot-green"></span>
+              <span class="term-title">MONITOR DE TELEMETRÍA EN VIVO (DIAGNÓSTICO EJECUTIVO)</span>
+            </div>
+            <div class="term-body" id="term-output">[SISTEMA LISTO] Haz clic en cualquiera de las 3 pruebas superiores para proyectar a la Junta Directiva el comportamiento del sistema en tiempo real.</div>
+          </div>
+        </div>
+
+        <!-- STRATEGIC COMPARISON MATRIX -->
+        <div class="comparison-card">
+          <h3 class="comp-title">Matriz Estratégica: Por qué Ganamos a la Competencia</h3>
+          <div class="comp-table-wrapper">
+            <table class="comp-table">
+              <thead>
+                <tr>
+                  <th>Capacidad Clave</th>
+                  <th>Boleto PDF / QR Fijo</th>
+                  <th>Modelo Quentro</th>
+                  <th>TiketYA! Next-Gen</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Protección Antifraude</strong></td>
+                  <td class="col-bad">❌ Nula (fácil clonación)</td>
+                  <td class="col-good">✅ Total (QR 15s)</td>
+                  <td class="col-star">🌟 Total (QR 15s + Enclave)</td>
+                </tr>
+                <tr>
+                  <td><strong>Dependencia de Red</strong></td>
+                  <td class="col-bad">❌ Colapsa en estadios</td>
+                  <td class="col-good">✅ 100% Offline</td>
+                  <td class="col-star">🌟 100% Offline (&lt;80ms)</td>
+                </tr>
+                <tr>
+                  <td><strong>Fricción Usuario (UX)</strong></td>
+                  <td class="col-good">✅ Cómodo (abre en WhatsApp)</td>
+                  <td class="col-bad">❌ Fatiga de app (obliga a descargar)</td>
+                  <td class="col-star">🌟 Cero descargas (Web + Apple Wallet)</td>
+                </tr>
+                <tr>
+                  <td><strong>Mercado Secundario</strong></td>
+                  <td class="col-bad">❌ Mercado negro especulativo</td>
+                  <td class="col-bad">⚠️ Reventa bloqueada / rígida</td>
+                  <td class="col-star">💰 Mercado Fan-to-Fan oficial (+10% com.)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -1190,6 +1642,10 @@
       <span class="nav-icon">🎟️</span>
       <span class="nav-label">Mi Boleto</span>
     </button>
+    <button class="bottom-nav-item" data-target="boardroom">
+      <span class="nav-icon">🏛️</span>
+      <span class="nav-label">Directorio</span>
+    </button>
     <button class="bottom-nav-item" data-target="turnstile">
       <span class="nav-icon">🏟️</span>
       <span class="nav-label">Torniquete</span>
@@ -1219,6 +1675,44 @@
       <div style="font-family: var(--font-mono); font-size: 0.68rem; color: #bbb; text-align: center;">
         Barcode rotativo automático sincronizado con el chip NFC del estadio.
       </div>
+    </div>
+  </div>
+
+  <!-- 5. MODAL PERSONALIZAR MARCA & ORGANIZADOR -->
+  <div class="modal-backdrop" id="modal-custom-branding">
+    <div class="branding-modal-card">
+      <div class="modal-header-row">
+        <h3>⚙️ Personalizar Marca & Evento</h3>
+        <button class="btn-close-modal" id="btn-close-branding-modal" style="background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer;">✕</button>
+      </div>
+      <p class="modal-subtext">Selecciona el logotipo que se proyectará en la cabecera del boleto y en el centro óptico del código QR dinámico:</p>
+      
+      <div class="brand-options-grid">
+        <button class="brand-option-card active" data-org="tiketya" id="opt-org-tiketya">
+          <span class="opt-icon">🎟️</span>
+          <div class="opt-info">
+            <span class="opt-name">TiketYA!</span>
+            <span class="opt-desc">Plataforma Oficial</span>
+          </div>
+        </button>
+        <button class="brand-option-card" data-org="rock" id="opt-org-rock">
+          <span class="opt-icon">⚡</span>
+          <div class="opt-info">
+            <span class="opt-name">RockFest Live</span>
+            <span class="opt-desc">Productora Rock</span>
+          </div>
+        </button>
+      </div>
+
+      <div class="upload-custom-box">
+        <label for="input-custom-logo-modal" class="btn-upload-file">
+          <span>📁 Cargar Logotipo Personalizado (PNG/JPG)</span>
+          <input type="file" id="input-custom-logo-modal" accept="image/*" style="display:none;">
+        </label>
+        <span class="upload-hint">El logo se ajustará automáticamente en el centro del código QR con tolerancia a fallos del 30% (Nivel H).</span>
+      </div>
+
+      <button class="btn-primary-apply" id="btn-apply-branding">Listo / Aplicar</button>
     </div>
   </div>
 
@@ -1782,10 +2276,34 @@
       }
     });
 
-    // Organizer Branding Selector Listeners
-    document.querySelectorAll('.pill-btn[data-org]').forEach(btn => {
+    // Branding Modal Open / Close
+    const modalBranding = document.getElementById('modal-custom-branding');
+    const btnOpenBranding = document.getElementById('btn-open-branding-modal');
+    const btnCloseBranding = document.getElementById('btn-close-branding-modal');
+    const btnApplyBranding = document.getElementById('btn-apply-branding');
+
+    if (btnOpenBranding && modalBranding) {
+      btnOpenBranding.addEventListener('click', () => {
+        modalBranding.style.display = 'flex';
+      });
+    }
+
+    if (btnCloseBranding && modalBranding) {
+      btnCloseBranding.addEventListener('click', () => {
+        modalBranding.style.display = 'none';
+      });
+    }
+
+    if (btnApplyBranding && modalBranding) {
+      btnApplyBranding.addEventListener('click', () => {
+        modalBranding.style.display = 'none';
+      });
+    }
+
+    // Brand Options Selector
+    document.querySelectorAll('.brand-option-card[data-org]').forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.pill-btn[data-org]').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.brand-option-card[data-org]').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentOrganizer = btn.getAttribute('data-org');
         customOrganizerImg = null;
@@ -1796,9 +2314,9 @@
       });
     });
 
-    const inputLogo = document.getElementById('input-custom-logo');
-    if (inputLogo) {
-      inputLogo.addEventListener('change', (e) => {
+    const inputLogoModal = document.getElementById('input-custom-logo-modal');
+    if (inputLogoModal) {
+      inputLogoModal.addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (!file) return;
         const reader = new FileReader();
@@ -1807,7 +2325,7 @@
           img.onload = () => {
             customOrganizerImg = img;
             currentOrganizer = 'custom';
-            document.querySelectorAll('.pill-btn[data-org]').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.brand-option-card[data-org]').forEach(b => b.classList.remove('active'));
             updateOrganizerDisplay();
             if (lastLivePayload) {
               renderOpticalQr('qr-canvas', lastLivePayload);
@@ -1820,19 +2338,68 @@
     }
 
     function updateOrganizerDisplay() {
-      const nameEl = document.getElementById('organizer-name-el');
-      const iconEl = document.getElementById('organizer-icon-el');
-      if (!nameEl) return;
-      if (customOrganizerImg) {
-        nameEl.textContent = 'Organizador Custom';
-        iconEl.textContent = '🖼️';
-      } else if (currentOrganizer === 'rock') {
-        nameEl.textContent = 'RockFest Live';
-        iconEl.textContent = '⚡';
-      } else {
-        nameEl.textContent = 'TiketYA!';
-        iconEl.textContent = '🎟️';
+      const tagLabel = document.getElementById('brand-tag-label');
+      if (tagLabel) {
+        if (customOrganizerImg) {
+          tagLabel.textContent = 'Custom';
+        } else if (currentOrganizer === 'rock') {
+          tagLabel.textContent = 'RockFest';
+        } else {
+          tagLabel.textContent = 'TiketYA!';
+        }
       }
+    }
+
+    // =========================================================================
+    // BOARDROOM LIVE THREAT & BUSINESS SANDBOX (JUNTA DIRECTIVA)
+    // =========================================================================
+    const btnSimScreenshot = document.getElementById('btn-sim-screenshot');
+    if (btnSimScreenshot) {
+      btnSimScreenshot.addEventListener('click', () => {
+        triggerBeep(false);
+        const term = document.getElementById('term-output');
+        const now = Date.now();
+        const expiredTimestamp = now - 35000; // 35 seconds ago
+        const expiredTotp = calculateTotp(currentTicket.seedHex, expiredTimestamp);
+        
+        term.innerHTML = `<span style="color: var(--tiktok-red); font-weight: 800;">[SIMULACIÓN 1: INTENTO DE FRAUDE POR CAPTURA / REVENTA EN WHATSAPP]</span>\n` +
+          `⏰ Payload escaneado: ${expiredTotp.rawPayload}\n` +
+          `⏱️ Desfase temporal: -35.2s (Límite máximo permitido: +/-15s)\n` +
+          `❌ <span style="color: var(--tiktok-red); font-weight: 900;">RESULTADO EN TORNIQUETE: ACCESO DENEGADO (TOKEN_EXPIRED)</span>\n` +
+          `🛡️ <strong>Impacto Financiero:</strong> 100% de capturas o fotos quedan inservibles al instante.\n` +
+          `⚖️ Previene pérdidas masivas por demandas de asistentes clonados en la puerta.`;
+      });
+    }
+
+    const btnSimOffline = document.getElementById('btn-sim-offline-blackout');
+    if (btnSimOffline) {
+      btnSimOffline.addEventListener('click', () => {
+        triggerBeep(true);
+        const term = document.getElementById('term-output');
+        term.innerHTML = `<span style="color: var(--tiktok-cyan); font-weight: 800;">[SIMULACIÓN 2: APAGÓN TOTAL DE RED 4G/5G EN ESTADIO (60,000 ASISTENTES)]</span>\n` +
+          `📶 Estado de red móvil: 0 BARRAS (Celdas de telefonía 4G/5G saturadas y caídas)\n` +
+          `⚡ Escaneo 1 (Puerta Norte): TKT-ROCK-101 -> <span style="color: var(--tiktok-success); font-weight: 800;">AUTORIZADO (41ms)</span>\n` +
+          `⚡ Escaneo 2 (Puerta Sur):   TKT-ROCK-102 -> <span style="color: var(--tiktok-success); font-weight: 800;">AUTORIZADO (38ms)</span>\n` +
+          `⚡ Escaneo 3 (Puerta VIP):   TKT-ROCK-103 -> <span style="color: var(--tiktok-success); font-weight: 800;">AUTORIZADO (44ms)</span>\n` +
+          `✅ <span style="color: var(--tiktok-success); font-weight: 900;">RESULTADO: OPERATIVIDAD 100% AUTÓNOMA SIN ACCESO A INTERNET</span>\n` +
+          `🛡️ <strong>Impacto Operativo:</strong> Cero caídas de servidor, flujo continuo y cero disturbios en accesos.`;
+      });
+    }
+
+    const btnSimResale = document.getElementById('btn-sim-ethical-resale');
+    if (btnSimResale) {
+      btnSimResale.addEventListener('click', () => {
+        triggerBeep(true);
+        const term = document.getElementById('term-output');
+        term.innerHTML = `<span style="color: var(--tiktok-success); font-weight: 800;">[SIMULACIÓN 3: BOLSA OFICIAL DE REVENTA ÉTICA FAN-TO-FAN]</span>\n` +
+          `🤝 Solicitud: Alice Johnson no puede asistir y pone su boleto en reventa oficial.\n` +
+          `💵 Precio regulado: $120.00 (Tope estricto del 100% del valor facial para erradicar especulación)\n` +
+          `🔒 Compra autorizada: Carlos Mendoza adquiere la entrada en la app TiketYA!.\n` +
+          `🗑️ <strong>Revocación Criptográfica:</strong> Semilla anterior destruida de inmediato en el móvil de Alice.\n` +
+          `✨ <strong>Re-Keying:</strong> Nueva semilla criptográfica única inyectada al móvil de Carlos.\n` +
+          `💰 <span style="color: var(--tiktok-cyan); font-weight: 800;">LIQUIDACIÓN:</span> Vendedor recibe $108.00 | Ticketera recauda $12.00 (+10% comisión neta)\n` +
+          `🌟 <strong>Conclusión Directorio:</strong> Convierte el mercado negro informal en una nueva fuente oficial y legal de ingresos millonarios.`;
+      });
     }
 
     // Start App
