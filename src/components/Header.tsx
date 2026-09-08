@@ -1,5 +1,5 @@
 import React from 'react';
-import { OrganizerBrand } from '../types';
+import { OrganizerBrand, UserAppRole, StaffUser } from '../types';
 
 interface HeaderProps {
   brand: OrganizerBrand;
@@ -7,6 +7,10 @@ interface HeaderProps {
   onOpenBrandModal: () => void;
   isOffline: boolean;
   isDesktop?: boolean;
+  userRole?: UserAppRole;
+  staffUser?: StaffUser | null;
+  onOpenStaffModal?: () => void;
+  onLogoutStaff?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -14,7 +18,11 @@ export const Header: React.FC<HeaderProps> = ({
   customBrandName,
   onOpenBrandModal,
   isOffline,
-  isDesktop = false
+  isDesktop = false,
+  userRole = 'attendee',
+  staffUser = null,
+  onOpenStaffModal,
+  onLogoutStaff
 }) => {
   const getBrandDisplayName = () => {
     switch (brand) {
@@ -27,9 +35,16 @@ export const Header: React.FC<HeaderProps> = ({
     }
   };
 
+  const isStaffMode = userRole !== 'attendee';
+
   return (
     <header>
-      <div className="brand-header" onClick={onOpenBrandModal} style={{ cursor: 'pointer' }} title="Cambiar organizador o logo">
+      <div
+        className="brand-header"
+        onClick={onOpenBrandModal}
+        style={{ cursor: 'pointer' }}
+        title="Cambiar organizador o logo"
+      >
         <div className="brand-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path
@@ -48,26 +63,76 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
         <div>
           <div className="brand-title">
-            {getBrandDisplayName()} <span style={{ fontSize: '0.65rem', color: 'var(--tiktok-cyan)' }}>PRO</span>
+            {getBrandDisplayName()}{' '}
+            <span style={{ fontSize: '0.65rem', color: isStaffMode ? 'var(--tiktok-magenta)' : 'var(--tiktok-cyan)' }}>
+              {isStaffMode ? 'STAFF' : 'PRO'}
+            </span>
           </div>
-          <div className="brand-tagline">SMART TICKETING ENGINE</div>
+          <div className="brand-tagline">
+            {isStaffMode ? 'CONTROL DE ACCESO & INTRANET' : 'SMART TICKETING WALLET'}
+          </div>
         </div>
       </div>
 
       <div className="header-badges">
-        <button
-          onClick={onOpenBrandModal}
-          className="brand-badge-btn"
-          title="Cambiar marca / organizador"
-        >
-          <span>🎨</span>
-          {isDesktop && <span className="brand-badge-label">{getBrandDisplayName()}</span>}
-        </button>
+        {isStaffMode ? (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div
+              className="offline-pill"
+              style={{
+                background: 'rgba(254, 44, 85, 0.15)',
+                borderColor: 'rgba(254, 44, 85, 0.4)',
+                color: 'var(--tiktok-magenta)'
+              }}
+              title={staffUser?.title}
+            >
+              <span className="live-dot" style={{ background: 'var(--tiktok-magenta)' }} />
+              <span>
+                {userRole === 'operator' ? 'OPERADOR' : userRole === 'auditor' ? 'AUDITOR' : 'DIRECTORIO'}
+              </span>
+            </div>
 
-        <div className="offline-pill" title="Protocolo 100% Offline RFC 6238">
-          <span className="live-dot" />
-          <span>{isOffline ? 'MODO AVIÓN' : '100% OFFLINE'}</span>
-        </div>
+            {onLogoutStaff && (
+              <button
+                onClick={onLogoutStaff}
+                className="brand-badge-btn"
+                title="Salir a billetera de espectador"
+                style={{ color: 'var(--text-muted)' }}
+              >
+                <span>🚪</span>
+                {isDesktop && <span className="brand-badge-label">Salir</span>}
+              </button>
+            )}
+          </div>
+        ) : (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            {onOpenStaffModal && (
+              <button
+                onClick={onOpenStaffModal}
+                className="brand-badge-btn"
+                title="Acceso al Portal de Personal / Operadores"
+                style={{ borderColor: 'rgba(0, 242, 254, 0.25)' }}
+              >
+                <span>🔒</span>
+                {isDesktop && <span className="brand-badge-label">Staff</span>}
+              </button>
+            )}
+
+            <button
+              onClick={onOpenBrandModal}
+              className="brand-badge-btn"
+              title="Cambiar marca / organizador"
+            >
+              <span>🎨</span>
+              {isDesktop && <span className="brand-badge-label">{getBrandDisplayName()}</span>}
+            </button>
+
+            <div className="offline-pill" title="Protocolo 100% Offline RFC 6238">
+              <span className="live-dot" />
+              <span>{isOffline ? 'MODO AVIÓN' : '100% OFFLINE'}</span>
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );

@@ -92,3 +92,16 @@ export type ActiveTab = 'boardroom' | 'dual' | 'ticket' | 'turnstile' | 'transfe
 export type TechMode = 'QR' | 'NFC';
 export type OrganizerBrand = 'tiketya' | 'rock' | 'custom';
 
+export type UserAppRole = 'attendee' | 'operator' | 'auditor' | 'boardroom';
+
+export interface StaffUser {
+  id: string;
+  name: string;
+  role: 'operator' | 'auditor' | 'boardroom';
+  title: string;
+  badgeId: string;
+  permissions: string[];
+  assignedGate?: string;
+  token: string;
+}
+

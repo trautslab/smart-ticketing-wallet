@@ -7,14 +7,16 @@ import { GeofenceControlBar } from './GeofenceControlBar';
 
 interface TicketCardProps {
   ticket: Ticket;
-  onSimulateTurnstileScan: (payload: string, mode: TechMode) => void;
+  onSimulateTurnstileScan?: (payload: string, mode: TechMode) => void;
   onShowToast: (msg: string) => void;
+  showSimulateScan?: boolean;
 }
 
 export const TicketCard: React.FC<TicketCardProps> = ({
   ticket,
   onSimulateTurnstileScan,
-  onShowToast
+  onShowToast,
+  showSimulateScan = false
 }) => {
   const [techMode, setTechMode] = useState<TechMode>('QR');
 
@@ -26,9 +28,9 @@ export const TicketCard: React.FC<TicketCardProps> = ({
 
   const handleSimulateScan = () => {
     if (techMode === 'QR' && totp?.rawPayload) {
-      onSimulateTurnstileScan(totp.rawPayload, 'QR');
+      onSimulateTurnstileScan?.(totp.rawPayload, 'QR');
     } else {
-      onSimulateTurnstileScan(`NFC:STK:${ticket.id}:${Date.now()}`, 'NFC');
+      onSimulateTurnstileScan?.(`NFC:STK:${ticket.id}:${Date.now()}`, 'NFC');
     }
   };
 
@@ -111,18 +113,20 @@ export const TicketCard: React.FC<TicketCardProps> = ({
           )}
         </div>
 
-        {/* Quick Test Scan Action */}
-        <div className="quick-scan-container">
-          <button
-            id="btn-quick-turnstile-test"
-            className="btn-quick-scan"
-            onClick={handleSimulateScan}
-            title="Envía instantáneamente este token al torniquete para verificar acceso"
-          >
-            <span>🚀</span>
-            <span>Escanear en Torniquete (&lt;42ms)</span>
-          </button>
-        </div>
+        {/* Quick Test Scan Action (Only shown in dual desktop mode) */}
+        {showSimulateScan && (
+          <div className="quick-scan-container">
+            <button
+              id="btn-quick-turnstile-test"
+              className="btn-quick-scan"
+              onClick={handleSimulateScan}
+              title="Envía instantáneamente este token al torniquete para verificar acceso"
+            >
+              <span>🚀</span>
+              <span>Escanear en Torniquete (&lt;42ms)</span>
+            </button>
+          </div>
+        )}
 
         {/* Security & Ownership Footer */}
         <div className="ticket-security-footer">

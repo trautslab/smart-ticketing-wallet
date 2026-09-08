@@ -1,21 +1,25 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useTurnstileGate } from '../../hooks/useTurnstileGate';
 import { useMeshNetwork } from '../../hooks/useMeshNetwork';
 import { StadiumMeshVisualizer } from './StadiumMeshVisualizer';
-import { Ticket } from '../../types';
+import { Ticket, ScanResult } from '../../types';
+import { OpticalQrScanner } from '../../core/scanner/OpticalQrScanner';
+import { TurnstileFeedback } from '../../utils/audioFeedback';
 
 interface TurnstileStationProps {
   ticket: Ticket;
   turnstile: ReturnType<typeof useTurnstileGate>;
   mesh: ReturnType<typeof useMeshNetwork>;
   onShowToast: (msg: string) => void;
+  operatorBadge?: string;
 }
 
 export const TurnstileStation: React.FC<TurnstileStationProps> = ({
   ticket,
   turnstile,
   mesh,
-  onShowToast
+  onShowToast,
+  operatorBadge = 'BADGE-OP-741'
 }) => {
   const {
     selectedGate,
@@ -26,44 +30,140 @@ export const TurnstileStation: React.FC<TurnstileStationProps> = ({
   } = turnstile;
 
   const [isCameraActive, setIsCameraActive] = useState<boolean>(false);
+  const [isTorchOn, setIsTorchOn] = useState<boolean>(false);
+  const [isScanningLock, setIsScanningLock] = useState<boolean>(false);
+  const [serverScanResult, setServerScanResult] = useState<ScanResult | null>(null);
+
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const scannerRef = useRef<OpticalQrScanner | null>(null);
+  const lastScannedPayloadRef = useRef<string>('');
+  const lastScannedTimeRef = useRef<number>(0);
+
+  /**
+   * Process incoming QR code payload from camera or simulation
+   */
+  const handleQrDetected = useCallback(async (payload: string) => {
+    const now = Date.now();
+    // Debounce identical scans within 2 seconds
+    if (payload === lastScannedPayloadRef.current && now - lastScannedTimeRef.current < 2000) {
+      return;
+    }
+
+    lastScannedPayloadRef.current = payload;
+    lastScannedTimeRef.current = now;
+    setIsScanningLock(true);
+
+    try {
+      // 1. First attempt authoritative Cloudflare Pages serverless edge validation (/api/verify)
+      const res = await fetch('/api/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          payload,
+          gateId: selectedGate,
+          operatorId: operatorBadge,
+          mode: 'QR'
+        })
+      });
+
+      if (res.ok) {
+        const data = await res.json() as any;
+
+        const scanResult: ScanResult = {
+          status: data.status,
+          ticketId: data.ticketId || 'STK-QR',
+          timestamp: data.timestamp || new Date().toISOString(),
+          latencyMs: data.latencyMs || 24,
+          gateId: data.gateId || selectedGate,
+          reason: data.reason || (data.valid ? `Acceso permitido a ${data.attendeeName || 'Espectador'} (${data.tier || 'VIP'})` : 'Validación fallida')
+        };
+
+        setServerScanResult(scanResult);
+
+        if (data.valid && data.status === 'ACCESS_GRANTED') {
+          TurnstileFeedback.playSuccess();
+          mesh.broadcastTicketUsed(selectedGate, data.ticketId);
+          onShowToast(`✅ ACCESO PERMITIDO: ${data.attendeeName || data.ticketId} (<${data.latencyMs}ms)`);
+        } else if (data.status === 'REPLAY_ATTACK_DETECTED') {
+          TurnstileFeedback.playError();
+          onShowToast(`🚨 REPLAY DETECTADO: ${data.reason}`);
+        } else if (data.status === 'EXPIRED_WINDOW') {
+          TurnstileFeedback.playError();
+          onShowToast(`⏱️ EXPIRADO: ${data.reason}`);
+        } else {
+          TurnstileFeedback.playError();
+          onShowToast(`⛔ ACCESO DENEGADO: ${data.reason}`);
+        }
+
+        // Also update local hook stats
+        processScan(payload, 'QR');
+      } else {
+        throw new Error('API offline fallback');
+      }
+    } catch {
+      // 2. Offline Fallback: Local Turnstile Validator RFC 6238
+      const localResult = processScan(payload, 'QR');
+      setServerScanResult(localResult);
+
+      if (localResult.status === 'ACCESS_GRANTED') {
+        TurnstileFeedback.playSuccess();
+        onShowToast(`✅ ACCESO PERMITIDO (OFFLINE LOCAL): <${localResult.latencyMs}ms`);
+      } else {
+        TurnstileFeedback.playError();
+        onShowToast(`⛔ ${localResult.reason}`);
+      }
+    } finally {
+      setTimeout(() => {
+        setIsScanningLock(false);
+      }, 1200);
+    }
+  }, [selectedGate, operatorBadge, mesh, processScan, onShowToast]);
 
   // Toggle Camera
   const toggleCamera = async () => {
     if (isCameraActive) {
-      if (videoRef.current && videoRef.current.srcObject) {
-        const stream = videoRef.current.srcObject as MediaStream;
-        stream.getTracks().forEach(track => track.stop());
-        videoRef.current.srcObject = null;
+      if (scannerRef.current) {
+        scannerRef.current.stop();
+        scannerRef.current = null;
       }
       setIsCameraActive(false);
+      setIsTorchOn(false);
     } else {
+      if (!videoRef.current) return;
+
       try {
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-          const stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: 'environment' }
-          });
-          if (videoRef.current) {
-            videoRef.current.srcObject = stream;
-            videoRef.current.play();
+        const scanner = new OpticalQrScanner({
+          videoElement: videoRef.current,
+          onScan: handleQrDetected,
+          onError: (err) => {
+            onShowToast(`⚠️ Error de cámara: ${err.message}`);
           }
-          setIsCameraActive(true);
-          onShowToast('📹 Cámara activada para escaneo de torniquete.');
-        } else {
-          onShowToast('⚠️ Cámara no disponible en este contexto. Usa el simulador rápido.');
-        }
-      } catch {
-        onShowToast('⚠️ Permiso de cámara denegado o no disponible en HTTP local.');
+        });
+
+        await scanner.start();
+        scannerRef.current = scanner;
+        setIsCameraActive(true);
+        onShowToast('📹 Escáner óptico WebRTC activado. Enfoque la pantalla del otro celular.');
+      } catch (err: any) {
+        onShowToast(`⚠️ No se pudo acceder a la cámara: ${err.message}`);
       }
     }
   };
 
-  // Clean up camera on unmount
+  const handleToggleTorch = async () => {
+    if (scannerRef.current) {
+      const newState = await scannerRef.current.toggleTorch();
+      setIsTorchOn(newState);
+      onShowToast(newState ? '🔦 Linterna activada' : '🔦 Linterna apagada');
+    }
+  };
+
+  // Clean up on unmount
   useEffect(() => {
     return () => {
-      if (videoRef.current && videoRef.current.srcObject) {
-        const stream = videoRef.current.srcObject as MediaStream;
-        stream.getTracks().forEach(track => track.stop());
+      if (scannerRef.current) {
+        scannerRef.current.stop();
+        scannerRef.current = null;
       }
     };
   }, []);
@@ -73,30 +173,25 @@ export const TurnstileStation: React.FC<TurnstileStationProps> = ({
     const validHex = validCounter.toString(16).padStart(16, '0');
     const authMac = ticket.seedHex.substring(0, 16);
     const payload = `STK:v1:${ticket.id}:${validHex}:${authMac}`;
-    processScan(payload, 'QR');
+    handleQrDetected(payload);
   };
 
   const handleExpiredScan = () => {
-    // Counter from 2 minutes ago (8 periods expired)
     const oldCounter = Math.floor(Date.now() / 15000) - 8;
     const oldHex = oldCounter.toString(16).padStart(16, '0');
     const authMac = ticket.seedHex.substring(0, 16);
     const payload = `STK:v1:${ticket.id}:${oldHex}:${authMac}`;
-    processScan(payload, 'QR');
-    onShowToast('🚫 Captura vieja rechazada: la ventana temporal expiró hace más de 15s.');
+    handleQrDetected(payload);
   };
 
   const handleTamperedScan = () => {
     const counterHex = Math.floor(Date.now() / 15000).toString(16).padStart(16, '0');
     const fakeMac = 'deadbeefbadf00d1';
     const payload = `STK:v1:${ticket.id}:${counterHex}:${fakeMac}`;
-    processScan(payload, 'QR');
-    onShowToast('⛔ Código alterado rechazado: firma HMAC inválida.');
+    handleQrDetected(payload);
   };
 
   const handleReplayAttackSim = () => {
-    // Force double entry test
-    // First admit at Gate A
     const validCounter = Math.floor(Date.now() / 15000);
     const validHex = validCounter.toString(16).padStart(16, '0');
     const authMac = ticket.seedHex.substring(0, 16);
@@ -105,15 +200,16 @@ export const TurnstileStation: React.FC<TurnstileStationProps> = ({
     // Mark as used in Gate A
     mesh.broadcastTicketUsed('GATE-A', ticket.id);
 
-    // Now try to scan at Gate B
+    // Scan at Gate B
     setSelectedGate('GATE-B');
-    processScan(payload, 'QR');
-    onShowToast('🚨 Intento de doble entrada detectado en Gate B. El boleto ya fue consumido en Gate A.');
+    handleQrDetected(payload);
   };
+
+  const activeResult = serverScanResult || lastScanResult;
 
   return (
     <div className="turnstile-station-container">
-      {/* Gate Selector */}
+      {/* Gate Selector & Operator Banner */}
       <div className="station-header-bar">
         <div className="station-gate-selector">
           <label htmlFor="gate-select">ESTACIÓN:</label>
@@ -129,18 +225,25 @@ export const TurnstileStation: React.FC<TurnstileStationProps> = ({
           </select>
         </div>
 
-        <div className="station-offline-badge">
+        <div className="station-offline-badge" title="Validación Cloudflare Edge + Fallback Local">
           <span className="live-dot" />
-          <span>MOTOR OFFLINE ACTIVO (&lt;42ms)</span>
+          <span>EDGE SERVERLESS &lt;42ms</span>
         </div>
       </div>
 
-      {/* Viewfinder Area */}
+      {/* Optical Camera Viewfinder Area */}
       <div className="viewfinder-card">
-        <div className="scanner-viewfinder">
-          {isCameraActive ? (
-            <video ref={videoRef} className="camera-feed" autoPlay playsInline muted />
-          ) : (
+        <div className={`scanner-viewfinder ${isScanningLock ? 'scan-locked' : ''}`}>
+          {/* Always have the video tag in the DOM so refs don't disconnect */}
+          <video
+            ref={videoRef}
+            className={`camera-feed ${isCameraActive ? 'visible' : 'hidden'}`}
+            autoPlay
+            playsInline
+            muted
+          />
+
+          {!isCameraActive && (
             <div className="viewfinder-placeholder">
               <div className="laser-line" />
               <div className="target-corners">
@@ -151,7 +254,22 @@ export const TurnstileStation: React.FC<TurnstileStationProps> = ({
               </div>
               <div className="viewfinder-prompt">
                 <span className="viewfinder-icon">📷</span>
-                <span>Apunta la cámara del operador hacia el QR dinámico</span>
+                <span>Apunta la cámara del operador hacia la pantalla del otro celular</span>
+              </div>
+            </div>
+          )}
+
+          {isCameraActive && (
+            <div className="viewfinder-active-hud">
+              <div className="laser-sweep-line" />
+              <div className="target-reticle">
+                <div className="corner top-left" />
+                <div className="corner top-right" />
+                <div className="corner bottom-left" />
+                <div className="corner bottom-right" />
+              </div>
+              <div className="hud-badge">
+                <span>🔴 ESCANEANDO QR EN VIVO...</span>
               </div>
             </div>
           )}
@@ -163,35 +281,45 @@ export const TurnstileStation: React.FC<TurnstileStationProps> = ({
             className={`btn-camera-toggle ${isCameraActive ? 'active' : ''}`}
             id="btn-toggle-camera"
           >
-            <span>{isCameraActive ? '⏹️ Detener Cámara' : '📹 Activar Cámara WebRTC'}</span>
+            <span>{isCameraActive ? '⏹️ Detener Cámara' : '📹 Activar Escáner de Cámara'}</span>
           </button>
+
+          {isCameraActive && (
+            <button
+              onClick={handleToggleTorch}
+              className={`btn-torch-toggle ${isTorchOn ? 'active' : ''}`}
+              title="Encender/apagar flash"
+            >
+              <span>{isTorchOn ? '🔦 Flash ON' : '💡 Flash'}</span>
+            </button>
+          )}
         </div>
       </div>
 
       {/* Real-time Scan Result Banner */}
-      {lastScanResult && (
-        <div className={`scan-result-banner ${lastScanResult.status.toLowerCase()}`}>
+      {activeResult && (
+        <div className={`scan-result-banner ${activeResult.status.toLowerCase()}`}>
           <div className="result-main-line">
             <span className="result-icon">
-              {lastScanResult.status === 'ACCESS_GRANTED' ? '✅' : '⛔'}
+              {activeResult.status === 'ACCESS_GRANTED' ? '✅' : '⛔'}
             </span>
             <span className="result-text">
-              {lastScanResult.status === 'ACCESS_GRANTED' ? 'ACCESO AUTORIZADO' : 'ACCESO DENEGADO'}
+              {activeResult.status === 'ACCESS_GRANTED' ? 'ACCESO AUTORIZADO' : 'ACCESO DENEGADO'}
             </span>
-            <span className="result-latency">{lastScanResult.latencyMs}ms</span>
+            <span className="result-latency">{activeResult.latencyMs}ms</span>
           </div>
-          <div className="result-reason">{lastScanResult.reason}</div>
+          <div className="result-reason">{activeResult.reason}</div>
           <div className="result-meta">
-            <span>BOLETO: <strong>{lastScanResult.ticketId}</strong></span>
+            <span>BOLETO: <strong>{activeResult.ticketId}</strong></span>
             <span>•</span>
-            <span>PUERTA: <strong>{lastScanResult.gateId}</strong></span>
+            <span>PUERTA: <strong>{activeResult.gateId}</strong></span>
           </div>
         </div>
       )}
 
       {/* Simulator Test Buttons for Edge Cases */}
       <div className="turnstile-sim-actions">
-        <div className="actions-label">SIMULADOR DE CASOS DE SEGURIDAD (PRUEBAS RÁPIDAS):</div>
+        <div className="actions-label">SIMULADOR DE CASOS DE SEGURIDAD (PRUEBA RÁPIDA 1-CLICK):</div>
         <div className="sim-buttons-grid">
           <button
             id="btn-sim-valid"
@@ -217,7 +345,7 @@ export const TurnstileStation: React.FC<TurnstileStationProps> = ({
             onClick={handleTamperedScan}
           >
             <span>⚠️</span>
-            <span>Escanear QR con Firma Alterada</span>
+            <span>Escanear QR Firma Falsa</span>
           </button>
         </div>
       </div>
