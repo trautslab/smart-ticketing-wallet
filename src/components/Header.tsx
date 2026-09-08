@@ -1,0 +1,85 @@
+import React from 'react';
+import { OrganizerBrand } from '../types';
+
+interface HeaderProps {
+  brand: OrganizerBrand;
+  customBrandName: string;
+  onOpenBrandModal: () => void;
+  isOffline: boolean;
+}
+
+export const Header: React.FC<HeaderProps> = ({
+  brand,
+  customBrandName,
+  onOpenBrandModal,
+  isOffline
+}) => {
+  const getBrandDisplayName = () => {
+    switch (brand) {
+      case 'tiketya':
+        return 'TiketYA!';
+      case 'rock':
+        return 'Rock Festival';
+      case 'custom':
+        return customBrandName || 'Organizador';
+    }
+  };
+
+  return (
+    <header>
+      <div className="brand-header" onClick={onOpenBrandModal} style={{ cursor: 'pointer' }} title="Cambiar organizador o logo">
+        <div className="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"
+              fill="url(#brandGrad)"
+              stroke="#010101"
+              strokeWidth="1.5"
+            />
+            <defs>
+              <linearGradient id="brandGrad" x1="3" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#25F4EE" />
+                <stop offset="1" stopColor="#FE2C55" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div>
+          <div className="brand-title">
+            {getBrandDisplayName()} <span style={{ fontSize: '0.68rem', color: 'var(--tiktok-cyan)' }}>PRO</span>
+          </div>
+          <div className="brand-tagline">SMART TICKETING ENGINE</div>
+        </div>
+      </div>
+
+      <div className="header-badges">
+        <button
+          onClick={onOpenBrandModal}
+          className="brand-badge"
+          style={{
+            background: 'rgba(255, 255, 255, 0.06)',
+            border: '1px solid rgba(255, 255, 255, 0.12)',
+            borderRadius: '16px',
+            color: 'var(--tiktok-white)',
+            padding: '4px 10px',
+            fontSize: '0.75rem',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px'
+          }}
+        >
+          <span>🎨</span>
+          <span style={{ maxWidth: '90px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            {getBrandDisplayName()}
+          </span>
+        </button>
+
+        <div className="offline-pill" title="Protocolo 100% Offline RFC 6238">
+          <span className="live-dot" />
+          <span>{isOffline ? 'MODO AVION (OFFLINE)' : 'OFFLINE AIRPLANE-READY'}</span>
+        </div>
+      </div>
+    </header>
+  );
+};

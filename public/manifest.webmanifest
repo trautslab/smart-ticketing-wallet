@@ -1,0 +1,36 @@
+{
+  "name": "TiketYA! Smart Ticket — Boletería Digital con QR Dinámico",
+  "short_name": "TiketYA!",
+  "description": "Plataforma de Smart Ticketing con QR dinámico criptográfico (TOTP RFC 6238), validación 100% offline, soporte NFC Apple/Google Wallet y Red Mesh.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#010101",
+  "theme_color": "#010101",
+  "orientation": "portrait-primary",
+  "categories": ["entertainment", "utilities"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/og-preview.png",
+      "sizes": "1200x630",
+      "type": "image/png"
+    }
+  ]
+}

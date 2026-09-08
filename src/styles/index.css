@@ -1,0 +1,1284 @@
+/* TiketYA! Design System — Dark TikTok / High-End Event Aesthetic */
+:root {
+  --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --tiktok-black: #010101;
+  --tiktok-dark: #0a0a0f;
+  --tiktok-card: #121218;
+  --tiktok-cyan: #25F4EE;
+  --tiktok-cyan-glow: rgba(37, 244, 238, 0.4);
+  --tiktok-red: #FE2C55;
+  --tiktok-red-glow: rgba(254, 44, 85, 0.4);
+  --tiktok-white: #FFFFFF;
+  --tiktok-gray: #8A8B91;
+  --tiktok-border: #2F3035;
+  --tiktok-success: #00f296;
+  --nav-height: 64px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--tiktok-black);
+  color: var(--tiktok-white);
+  font-family: var(--font-display);
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* TOP HEADER */
+header {
+  height: 56px;
+  background: rgba(9, 9, 13, 0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--tiktok-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.brand-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.brand-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.brand-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-size: 0.88rem;
+  font-weight: 900;
+  letter-spacing: -0.2px;
+}
+
+.brand-sub {
+  font-size: 0.62rem;
+  color: var(--tiktok-gray);
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.chromatic-text {
+  background: linear-gradient(90deg, #fff 0%, var(--tiktok-cyan) 60%, var(--tiktok-red) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.badge-offline {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.62rem;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  background: rgba(0, 242, 152, 0.12);
+  color: var(--tiktok-success);
+  border: 1px solid rgba(0, 242, 152, 0.35);
+  padding: 3px 8px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+}
+
+.badge-offline .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tiktok-success);
+  animation: pulseDot 1.5s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.5; }
+}
+
+.btn-audio {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--tiktok-border);
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  transition: all 0.15s ease;
+}
+
+.btn-audio:active {
+  transform: scale(0.92);
+}
+
+/* DESKTOP TOP NAV TABS */
+.desktop-tabs {
+  display: flex;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 3px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.desktop-tab {
+  background: none;
+  border: none;
+  color: var(--tiktok-gray);
+  padding: 5px 12px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.desktop-tab.active {
+  background: var(--tiktok-cyan);
+  color: #010101;
+  font-weight: 800;
+  box-shadow: 0 0 12px var(--tiktok-cyan-glow);
+}
+
+/* MAIN CONTAINER */
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* TICKET CARD NATIVE */
+.ticket-container {
+  max-width: 390px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.ticket-card-native {
+  background: linear-gradient(180deg, #161622 0%, #0d0d14 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  padding: 1.4rem 1.1rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.ticket-card-native::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--tiktok-cyan), var(--tiktok-red));
+}
+
+.ticket-header-compact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
+.badge-event-type {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--tiktok-cyan);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.btn-gear-brand {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--tiktok-border);
+  color: #fff;
+  border-radius: 9999px;
+  padding: 3px 8px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ticket-event-name {
+  font-size: 1.25rem;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 0.25rem;
+  color: #fff;
+}
+
+.ticket-venue-name {
+  font-size: 0.75rem;
+  color: var(--tiktok-gray);
+  margin-bottom: 0.75rem;
+}
+
+/* TECH MODE SWITCHER */
+.tech-mode-switcher {
+  display: flex;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  padding: 3px;
+  margin: 0.4rem auto 0.6rem;
+  max-width: 320px;
+  width: 100%;
+  gap: 4px;
+}
+
+.tech-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--tiktok-gray);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.tech-tab.active {
+  background: var(--tiktok-cyan);
+  color: #010101;
+  font-weight: 800;
+  box-shadow: 0 0 12px var(--tiktok-cyan-glow);
+}
+
+/* QR CANVAS CONTAINER */
+.qr-frame {
+  width: min(250px, 70vw);
+  height: min(250px, 70vw);
+  margin: 0.3rem auto 0.6rem;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 10px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.qr-frame canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* GEOFENCE SHIELD */
+.geofence-shield {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(1, 1, 1, 0.88);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  border: 2px solid var(--tiktok-red);
+}
+
+.geofence-shield-icon {
+  font-size: 2.2rem;
+  margin-bottom: 0.4rem;
+  filter: drop-shadow(0 0 10px var(--tiktok-red));
+}
+
+.geofence-shield-title {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--tiktok-red);
+  margin-bottom: 0.3rem;
+}
+
+.geofence-shield-desc {
+  font-size: 0.66rem;
+  color: #cbd5e1;
+  line-height: 1.35;
+}
+
+/* NFC PASS CARD */
+.nfc-pass-card {
+  width: min(250px, 70vw);
+  height: min(250px, 70vw);
+  margin: 0.3rem auto 0.6rem;
+  background: radial-gradient(circle at center, rgba(37, 244, 238, 0.12) 0%, rgba(1, 1, 1, 0.95) 70%);
+  border: 2px solid var(--tiktok-cyan);
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(37, 244, 238, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  position: relative;
+  animation: pulseGlow 2.5s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(37, 244, 238, 0.2); }
+  50% { box-shadow: 0 0 35px rgba(37, 244, 238, 0.45); }
+}
+
+.nfc-waves-icon {
+  font-size: 3rem;
+  color: var(--tiktok-cyan);
+  filter: drop-shadow(0 0 12px var(--tiktok-cyan));
+  margin-bottom: 0.4rem;
+  animation: waveNfc 1.5s infinite ease-in-out;
+}
+
+@keyframes waveNfc {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 20px #25F4EE); }
+}
+
+.nfc-pass-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 0.2rem;
+}
+
+.nfc-pass-sub {
+  font-size: 0.68rem;
+  color: var(--tiktok-gray);
+  margin-bottom: 0.5rem;
+}
+
+.nfc-pass-badge {
+  display: inline-block;
+  background: rgba(0, 242, 152, 0.15);
+  border: 1px solid var(--tiktok-success);
+  color: var(--tiktok-success);
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* GEOFENCE CONTROL BAR */
+.geofence-control-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 0.5rem 0.75rem;
+  margin: 0.5rem 0;
+  font-size: 0.72rem;
+}
+
+.geofence-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.geofence-btn-toggle {
+  background: rgba(37, 244, 238, 0.15);
+  border: 1px solid var(--tiktok-cyan);
+  color: var(--tiktok-cyan);
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.geofence-btn-toggle.locked {
+  background: rgba(254, 44, 85, 0.15);
+  border-color: var(--tiktok-red);
+  color: var(--tiktok-red);
+}
+
+/* TIMER PILL */
+.timer-pill-widget {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--tiktok-border);
+  border-radius: 9999px;
+  padding: 0.4rem 0.85rem;
+  margin: 0.4rem auto;
+  max-width: 250px;
+  width: 100%;
+}
+
+.timer-ring-container {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timer-svg {
+  width: 32px;
+  height: 32px;
+  transform: rotate(-90deg);
+}
+
+.timer-svg-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 3;
+}
+
+.timer-svg-bar {
+  fill: none;
+  stroke: var(--tiktok-cyan);
+  stroke-width: 3;
+  stroke-dasharray: 84.82;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.5s linear, stroke 0.3s ease;
+}
+
+.timer-val-text {
+  position: absolute;
+  font-size: 0.62rem;
+  font-weight: 900;
+  font-family: var(--font-mono);
+  color: var(--tiktok-cyan);
+}
+
+.timer-meta-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.timer-meta-label {
+  font-size: 0.58rem;
+  color: var(--tiktok-gray);
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.timer-meta-code {
+  font-size: 0.68rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: #fff;
+}
+
+/* SEAT STRIP */
+.seat-strip-unified {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 0.6rem 0.85rem;
+  margin: 0.6rem 0;
+}
+
+.seat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.seat-label {
+  font-size: 0.58rem;
+  color: var(--tiktok-gray);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.seat-value {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.seat-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.ticket-owner-text {
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--tiktok-gray);
+  margin: 0.4rem 0 0.6rem;
+}
+
+.ticket-actions-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-top: 0.3rem;
+}
+
+.btn-action-mobile {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--tiktok-border);
+  color: #fff;
+  border-radius: 10px;
+  padding: 0.5rem 0.2rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transition: all 0.15s ease;
+}
+
+.btn-action-mobile:active {
+  transform: scale(0.95);
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* TURNSTILE & MESH STYLES */
+.module-card {
+  background: var(--tiktok-card);
+  border: 1px solid var(--tiktok-border);
+  border-radius: 20px;
+  padding: 1.2rem;
+  margin-bottom: 1.2rem;
+}
+
+.module-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.9rem;
+}
+
+.module-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.module-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.select-gate {
+  background: #000;
+  border: 1px solid var(--tiktok-border);
+  color: #fff;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 0.72rem;
+  font-family: var(--font-display);
+}
+
+.barrier-display {
+  background: #000;
+  border: 2px solid var(--tiktok-border);
+  border-radius: 16px;
+  padding: 1.2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0.9rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.barrier-status-text {
+  font-size: 1.15rem;
+  font-weight: 900;
+  margin: 0.4rem 0 0.2rem;
+  letter-spacing: 0.5px;
+}
+
+.barrier-speed {
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  color: var(--tiktok-gray);
+  margin-bottom: 0.2rem;
+}
+
+.barrier-desc {
+  font-size: 0.7rem;
+  color: var(--tiktok-gray);
+}
+
+.gate-beacon-led {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin: 0 auto;
+  background: #444;
+}
+
+.gate-beacon-led.green {
+  background: var(--tiktok-success);
+  box-shadow: 0 0 16px var(--tiktok-success);
+}
+
+.gate-beacon-led.red {
+  background: var(--tiktok-red);
+  box-shadow: 0 0 16px var(--tiktok-red-glow);
+}
+
+/* WEBRTC CAMERA SCANNER HUD */
+.camera-scanner-wrapper {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  background: #000;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid var(--tiktok-cyan);
+  box-shadow: 0 0 20px rgba(37, 244, 238, 0.3);
+  margin-bottom: 0.85rem;
+}
+
+#camera-video-stream {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.camera-reticle {
+  position: absolute;
+  top: 20px; left: 20px; right: 20px; bottom: 20px;
+  border: 2px dashed rgba(37, 244, 238, 0.6);
+  border-radius: 12px;
+  pointer-events: none;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.45);
+}
+
+.camera-laser {
+  position: absolute;
+  left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--tiktok-cyan), #fff, var(--tiktok-cyan), transparent);
+  box-shadow: 0 0 12px var(--tiktok-cyan);
+  animation: scanLaser 1.8s infinite ease-in-out;
+}
+
+@keyframes scanLaser {
+  0% { top: 15%; opacity: 0.3; }
+  50% { top: 85%; opacity: 1; }
+  100% { top: 15%; opacity: 0.3; }
+}
+
+.camera-hud-badge {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--tiktok-cyan);
+  color: var(--tiktok-cyan);
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.camera-btn-close {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(254, 44, 85, 0.9);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  cursor: pointer;
+  z-index: 5;
+}
+
+/* NFC READER PAD */
+.nfc-reader-pad {
+  background: rgba(37, 244, 238, 0.06);
+  border: 1px dashed rgba(37, 244, 238, 0.4);
+  border-radius: 14px;
+  padding: 0.85rem;
+  text-align: center;
+  margin: 0.75rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn-nfc-tap {
+  background: linear-gradient(135deg, #25F4EE, #00f296);
+  color: #010101;
+  font-size: 0.78rem;
+  font-weight: 800;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-nfc-tap:active {
+  transform: scale(0.96);
+}
+
+/* STADIUM MESH GRID */
+.stadium-mesh-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 0.85rem;
+  margin: 0.85rem 0;
+}
+
+.mesh-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.mesh-title {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mesh-pill {
+  font-size: 0.62rem;
+  font-weight: 800;
+  background: rgba(0, 242, 152, 0.15);
+  color: var(--tiktok-success);
+  padding: 2px 8px;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 242, 152, 0.3);
+}
+
+.mesh-gates-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 0.6rem;
+}
+
+.gate-node-card {
+  background: #000;
+  border: 1px solid var(--tiktok-border);
+  border-radius: 10px;
+  padding: 0.5rem;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.gate-node-card.active {
+  border-color: var(--tiktok-cyan);
+  box-shadow: 0 0 10px var(--tiktok-cyan-glow);
+}
+
+.gate-node-card.used {
+  border-color: var(--tiktok-red);
+  background: rgba(254, 44, 85, 0.1);
+}
+
+.gate-node-title {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.gate-node-state {
+  font-size: 0.58rem;
+  font-weight: 700;
+  margin-top: 2px;
+  font-family: var(--font-mono);
+}
+
+.mesh-action-row {
+  display: flex;
+  gap: 6px;
+}
+
+.staff-buttons-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+
+.btn-touch-primary {
+  min-height: 46px;
+  background: linear-gradient(135deg, var(--tiktok-cyan), #00f296);
+  color: #010101;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  transition: all 0.15s ease;
+}
+
+.btn-touch-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-touch-cyan {
+  min-height: 46px;
+  background: rgba(37, 244, 238, 0.14);
+  border: 1px solid var(--tiktok-cyan);
+  color: var(--tiktok-cyan);
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  transition: all 0.15s ease;
+}
+
+.btn-touch-cyan:active {
+  transform: scale(0.98);
+}
+
+.btn-touch-secondary {
+  min-height: 42px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--tiktok-border);
+  color: #fff;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  transition: all 0.15s ease;
+}
+
+.btn-touch-secondary:active {
+  transform: scale(0.98);
+}
+
+/* BOARDROOM PITCH STYLES */
+.boardroom-container {
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.boardroom-hero {
+  text-align: center;
+  padding: 1.5rem 0.5rem;
+  background: radial-gradient(circle at 50% 20%, rgba(37, 244, 238, 0.15) 0%, rgba(1, 1, 1, 0) 70%);
+  border-radius: 20px;
+  margin-bottom: 1.5rem;
+}
+
+.boardroom-badge {
+  display: inline-block;
+  background: rgba(37, 244, 238, 0.15);
+  color: var(--tiktok-cyan);
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  border: 1px solid rgba(37, 244, 238, 0.35);
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+}
+
+.boardroom-title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+.boardroom-sub {
+  font-size: 0.85rem;
+  color: var(--tiktok-gray);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.kpi-board-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 1.8rem;
+}
+
+.kpi-tile {
+  background: var(--tiktok-card);
+  border: 1px solid var(--tiktok-border);
+  border-radius: 16px;
+  padding: 1.1rem;
+  text-align: center;
+}
+
+.kpi-tile-num {
+  font-size: 1.8rem;
+  font-weight: 900;
+  font-family: var(--font-mono);
+  color: var(--tiktok-cyan);
+  margin-bottom: 0.2rem;
+}
+
+.kpi-tile-title {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.kpi-tile-sub {
+  font-size: 0.65rem;
+  color: var(--tiktok-gray);
+  margin-top: 2px;
+}
+
+.sandbox-card {
+  background: var(--tiktok-card);
+  border: 1px solid var(--tiktok-border);
+  border-radius: 20px;
+  padding: 1.3rem;
+  margin-bottom: 1.5rem;
+}
+
+.sandbox-header {
+  margin-bottom: 1rem;
+}
+
+.sandbox-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--tiktok-red);
+}
+
+.sandbox-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.sandbox-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--tiktok-border);
+  border-radius: 12px;
+  padding: 0.85rem;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  color: #fff;
+  transition: all 0.15s ease;
+}
+
+.sandbox-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--tiktok-cyan);
+}
+
+.sandbox-btn .s-icon { font-size: 1.3rem; margin-bottom: 2px; }
+.sandbox-btn .s-title { font-size: 0.78rem; font-weight: 800; }
+.sandbox-btn .s-sub { font-size: 0.65rem; color: var(--tiktok-gray); }
+
+.sandbox-terminal {
+  background: #000;
+  border: 1px solid var(--tiktok-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.term-header {
+  background: #0d0d12;
+  padding: 0.4rem 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 1px solid var(--tiktok-border);
+}
+
+.term-dot { width: 8px; height: 8px; border-radius: 50%; }
+.dot-red { background: #ff5f56; }
+.dot-yellow { background: #ffbd2e; }
+.dot-green { background: #27c93f; }
+.term-title { font-size: 0.62rem; font-family: var(--font-mono); color: var(--tiktok-gray); font-weight: 700; margin-left: 6px; }
+
+.term-body {
+  padding: 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: #cbd5e1;
+  white-space: pre-wrap;
+  line-height: 1.5;
+  min-height: 80px;
+}
+
+.comp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+}
+
+.comp-table th, .comp-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--tiktok-border);
+}
+
+.comp-table th { background: rgba(255, 255, 255, 0.04); color: var(--tiktok-gray); font-weight: 700; }
+.col-bad { color: var(--tiktok-red); }
+.col-good { color: var(--tiktok-cyan); }
+.col-star { color: var(--tiktok-success); font-weight: 800; }
+
+/* P2P & AUDIT TABLE */
+.form-group-input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-label-txt {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--tiktok-gray);
+}
+
+.mobile-input-field {
+  background: #000;
+  border: 1px solid var(--tiktok-border);
+  border-radius: 10px;
+  padding: 0.75rem 0.85rem;
+  color: #fff;
+  font-size: 16px;
+  font-family: var(--font-display);
+}
+
+.mobile-input-field:focus {
+  outline: none;
+  border-color: var(--tiktok-cyan);
+  box-shadow: 0 0 10px var(--tiktok-cyan-glow);
+}
+
+.audit-table-box {
+  max-height: 320px;
+  overflow-y: auto;
+  border: 1px solid var(--tiktok-border);
+  border-radius: 12px;
+}
+
+.table-native-mobile {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.table-native-mobile th {
+  background: #0a0a0f;
+  padding: 0.55rem 0.65rem;
+  text-align: left;
+  color: var(--tiktok-gray);
+  font-weight: 700;
+  position: sticky;
+  top: 0;
+  border-bottom: 1px solid var(--tiktok-border);
+}
+
+.table-native-mobile td {
+  padding: 0.55rem 0.65rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* TIKTOK BOTTOM NAVIGATION BAR */
+.bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  background: rgba(9, 9, 13, 0.96);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--tiktok-border);
+  z-index: 1500;
+  padding-bottom: max(0.2rem, env(safe-area-inset-bottom));
+  justify-content: space-around;
+  align-items: center;
+}
+
+.bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--tiktok-gray);
+  cursor: pointer;
+  flex: 1;
+  height: 100%;
+  gap: 3px;
+  transition: all 0.15s ease;
+}
+
+.bottom-nav-item .nav-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.bottom-nav-item .nav-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.bottom-nav-item.active {
+  color: #fff;
+}
+
+.bottom-nav-item.active .nav-icon {
+  filter: drop-shadow(0 0 8px var(--tiktok-cyan));
+  transform: translateY(-1px);
+}
+
+.bottom-nav-item.active .nav-label {
+  color: var(--tiktok-cyan);
+  font-weight: 800;
+}
+
+/* TOAST */
+.app-toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background: rgba(9, 9, 13, 0.95);
+  border: 1px solid var(--tiktok-cyan);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  z-index: 3000;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.app-toast.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+/* RESPONSIVE LAYOUTS */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: calc(var(--nav-height) + 1rem);
+  }
+  .desktop-tabs {
+    display: none;
+  }
+  .bottom-nav {
+    display: flex;
+  }
+  .app-main {
+    padding: 0.75rem 0.85rem;
+  }
+  .ticket-container {
+    max-width: 100%;
+  }
+  .ticket-card-native {
+    border-radius: 20px;
+    padding: 1.2rem 0.85rem;
+  }
+  .ticket-event-name {
+    font-size: 1.1rem;
+  }
+}
+
+@media (min-width: 1025px) {
+  body.desktop-dual-mode .app-main {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+  body.desktop-dual-mode .desktop-dual-left {
+    flex: 1;
+    max-width: 420px;
+  }
+  body.desktop-dual-mode .desktop-dual-right {
+    flex: 1.4;
+  }
+}

@@ -87,3 +87,8 @@ export interface MeshSyncMessage {
   timestamp: string;
   signature: string;
 }
+
+export type ActiveTab = 'boardroom' | 'dual' | 'ticket' | 'turnstile' | 'transfer' | 'audit';
+export type TechMode = 'QR' | 'NFC';
+export type OrganizerBrand = 'tiketya' | 'rock' | 'custom';
+
